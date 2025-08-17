@@ -1,13 +1,12 @@
+import HomeAbout from '@/components/About/HomeAbout'
 import TopPart from '@/components/TopPart'
 import React from 'react'
 
 const Home = () => {
   return (
     <div>
-      {/* <HeroSection /> */}
       <TopPart />
-      {/* down arrow */}
-      {/* featured causes */}
+      <HomeAbout />
     </div>
   )
 }

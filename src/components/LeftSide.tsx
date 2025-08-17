@@ -1,16 +1,14 @@
 'use client'
 
+import BadgeCustome from './BadgeCustome'
 import Divider from './Divider'
-import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 const Leftside = () => {
   return (
     <div className='flex flex-col gap-6'>
       <div>
-        <Badge className='text-sm rounded-full py-1 px-3 bg-second text-primary'>
-          Effortless Giving for Maximum Impact
-        </Badge>
+        <BadgeCustome text='Effortless Giving for Maximum Impact' />
         <h1 className='text-neutral text-6xl font-bold mt-3'>
           Make a difference with every donation
         </h1>
