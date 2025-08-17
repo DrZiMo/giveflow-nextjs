@@ -40,7 +40,9 @@
   --second-color: #E0E7FF;
   --dark-color: #1A293F;
   --faded-background: rgba(255, 255, 255, 0.2);
+  --faded-black: rgba(0, 0, 0, 0.2);
   --gray-text: rgba(255, 255, 255, 0.5);
+  --almost-black: rgba(0, 0, 0, 0.6);
 }
 
 @theme {
@@ -55,7 +57,9 @@
   --color-primary: var(--primary-color);
   --color-dark-primary: var(--dark-color);
   --color-faded: var(--faded-background);
+  --color-faded2: var(--faded-black);
   --color-gray-color: var(--gray-text);
+  --color-almost-black: var(--almost-black);
   --color-second: var(--second-color);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
