@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Header from '../components/Header'
 import { ThemeProvider } from '../components/ThemeProvider'
+import Footer from '@/components/Footer/Footer'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
         cz-shortcut-listen='true'
       >
         <ThemeProvider
@@ -36,15 +37,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div>
+          <div className='flex flex-col h-full'>
             <Header />
-            <main>
-              {/* <HeroSection /> */}
-              {/* down arrow */}
-              {/* featured causes */}
-              {children}
-            </main>
-            {/* <Footer /> */}
+            <main className='flex-1'>{children}</main>
+            <Footer />
           </div>
         </ThemeProvider>
       </body>
