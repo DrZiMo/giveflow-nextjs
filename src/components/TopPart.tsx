@@ -1,5 +1,6 @@
 'use client'
 
+import FeaturedCauses from './FeaturedCauses'
 import Hero from './Hero'
 
 const TopPart = () => {
@@ -7,8 +8,8 @@ const TopPart = () => {
     <div className='bg-gradient-to-t from-second to-background'>
       <div className='pb-20 w-[90%] mx-auto'>
         <Hero />
-        {/* <FeaturedCauses />
-        <TrendingNow /> */}
+        <FeaturedCauses />
+        {/* <TrendingNow /> */}
       </div>
     </div>
   )

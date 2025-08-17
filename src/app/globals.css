@@ -6,8 +6,8 @@
 :root {
   --primary: oklch(0.205 0 0);
   --radius: 0.625rem;
-  --background: rgb(255, 255, 255);
-  --foreground: oklch(0.145 0 0);
+  --background: #F9FAFF;
+  --foreground: #0A0A0A;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -38,7 +38,7 @@
   --sidebar-ring: oklch(0.708 0 0);
   --primary-color: #3b82f6;
   --second-color: #bae6fd;
-  --dark-color: #082f49;
+  --dark-color: #1A293F;
   --faded-background: rgba(255, 255, 255, 0.2);
   --gray-text: rgba(255, 255, 255, 0.5);
 }
@@ -91,7 +91,7 @@
   --radius-xl: calc(var(--radius) + 4px)}
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: #0A0A0A;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
