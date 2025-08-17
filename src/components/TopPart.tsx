@@ -1,9 +1,13 @@
+'use client'
+
+import Hero from './Hero'
+
 const TopPart = () => {
   return (
-    <div className='bg-gradient-to-t from-primary-content to-base'>
-      <div className='w-[90%] 2xl:w-[1300px] mx-auto pb-20'>
-        {/* <Hero />
-        <FeaturedCauses />
+    <div className='bg-gradient-to-t from-second to-background'>
+      <div className='pb-20 w-[90%] mx-auto'>
+        <Hero />
+        {/* <FeaturedCauses />
         <TrendingNow /> */}
       </div>
     </div>
