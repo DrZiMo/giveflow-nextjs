@@ -38,8 +38,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className='flex flex-col h-full'>
-            <Header />
-            <main className='flex-1'>{children}</main>
+            <div className='w-[90%] mx-auto flex-1 py-8'>
+              <Header />
+              <main>{children}</main>
+            </div>
             <Footer />
           </div>
         </ThemeProvider>

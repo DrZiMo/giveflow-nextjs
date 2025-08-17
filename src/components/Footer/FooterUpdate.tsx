@@ -1,22 +1,21 @@
-'use client'
-
 import { Mail } from 'lucide-react'
+import { Button } from '../ui/button'
 
 const FooterUpdated = () => {
   return (
     <div className='flex flex-col gap-4'>
-      <h2 className='text-base-100 font-semibold'>STAY UPDATED</h2>
+      <h2 className='text-background font-semibold'>STAY UPDATED</h2>
       <p>Subscribe to our newsletter for impact stories and updates.</p>
-      <div className='bg-base-100/20 flex justify-between items-center pl-4 rounded-l-sm'>
+      <div className='bg-faded flex justify-between items-center pl-4 rounded-l-sm'>
         <input
           type='text'
           placeholder='Your Email Address'
           className='outline-0'
         />
         {/* TODO: Make this functional */}
-        <button className='btn btn-primary shadow-none rounded-l-none'>
+        <Button className='rounded-l-none rounded-r-sm w-fit'>
           <Mail size={20} />
-        </button>
+        </Button>
       </div>
     </div>
   )

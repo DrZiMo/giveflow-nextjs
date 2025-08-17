@@ -5,7 +5,7 @@ import UserPart from './UserPart'
 
 const Header = () => {
   return (
-    <div className='flex justify-between'>
+    <div className='flex justify-between gap-48 items-center w-full'>
       <Logo />
       <Navigation />
       <UserPart />

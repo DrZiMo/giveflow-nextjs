@@ -10,7 +10,7 @@ const Footer = () => {
   const resourceLinks = ['Help Center', 'Privacy Policy', 'Terms of Service']
 
   return (
-    <div className='bg-dark-primary mt-20 text-background w-full'>
+    <div className='bg-dark-primary mt-20 text-gray-color w-full'>
       <div className='w-[90%] 2xl:w-[1300px] mx-auto py-16'>
         <div className='grid grid-cols-4 gap-10'>
           <FooterMain />
@@ -18,8 +18,8 @@ const Footer = () => {
           <FooterLinks title='Resource' links={resourceLinks} />
           <FooterUpdated />
         </div>
-        <div className='divider w-full h-[1px] bg-base-100/20 mt-16'></div>
-        <div className='footer-bottom text-sm flex justify-between'>
+        <div className='divider w-full h-[1px] bg-faded mt-16'></div>
+        <div className='footer-bottom text-sm flex justify-between mt-5'>
           <h5>© 2025 GiveFlow. All rights reserved.</h5>
           <h5 className='flex gap-1 items-center'>
             Made with <Heart size={16} className='text-primary' /> for a better

@@ -9,8 +9,8 @@ export interface FooterLinksProp {
 
 const FooterLinks = ({ title, links }: FooterLinksProp) => {
   return (
-    <div>
-      <h2 className='text-base-100 font-semibold mb-3'>
+    <div className='w-fit'>
+      <h2 className='text-background font-semibold mb-3'>
         {title.toUpperCase()}
       </h2>
       <div className='flex flex-col gap-2'>
