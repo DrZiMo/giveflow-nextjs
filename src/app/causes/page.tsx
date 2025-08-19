@@ -12,6 +12,7 @@ import CauseGroup from '@/components/CausesGroup'
 import Filter from '@/components/Filter'
 import { Suspense } from 'react'
 import Loading from '../loading'
+import Sort from '@/components/Sort'
 
 const Cause = () => {
   const trendingCauses = causes.filter((cause) => cause.trending == true)
@@ -47,7 +48,7 @@ const Cause = () => {
       <div className='flex items-center gap-3 mt-8 relative'>
         <SearchBar />
         <Filter />
-        {/* <SortOptions /> */}
+        <Sort />
       </div>
       <div className='mt-10'>
         <h1 className='flex items-center gap-2 text-2xl font-semibold'>
