@@ -1,5 +1,3 @@
-'use client'
-
 import FeaturedCauses from './FeaturedCauses'
 import Hero from './Hero'
 

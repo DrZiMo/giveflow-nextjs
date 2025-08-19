@@ -1,8 +1,8 @@
 'use client'
 
 import causes from '@/app/data/causes'
-import { ListFilter } from 'lucide-react'
-import React, { useState } from 'react'
+import { FilterIcon } from 'lucide-react'
+import { useState } from 'react'
 
 const FilterDropDown = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -14,13 +14,13 @@ const FilterDropDown = () => {
   return (
     <div>
       <h1 className='flex items-center gap-2 text-primary text-xl'>
-        <ListFilter /> Filter Causes
+        <FilterIcon /> Filter Causes
       </h1>
       <div className='filter-categories list-none flex items-center flex-wrap gap-2 mt-5'>
         <li
-          className={`border border-neutral-200 w-fit py-1 px-2 rounded-sm cursor-pointer hover:bg-primary hover:border-primary hover:text-base-100 transition ${
+          className={`border border-neutral-200 w-fit py-1 px-2 rounded-sm cursor-pointer hover:bg-primary hover:border-primary hover:text-background transition ${
             selectedCategory === 'All'
-              ? 'bg-primary border-primary text-base-100'
+              ? 'bg-primary border-primary text-background'
               : 'border-neutral-200 bg-transparent text-neutral-950'
           }`}
           onClick={() => handleSelectedCategory('All')}
@@ -30,9 +30,9 @@ const FilterDropDown = () => {
         {causes.map((cause) => (
           <li
             key={cause.category}
-            className={`border  w-fit py-1 px-2 rounded-sm cursor-pointer hover:bg-primary hover:border-primary hover:text-base-100 transition ${
+            className={`border  w-fit py-1 px-2 rounded-sm cursor-pointer hover:bg-primary hover:border-primary hover:text-background transition ${
               selectedCategory === cause.category
-                ? 'bg-primary border-primary text-base-100'
+                ? 'bg-primary border-primary text-background'
                 : 'border-neutral-200 bg-transparent text-neutral-950'
             }`}
             onClick={() => handleSelectedCategory(cause.category)}

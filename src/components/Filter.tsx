@@ -4,8 +4,10 @@ import React, { Suspense } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Button } from './ui/button'
 import { FilterIcon } from 'lucide-react'
-import FilterDropDown from './FilterDropDown'
+// import FilterDropDown from './FilterDropDown'
 import Loading from '@/app/loading'
+
+const FilterDropDown = React.lazy(() => import('./FilterDropDown'))
 
 const Filter = () => {
   return (
@@ -18,7 +20,12 @@ const Filter = () => {
           <FilterIcon /> Filter
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-80'>
+      <PopoverContent
+        className='w-80'
+        side='bottom'
+        align='end'
+        avoidCollisions={false}
+      >
         <Suspense fallback={<Loading />}>
           <FilterDropDown />
         </Suspense>
