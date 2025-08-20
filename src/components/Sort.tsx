@@ -1,32 +1,48 @@
+'use client'
+
 import React, { Suspense } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Button } from './ui/button'
 import { ListFilter } from 'lucide-react'
 import Loading from '@/app/loading'
 import SortDropDown from './SortDropDown'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select'
 
 const Sort = () => {
+  const sortOptions = [
+    'Newest Causes',
+    'Oldest Causes',
+    'Most Liked',
+    'Highest Amount Needed',
+    'Nearly Funded',
+    'Most Funded',
+    'Least Funded',
+    'Urgency Level',
+  ]
+
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant='default'
-          className='h-full m-0 bg-second py-3 shadow-sm text-almost-black hover:text-background'
-        >
-          <ListFilter /> Sort
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        className='w-80'
-        side='bottom'
-        align='end'
-        avoidCollisions={false}
-      >
-        <Suspense fallback={<Loading />}>
-          <SortDropDown />
-        </Suspense>
-      </PopoverContent>
-    </Popover>
+    <Select>
+      <SelectTrigger>
+        <SelectValue placeholder='Sort' />
+      </SelectTrigger>
+      <SelectContent>
+        {sortOptions.map((sort, index) => (
+          <SelectItem
+            key={index}
+            value={sort}
+            // onClick={() => handleSelectedSort(sort)}
+          >
+            {sort}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 
