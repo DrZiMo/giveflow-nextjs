@@ -53,7 +53,7 @@ const OurValue = () => {
                 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
             }}
           >
-            <div className='icon bg-primary-content p-3 rounded-full text-primary'>
+            <div className='icon bg-second p-3 rounded-full text-primary'>
               <card.icon size={24} />
             </div>
             <h1 className='text-lg'>{card.title}</h1>

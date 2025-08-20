@@ -19,7 +19,7 @@ const JoinOurTeam = () => {
             passionate about making a difference. Check out our open positions
             and see if there&apos;s a fit for you.
           </p>
-          <button className='border border-primary bg-card w-fit py-2 px-4 text-primary rounded-full cursor-pointer hover:bg-second transition'>
+          <button className='border border-primary bg-card w-fit py-2 px-4 text-primary rounded-full cursor-pointer hover:bg-second/60 transition'>
             View Open Positions
           </button>
         </div>
