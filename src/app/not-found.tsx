@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ArrowLeft, Home, Search } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 const NotFound = () => {
   const pathname = usePathname()
+  const router = useRouter()
 
   return (
     <Card className='w-[40%] mx-auto mt-10 flex flex-col items-center px-8'>
@@ -25,13 +26,17 @@ const NotFound = () => {
         {pathname}
       </code>
       <div className='flex justify-between w-full'>
-        <Button>
-          <Home /> Go to Homepage
-        </Button>
-        <Button variant={'outline'}>
-          <Search /> Browse Causes
-        </Button>
-        <Button variant={'ghost'}>
+        <Link href={'/'}>
+          <Button>
+            <Home /> Go to Homepage
+          </Button>
+        </Link>
+        <Link href={'/causes'}>
+          <Button variant={'outline'}>
+            <Search /> Browse Causes
+          </Button>
+        </Link>
+        <Button variant={'ghost'} onClick={() => router.back()}>
           <ArrowLeft /> Go Back
         </Button>
       </div>
