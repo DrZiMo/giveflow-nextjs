@@ -43,8 +43,8 @@ const NotFound = () => {
       <div className='divider w-full h-[1px] bg-faded2 mt-5'></div>
       <p className='text-almost-black'>
         Need help? Visit our{' '}
-        <Link href={'/about'} className='text-primary underline'>
-          About page
+        <Link href={'/contact'} className='text-primary underline'>
+          Contact Page
         </Link>{' '}
         or return to the{' '}
         <Link href={'/'} className='text-primary underline'>
