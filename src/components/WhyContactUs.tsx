@@ -35,7 +35,7 @@ const WhyContactUs = () => {
       <CardContent className='flex flex-col gap-4'>
         {Object.values(whyContactUs).map(([title, desc], index) => (
           <div key={index} className='flex flex-col'>
-            <Label className='font-semibold text-lg'>{title}</Label>
+            <Label className='font-semibold text-md'>{title}</Label>
             <p className='text-muted-foreground text-sm'>{desc}</p>
           </div>
         ))}
