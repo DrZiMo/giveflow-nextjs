@@ -41,7 +41,7 @@ const NotFound = () => {
         </Button>
       </div>
       <div className='divider w-full h-[1px] bg-faded2 mt-5'></div>
-      <p className='text-almost-black'>
+      <p className='text-muted-foreground'>
         Need help? Visit our{' '}
         <Link href={'/contact'} className='text-primary underline'>
           Contact Page

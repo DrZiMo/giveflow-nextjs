@@ -59,6 +59,8 @@ const SendUsMessage = () => {
               <Textarea
                 id='message'
                 placeholder='Tell us more about your inquiry ...'
+                className='h-auto min-h-[150px] resize-none'
+                rows={6}
                 required
               />
             </div>

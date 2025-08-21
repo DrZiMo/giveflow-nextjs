@@ -22,7 +22,7 @@ const Title = ({ title, subTitle, isLine = true, size = 4 }: ITitleV1) => {
       <p
         className={`${
           size === 4 ? 'text-xl' : 'text-md'
-        } text-almost-black w-1/2 mx-auto mt-4`}
+        } text-muted-foreground w-1/2 mx-auto mt-4`}
       >
         {subTitle}
       </p>

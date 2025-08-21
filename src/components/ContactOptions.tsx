@@ -63,7 +63,7 @@ const ContactOptions = () => {
           </div>
           <div>
             <h1 className='text-lg font-semibold'>{card.title}</h1>
-            <p className='text-almost-black'>{card.desc}</p>
+            <p className='text-muted-foreground'>{card.desc}</p>
           </div>
           <h1 className='text-primary text-lg font-semibold'>{card.value}</h1>
         </div>

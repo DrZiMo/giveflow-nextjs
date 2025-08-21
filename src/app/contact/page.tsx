@@ -1,4 +1,5 @@
 import ContactOptions from '@/components/ContactOptions'
+import QuickResponse from '@/components/QuickResponse'
 import SendUsMessage from '@/components/SendUsMessage'
 import Title from '@/components/Title'
 import WhyContactUs from '@/components/WhyContactUs'
@@ -16,9 +17,9 @@ const Contact = () => {
 
       <div className='mt-32 grid grid-cols-2 gap-10'>
         <SendUsMessage />
-        <div className=''>
+        <div className='flex flex-col gap-5'>
           <WhyContactUs />
-          {/* <QuickResponse /> */}
+          <QuickResponse />
         </div>
       </div>
     </div>

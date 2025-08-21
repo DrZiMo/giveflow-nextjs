@@ -38,7 +38,7 @@ const About = () => {
               key={tab}
               className={`${
                 activeTab === index ? 'bg-card' : ''
-              } px-3 py-1 rounded-full hover:almost-black text-sm cursor-pointer transition`}
+              } px-3 py-1 rounded-full hover:text-muted-foreground text-sm cursor-pointer transition`}
               onClick={() => setActiveTab(index)}
             >
               {tab}

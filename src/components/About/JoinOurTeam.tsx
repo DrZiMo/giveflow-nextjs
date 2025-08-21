@@ -14,7 +14,7 @@ const JoinOurTeam = () => {
         </div>
         <div className='flex flex-col gap-3'>
           <h1 className='text-xl font-semibold'>Join Our Team</h1>
-          <p className='text-almost-black text-md'>
+          <p className='text-muted-foreground text-md'>
             We&apos;re always looking for talented individuals who are
             passionate about making a difference. Check out our open positions
             and see if there&apos;s a fit for you.
