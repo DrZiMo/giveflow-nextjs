@@ -1,6 +1,7 @@
 import ContactOptions from '@/components/ContactOptions'
 import SendUsMessage from '@/components/SendUsMessage'
 import Title from '@/components/Title'
+import WhyContactUs from '@/components/WhyContactUs'
 import React from 'react'
 
 const Contact = () => {
@@ -13,11 +14,11 @@ const Contact = () => {
 
       <ContactOptions />
 
-      <div className='mt-32 grid grid-cols-2'>
+      <div className='mt-32 grid grid-cols-2 gap-10'>
         <SendUsMessage />
-        <div>
-          {/* <WhyContactUs />
-          <QuickResponse /> */}
+        <div className=''>
+          <WhyContactUs />
+          {/* <QuickResponse /> */}
         </div>
       </div>
     </div>
