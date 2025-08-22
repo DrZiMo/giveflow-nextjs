@@ -18,6 +18,7 @@ import {
   FormControl,
   FormMessage,
 } from '../ui/form'
+import SocialLogin from './SocialLogin'
 
 const LoginContent = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -38,7 +39,7 @@ const LoginContent = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit((value) => onSubmit(value))}>
-        <div className='flex flex-col gap-8'>
+        <div className='flex flex-col gap-6'>
           {/* Email Input */}
           <FormField
             control={form.control}
@@ -119,9 +120,19 @@ const LoginContent = () => {
         </div>
 
         {/* Social login */}
-        <div className='grid grid-cols-2 gap-5 mt-5'>
-          <Button variant='outline'>Google</Button>
-          <Button variant='outline'>Facebook</Button>
+        <SocialLogin />
+
+        {/* sign up */}
+        <div className='text-muted-foreground text-center mt-6'>
+          <p>
+            Don&apos;t have an account?{' '}
+            <Link
+              href='/auth/register'
+              className='text-primary font-semibold hover:underline'
+            >
+              Sign up
+            </Link>
+          </p>
         </div>
       </form>
     </Form>
