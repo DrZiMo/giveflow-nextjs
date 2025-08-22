@@ -45,7 +45,7 @@ const Cause = ({
   const Icon = categoryIcon[category]
 
   return (
-    <div className='bg-white h-fit rounded-sm shadow'>
+    <div className='bg-white h-fit rounded-sm shadow hover:shadow-lg transition cursor-pointer'>
       {/* Header Section */}
       <div className='relative h-[150px] w-full rounded-t-sm overflow-hidden'>
         <img
@@ -84,7 +84,7 @@ const Cause = ({
           <Button className='flex-1'>
             <HandHeart size={24} /> Donate
           </Button>
-          <Button variant={'secondary'} className=''>
+          <Button variant={'secondary'}>
             <Heart />
           </Button>
         </div>

@@ -1,5 +1,4 @@
 import { TrendingUp } from 'lucide-react'
-import causes from '../data/causes'
 // import SortOptions from '../components/sortOptions'
 // import { useEffect, useRef } from 'react'
 // import { useAppDispatch, useAppSelector } from '../redux/hooks'
@@ -11,8 +10,9 @@ import SearchBar from '@/components/SearchBar'
 import CauseGroup from '@/components/CausesGroup'
 import Filter from '@/components/Filter'
 import { Suspense } from 'react'
-import Loading from '../loading'
 import Sort from '@/components/Sort'
+import Loading from '@/app/loading'
+import causes from '@/app/data/causes'
 
 const Cause = () => {
   const trendingCauses = causes.filter((cause) => cause.trending == true)
