@@ -3,6 +3,7 @@
 import React from 'react'
 import { ModeToggle } from './ModeToggle'
 import { Button } from './ui/button'
+import Link from 'next/link'
 
 const UserPart = () => {
   return (
@@ -11,7 +12,9 @@ const UserPart = () => {
 
       {/* if there is no logged in user */}
       <div className='buttons flex gap-3'>
-        <Button variant={'outline'}>Login</Button>
+        <Link href={'/auth/login'}>
+          <Button variant={'outline'}>Login</Button>
+        </Link>
         <Button>Signup</Button>
       </div>
     </div>
