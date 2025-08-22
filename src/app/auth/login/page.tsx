@@ -29,7 +29,7 @@ const LoginPage = () => {
             Please enter your credentials to access your account.
           </CardDescription>
         </CardHeader>
-        <CardContent className='flex flex-col gap-8'>
+        <CardContent>
           <LoginContent />
         </CardContent>
       </Card>
