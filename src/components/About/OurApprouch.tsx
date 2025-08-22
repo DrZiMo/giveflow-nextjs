@@ -13,7 +13,7 @@ const OurApproach = () => {
         <Lightbulb size={30} />
       </div>
       <h1 className='text-2xl font-semibold'>Our Approuch</h1>
-      <p className='w-[60%] text-center text-lg text-neutral/60'>
+      <p className='w-[60%] text-center text-lg text-muted-foreground'>
         We believe that technology, when thoughtfully applied, can remove
         barriers to giving and amplify the impact of each donation. By combining
         cutting-edge tools with deep humanitarian insights, we&apos;re creating

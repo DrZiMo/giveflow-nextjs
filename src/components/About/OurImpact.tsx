@@ -9,7 +9,7 @@ const OurImpact = () => {
     <div className='mt-28'>
       <div className='flex flex-col gap-2 items-center text-center'>
         <h1 className='text-2xl font-semibold'>Our Impact in Numbers</h1>
-        <p className='w-[60%] text-center text-lg text-neutral/60'>
+        <p className='w-[60%] text-center text-lg text-muted-foreground'>
           Through the power of our platform and community, we&apos;ve achieved
           remarkable results
         </p>
@@ -19,7 +19,7 @@ const OurImpact = () => {
         {boxes.map((box, index) => (
           <div
             key={index}
-            className='py-8 rounded-lg bg-base-100'
+            className='py-8 rounded-lg bg-card'
             style={{
               boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
             }}
@@ -27,7 +27,7 @@ const OurImpact = () => {
             <h1 className='text-primary text-4xl font-semibold mb-2'>
               {box.number}
             </h1>
-            <p className='text-neutral/60'>{box.title}</p>
+            <p className='text-muted-foreground'>{box.title}</p>
           </div>
         ))}
       </div>

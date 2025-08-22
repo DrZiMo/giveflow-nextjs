@@ -39,7 +39,7 @@ const OurValue = () => {
       <div className='cards grid grid-cols-4 mt-10 gap-6 text-center'>
         {cards.map((card, index) => (
           <div
-            className='flex flex-col gap-2 items-center cursor-pointer p-5 rounded-md transition bg-base-100'
+            className='flex flex-col gap-2 items-center cursor-pointer p-5 rounded-md transition bg-card'
             key={index}
             style={{
               boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
@@ -56,8 +56,8 @@ const OurValue = () => {
             <div className='icon bg-second p-3 rounded-full text-primary'>
               <card.icon size={24} />
             </div>
-            <h1 className='text-lg'>{card.title}</h1>
-            <p className='text-neutral/60'>{card.desc}</p>
+            <h1 className='text-lg font-semibold'>{card.title}</h1>
+            <p className='text-muted-foreground'>{card.desc}</p>
           </div>
         ))}
       </div>
