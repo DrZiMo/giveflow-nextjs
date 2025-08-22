@@ -3,7 +3,7 @@ import { Button } from '../ui/button'
 import { FcGoogle } from 'react-icons/fc'
 import { FaFacebook } from 'react-icons/fa6'
 
-const SocialLogin = () => {
+const SocialButtons = () => {
   return (
     <div className='grid grid-cols-2 gap-5 mt-5'>
       <Button variant='outline'>
@@ -16,4 +16,4 @@ const SocialLogin = () => {
   )
 }
 
-export default SocialLogin
+export default SocialButtons

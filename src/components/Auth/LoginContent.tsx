@@ -18,7 +18,8 @@ import {
   FormControl,
   FormMessage,
 } from '../ui/form'
-import SocialLogin from './SocialLogin'
+import SocialButtons from './SocialButtons'
+import FormError from '../FormError'
 
 const LoginContent = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -105,8 +106,17 @@ const LoginContent = () => {
           />
         </div>
 
+        {/* <FormError message={'Something went wrong'} /> */}
+
         {/* Submit button */}
-        <Button type='submit' className='w-full mt-4'>
+        <Button
+          type='submit'
+          className='w-full mt-4'
+          disabled={
+            !form.formState.isValid ||
+            Object.values(form.getValues()).some((v) => !v)
+          }
+        >
           Login <ArrowRight />
         </Button>
 
@@ -120,14 +130,14 @@ const LoginContent = () => {
         </div>
 
         {/* Social login */}
-        <SocialLogin />
+        <SocialButtons />
 
         {/* sign up */}
         <div className='text-muted-foreground text-center mt-6'>
           <p>
             Don&apos;t have an account?{' '}
             <Link
-              href='/auth/register'
+              href='/auth/signup'
               className='text-primary font-semibold hover:underline'
             >
               Sign up
