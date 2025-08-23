@@ -106,7 +106,7 @@ const LoginContent = () => {
           />
         </div>
 
-        {/* <FormError message={'Something went wrong'} /> */}
+        <FormError message='' />
 
         {/* Submit button */}
         <Button
