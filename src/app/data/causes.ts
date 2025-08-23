@@ -11,20 +11,259 @@ const causes = [
     featured: true,
     imageUrl:
       'https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80',
-    longDescription: `
-      ## Clean Water Initiative 💧
-
-      Access to clean water is a fundamental human right, yet **1 in 3 people worldwide** lack safe drinking water.  
-      With your support, we aim to:
-
-      - Build **sustainable wells** in rural areas  
-      - Provide **filtration systems** for schools and villages  
-      - Train communities on **hygiene and sanitation**  
-
-      ![Clean Water Project](https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=1200&q=80)
-
-      Every contribution ensures fewer families suffer from preventable waterborne diseases. Together, we can bring hope and health to thousands.  
-    `,
+    longDescription: {
+      type: 'doc',
+      content: [
+        {
+          type: 'heading',
+          attrs: {
+            level: 1,
+          },
+          content: [
+            {
+              type: 'text',
+              text: 'The Clean Water Initiative: A Commitment to Sustainable Health',
+            },
+          ],
+        },
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'Millions of people around the world face the daily challenge of water scarcity and lack access to safe, clean drinking water. The Clean Water Initiative is our comprehensive response to this global crisis. We are dedicated to more than just providing short-term relief; we build sustainable, long-lasting infrastructure that empowers communities, improves health, and fosters economic development for generations to come.',
+            },
+          ],
+        },
+        {
+          type: 'image',
+          attrs: {
+            src: 'https://cdn.sanity.io/images/cphrnle8/production/dc4e70fbc0520f2a2656a880832b76340277a7d1-3360x1680.webp?rect=560,0,2240,1680&w=800&h=600&q=100',
+            alt: 'Community members working together with our team to build a new well.',
+            title: 'Building a sustainable well in a rural community.',
+          },
+        },
+        {
+          type: 'heading',
+          attrs: {
+            level: 2,
+          },
+          content: [
+            {
+              type: 'text',
+              text: 'Our Multifaceted Approach',
+            },
+          ],
+        },
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'We address the water crisis through a holistic strategy, ensuring our solutions are appropriate, effective, and enduring. Our core projects include:',
+            },
+          ],
+        },
+        {
+          type: 'bulletList',
+          content: [
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      marks: [
+                        {
+                          type: 'bold',
+                        },
+                      ],
+                      text: 'Sustainable Well Construction: ',
+                    },
+                    {
+                      type: 'text',
+                      text: "We don't just dig wells; we engineer them. By utilizing local materials and training community members on maintenance, we create reliable water sources that remain functional for decades. Our hydro-geological surveys ensure we drill in locations with abundant, clean aquifers.",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      marks: [
+                        {
+                          type: 'bold',
+                        },
+                      ],
+                      text: 'Advanced Filtration Systems: ',
+                    },
+                    {
+                      type: 'text',
+                      text: 'For communities where groundwater is contaminated or saline, we implement appropriate filtration technology. From biosand filters for individual households to larger-scale reverse osmosis plants, we provide the tools to remove pathogens, chemicals, and impurities, transforming unsafe water into potable water.',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      marks: [
+                        {
+                          type: 'bold',
+                        },
+                      ],
+                      text: 'Sanitation and Hygiene (WASH) Facilities: ',
+                    },
+                    {
+                      type: 'text',
+                      text: 'Clean water is only one part of the equation. We build latrines and handwashing stations to prevent the spread of waterborne diseases. Crucially, we partner with local health workers to conduct hygiene education programs, creating a culture of health that maximizes the impact of our infrastructure.',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'heading',
+          attrs: {
+            level: 2,
+          },
+          content: [
+            {
+              type: 'text',
+              text: 'The Ripple Effect of Clean Water',
+            },
+          ],
+        },
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'The benefits of a reliable clean water source extend far beyond quenching thirst. It creates a powerful ',
+            },
+            {
+              type: 'text',
+              marks: [
+                {
+                  type: 'italic',
+                },
+              ],
+              text: 'ripple effect',
+            },
+            {
+              type: 'text',
+              text: ' throughout the entire community:',
+            },
+          ],
+        },
+        {
+          type: 'bulletList',
+          content: [
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      text: 'Improved Health: Drastic reduction in cholera, dysentery, and other waterborne illnesses, especially in children.',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      text: 'Education: Children, particularly girls who often spend hours fetching water, can now attend school regularly.',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      text: 'Economic Opportunity: Time saved and better health allows adults to engage in productive farming and business activities.',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      text: "Women's Empowerment: Freeing women and girls from the arduous and dangerous task of water collection unlocks their potential.",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'image',
+          attrs: {
+            src: 'https://www.shutterstock.com/image-photo/water-life-african-children-little-600nw-1599664510.jpg',
+            alt: 'A young child happily drinking clean, clear water from a cup.',
+            title: 'The joy and health benefits of clean water.',
+          },
+        },
+        {
+          type: 'heading',
+          attrs: {
+            level: 2,
+          },
+          content: [
+            {
+              type: 'text',
+              text: 'Join Us in Making a Lasting Impact',
+            },
+          ],
+        },
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'Your support is the cornerstone of this initiative. Together, we can turn the tide on the global water crisis, one community at a time. By investing in sustainable water solutions, you are not just giving a donation; you are providing health, opportunity, and hope for a brighter future.',
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     id: 2,
@@ -38,19 +277,131 @@ const causes = [
     featured: false,
     imageUrl:
       'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    longDescription: `
-      ## Education for All 📚
-
-      Education transforms lives. Our program focuses on:  
-
-      - Building **safe schools** in rural and urban poor areas  
-      - Distributing **books and digital learning tools**  
-      - Training **teachers** to inspire the next generation  
-
-      ![Classroom](https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80)
-
-      By contributing, you empower children to break the cycle of poverty and unlock brighter futures.  
-    `,
+    longDescription: {
+      type: 'doc',
+      content: [
+        {
+          type: 'heading',
+          attrs: {
+            level: 2,
+          },
+          content: [
+            {
+              type: 'text',
+              text: 'Education for All 📚',
+            },
+          ],
+        },
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'Education transforms lives. Our program focuses on:',
+            },
+          ],
+        },
+        {
+          type: 'bulletList',
+          content: [
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      text: 'Building ',
+                    },
+                    {
+                      type: 'text',
+                      marks: [
+                        {
+                          type: 'bold',
+                        },
+                      ],
+                      text: 'safe schools',
+                    },
+                    {
+                      type: 'text',
+                      text: ' in rural and urban poor areas',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      text: 'Distributing ',
+                    },
+                    {
+                      type: 'text',
+                      marks: [
+                        {
+                          type: 'bold',
+                        },
+                      ],
+                      text: 'books and digital learning tools',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'listItem',
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      type: 'text',
+                      text: 'Training ',
+                    },
+                    {
+                      type: 'text',
+                      marks: [
+                        {
+                          type: 'bold',
+                        },
+                      ],
+                      text: 'teachers',
+                    },
+                    {
+                      type: 'text',
+                      text: ' to inspire the next generation',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'image',
+          attrs: {
+            src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80',
+            alt: 'A classroom with students and a teacher.',
+            title: 'Classroom',
+          },
+        },
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'By contributing, you empower children to break the cycle of poverty and unlock brighter futures.',
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     id: 3,

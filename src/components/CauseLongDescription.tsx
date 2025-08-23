@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Editor } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
-import ReactMarkdown from 'react-markdown'
+import { EditorContent, useEditor } from '@tiptap/react'
+import { Image } from '@tiptap/extension-image'
 
 const CauseLongDescription = ({ content }: { content: string }) => {
-  return (
-    <div className='prose'>
-      <ReactMarkdown>{content}</ReactMarkdown>
-    </div>
-  )
+  const editor = useEditor({
+    extensions: [StarterKit, Image],
+    immediatelyRender: false,
+    content,
+    editable: false,
+  })
+  return <EditorContent editor={editor} />
 }
 
 export default CauseLongDescription

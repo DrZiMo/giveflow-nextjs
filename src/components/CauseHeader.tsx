@@ -11,7 +11,7 @@ const CauseHeader = ({ cause }: { cause: CauseProps }) => {
       <Card className='p-3'>
         <img src={cause.imageUrl} alt={cause.title} className='rounded-lg' />
         <div className='mt-2'>
-          {/* <CauseLongDescription content={cause.longDescription || ''} /> */}
+          <CauseLongDescription content={cause.longDescription || ''} />
         </div>
       </Card>
     </div>
