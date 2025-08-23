@@ -22,21 +22,26 @@ const Navigation = () => {
   return (
     <NavigationMenu className='flex-1'>
       <NavigationMenuList className='flex justify-around'>
-        {tabs.map((tab) => (
-          <Link href={tab.href} key={tab.name}>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger
-                className={
-                  pathname == tab.href
-                    ? 'text-primary'
-                    : 'text-foreground cursor-pointer hover:text-primary transition'
-                }
-              >
-                {tab.name}
-              </NavigationMenuTrigger>
-            </NavigationMenuItem>
-          </Link>
-        ))}
+        {tabs.map((tab) => {
+          const isActive =
+            tab.href === '/' ? pathname === '/' : pathname.startsWith(tab.href)
+
+          return (
+            <Link href={tab.href} key={tab.name}>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger
+                  className={
+                    isActive
+                      ? 'text-primary'
+                      : 'text-foreground cursor-pointer hover:text-primary transition'
+                  }
+                >
+                  {tab.name}
+                </NavigationMenuTrigger>
+              </NavigationMenuItem>
+            </Link>
+          )
+        })}
       </NavigationMenuList>
     </NavigationMenu>
   )

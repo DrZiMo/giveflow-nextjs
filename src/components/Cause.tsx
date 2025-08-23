@@ -18,6 +18,7 @@ import Image from 'next/image'
 import { Progress } from './ui/progress'
 import { Button } from './ui/button'
 import Link from 'next/link'
+import shortenText from '@/lib/shortenText'
 
 const Cause = ({
   id,
@@ -72,7 +73,7 @@ const Cause = ({
       {/* Content Section */}
       <div className='p-4'>
         <h2 className='text-lg font-semibold'>{title}</h2>
-        <p className='text-gray-500 text-sm'>{description}</p>
+        <p className='text-gray-500 text-sm'>{shortenText(description)}</p>
 
         {/* Progress Section */}
         <div className='mt-3'>
@@ -83,7 +84,7 @@ const Cause = ({
           <Progress value={percentage} className='mt-2' />
         </div>
         <div className='flex items-center gap-2 mt-4'>
-          <Link href={`/cause/${id}`} className='flex-1'>
+          <Link href={`/causes/cause/${id}`} className='flex-1'>
             {' '}
             {/* FIX This later */}
             <Button className='w-full'>

@@ -7,6 +7,7 @@ export interface CauseProps {
   category: string
   trending: boolean
   imageUrl: string
+  longDescription?: string
 }
 
 export interface CauseGroupProps {
