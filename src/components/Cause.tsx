@@ -17,8 +17,10 @@ import {
 import Image from 'next/image'
 import { Progress } from './ui/progress'
 import { Button } from './ui/button'
+import Link from 'next/link'
 
 const Cause = ({
+  id,
   title,
   description,
   amountNeeded,
@@ -81,9 +83,13 @@ const Cause = ({
           <Progress value={percentage} className='mt-2' />
         </div>
         <div className='flex items-center gap-2 mt-4'>
-          <Button className='flex-1'>
-            <HandHeart size={24} /> Donate
-          </Button>
+          <Link href={`/cause/${id}`} className='flex-1'>
+            {' '}
+            {/* FIX This later */}
+            <Button className='w-full'>
+              <HandHeart size={24} /> Donate
+            </Button>
+          </Link>
           <Button variant={'secondary'}>
             <Heart />
           </Button>

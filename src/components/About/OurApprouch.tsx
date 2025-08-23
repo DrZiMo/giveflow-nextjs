@@ -5,7 +5,7 @@ const OurApproach = () => {
   return (
     <div className='w-full flex flex-col items-center gap-6 mt-20'>
       <div
-        className='bg-base-100 p-4 rounded-full text-primary h-fit'
+        className='bg-card p-4 rounded-full text-primary h-fit'
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
         }}

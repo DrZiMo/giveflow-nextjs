@@ -15,7 +15,9 @@ const UserPart = () => {
         <Link href={'/auth/login'}>
           <Button variant={'outline'}>Login</Button>
         </Link>
-        <Button>Signup</Button>
+        <Link href={'/auth/signup'}>
+          <Button>Signup</Button>
+        </Link>
       </div>
     </div>
   )

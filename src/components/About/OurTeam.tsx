@@ -6,6 +6,7 @@ import JoinOurTeam from './JoinOurTeam'
 import ceoImage from '/public/CEO picture.jpg'
 import elonImage from '/public/Elon musk.webp'
 import markImage from '/public/Murk zuckerberg.webp'
+import Link from 'next/dist/client/link'
 
 const OurTeam = () => {
   const teamMembers = [
@@ -65,7 +66,9 @@ const OurTeam = () => {
         ))}
       </div>
 
-      <JoinOurTeam />
+      <Link href={'/contact'}>
+        <JoinOurTeam />
+      </Link>
     </div>
   )
 }

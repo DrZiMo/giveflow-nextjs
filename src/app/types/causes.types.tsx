@@ -1,4 +1,5 @@
 export interface CauseProps {
+  id: number
   title: string
   description: string
   amountNeeded: number

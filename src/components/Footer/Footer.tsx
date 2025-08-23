@@ -6,11 +6,19 @@ import FooterMain from './FooterMain'
 import FooterUpdated from './FooterUpdate'
 
 const Footer = () => {
-  const exploreLinks = ['Causes', 'How it Works']
-  const resourceLinks = ['Help Center', 'Privacy Policy', 'Terms of Service']
+  const exploreLinks = [
+    { label: 'Causes', href: '/causes' },
+    { label: 'How it Works', href: '/about' },
+  ]
+
+  const resourceLinks = [
+    { label: 'Help Center', href: '/contact' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms of Service', href: '/terms-of-service' },
+  ]
 
   return (
-    <div className='bg-dark-primary mt-20 text-gray-color w-full'>
+    <div className='bg-dark-primary mt-20 text-muted-foreground w-full'>
       <div className='w-[90%] 2xl:w-[1300px] mx-auto py-16'>
         <div className='grid grid-cols-4 gap-10'>
           <FooterMain />

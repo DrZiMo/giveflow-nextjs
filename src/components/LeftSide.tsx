@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import BadgeCustome from './BadgeCustome'
 import Divider from './Divider'
 import { Button } from './ui/button'
@@ -19,13 +20,17 @@ const Leftside = () => {
         that ensures your contributions create real impact.
       </p>
       <div className='buttons flex gap-3 mt-2'>
-        <Button className='px-6 py-2 text-[1rem]'>Quick donation</Button>
-        <Button
-          variant={'secondary'}
-          className='px-6 py-2 text-[1rem] hover:bg-primary-content/50 hover:text-primary/90 border-none'
-        >
-          Explore causes
-        </Button>
+        <Link href='/quick-donation'>
+          <Button className='px-6 py-2 text-[1rem]'>Quick donation</Button>
+        </Link>
+        <Link href={'/causes'}>
+          <Button
+            variant={'secondary'}
+            className='px-6 py-2 text-[1rem] hover:bg-primary-content/50 hover:text-primary/90 border-none'
+          >
+            Explore causes
+          </Button>
+        </Link>
       </div>
     </div>
   )

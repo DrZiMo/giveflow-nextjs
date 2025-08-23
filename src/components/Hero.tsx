@@ -24,7 +24,7 @@ const Hero = () => {
         </div>
       </div>
       <div className='mx-auto'>
-        <div className='bg-white w-fit mx-auto px-2 py-2 rounded-full shadow-md text-primary animate-bounce cursor-pointer'>
+        <div className='bg-white w-fit mx-auto px-2 py-2 rounded-full shadow-md text-primary animate-bounce'>
           <ArrowDown />
         </div>
       </div>

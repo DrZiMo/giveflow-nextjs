@@ -2,6 +2,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import BadgeCustome from '../BadgeCustome'
 import TitleV2 from '../TitleV2'
 import { Button } from '../ui/button'
+import Link from 'next/link'
 
 type LeftAboutPartProps = {
   size?: number
@@ -50,9 +51,11 @@ const LeftAboutPart = ({ size = 3 }: LeftAboutPartProps) => {
           </div>
         )}
       </div>
-      <Button className='w-fit mt-4 rounded-full font-normal flex items-center px-6'>
-        Discover Our Platform <ArrowRight size={20} />
-      </Button>
+      <Link href={'/about'}>
+        <Button className='w-fit mt-4 rounded-full font-normal flex items-center px-6'>
+          Discover Our Platform <ArrowRight size={20} />
+        </Button>
+      </Link>
     </div>
   )
 }

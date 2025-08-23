@@ -140,4 +140,7 @@
   button {
     @apply cursor-pointer
   }
+  Link {
+    @apply w-fit
+  }
 }

@@ -7,6 +7,7 @@ const CauseGroup: React.FC<CauseGroupProps> = ({ causes, number = 4 }) => {
       {causes.slice(0, number).map((cause, index) => (
         <Cause
           key={index}
+          id={cause.id}
           title={cause.title}
           description={cause.description}
           amountNeeded={cause.amountNeeded}

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import FooterLogo from './FooterLogo'
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
 
@@ -14,18 +15,34 @@ const FooterMain = () => {
       </p>
       <div className='icons flex gap-4'>
         {/* TODO: add the links */}
-        <a href='' target='_blank' className='hover:text-primary transition'>
+        <Link
+          href={''}
+          target='_blank'
+          className='hover:text-primary transition'
+        >
           <Twitter size={iconSize} />
-        </a>
-        <a href='' target='_blank' className='hover:text-primary transition'>
+        </Link>
+        <Link
+          href={''}
+          target='_blank'
+          className='hover:text-primary transition'
+        >
           <Facebook size={iconSize} />
-        </a>
-        <a href='' target='_blank' className='hover:text-primary transition'>
+        </Link>
+        <Link
+          href={''}
+          target='_blank'
+          className='hover:text-primary transition'
+        >
           <Instagram size={iconSize} />
-        </a>
-        <a href='' target='_blank' className='hover:text-primary transition'>
+        </Link>
+        <Link
+          href={''}
+          target='_blank'
+          className='hover:text-primary transition'
+        >
           <Linkedin size={iconSize} />
-        </a>
+        </Link>
       </div>
     </div>
   )

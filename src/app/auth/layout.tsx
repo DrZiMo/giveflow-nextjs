@@ -1,3 +1,4 @@
+import BackButton from '@/components/BackButton'
 import { Metadata } from 'next'
 import React from 'react'
 export const metadata: Metadata = {
@@ -13,5 +14,12 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <main>{children}</main>
+  return (
+    <div className='min-h-screen relative w-[90%] mx-auto'>
+      <div className='absolute left-0 top-0'>
+        <BackButton />
+      </div>
+      <main>{children}</main>
+    </div>
+  )
 }

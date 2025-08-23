@@ -4,6 +4,7 @@ import Title from './Title'
 import { Button } from './ui/button'
 import { Suspense } from 'react'
 import Loading from '@/app/loading'
+import Link from 'next/link'
 
 const FeaturedCauses = async () => {
   const featuredCauses = causes.filter((cause) => cause.featured === true)
@@ -17,7 +18,9 @@ const FeaturedCauses = async () => {
         <CauseGroup causes={featuredCauses} />
       </Suspense>
       <div className='flex justify-center'>
-        <Button className='mt-5'>View All Causes</Button>
+        <Link href={'/causes'}>
+          <Button className='mt-5'>View All Causes</Button>
+        </Link>
       </div>
     </div>
   )
