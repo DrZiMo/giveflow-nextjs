@@ -19,6 +19,7 @@ import { Progress } from './ui/progress'
 import { Button } from './ui/button'
 import Link from 'next/link'
 import shortenText from '@/lib/shortenText'
+import SaveLaterButton from './SaveLaterButton'
 
 const Cause = ({
   id,
@@ -91,9 +92,7 @@ const Cause = ({
               <HandHeart size={24} /> Donate
             </Button>
           </Link>
-          <Button variant={'secondary'}>
-            <Heart />
-          </Button>
+          <SaveLaterButton />
         </div>
       </div>
     </div>

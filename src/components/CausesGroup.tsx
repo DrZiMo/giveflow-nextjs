@@ -15,6 +15,7 @@ const CauseGroup: React.FC<CauseGroupProps> = ({ causes, number = 4 }) => {
           category={cause.category}
           trending={cause.trending!}
           imageUrl={cause.imageUrl}
+          donors={cause.donors}
         />
       ))}
     </div>

@@ -1,5 +1,6 @@
 import causes from '@/app/data/causes'
 import CauseInfo from '@/components/CauseInfo'
+import DonationInfo from '@/components/DonationInfo'
 import { Metadata } from 'next'
 
 export const getMetadata = ({
@@ -21,7 +22,7 @@ const Cause = () => {
   return (
     <div className='w-[90%] mx-auto mt-10 grid grid-cols-2 gap-10'>
       <CauseInfo />
-      {/* <DonationInfo /> */}
+      <DonationInfo />
     </div>
   )
 }

@@ -7,7 +7,8 @@ export interface CauseProps {
   category: string
   trending: boolean
   imageUrl: string
-  longDescription?: string
+  longDescription?: string | JSON
+  donors: number
 }
 
 export interface CauseGroupProps {
