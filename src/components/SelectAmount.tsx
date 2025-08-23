@@ -5,7 +5,13 @@ import { Card } from './ui/card'
 import { DollarSign } from 'lucide-react'
 import { Input } from './ui/input'
 
-const SelectAmount = ({ onSelect }: { onSelect: (amount: number) => void }) => {
+const SelectAmount = ({
+  onSelect,
+  isError,
+}: {
+  onSelect: (amount: number | '') => void
+  isError: boolean
+}) => {
   const amounts = [10, 25, 50, 100]
   const [selectedAmount, setSelectedAmount] = useState<number | ''>('')
 
@@ -27,11 +33,12 @@ const SelectAmount = ({ onSelect }: { onSelect: (amount: number) => void }) => {
         {amounts.map((amount) => (
           <Card
             key={amount}
-            className={`${
-              selectedAmount === amount
-                ? 'border-primary bg-primary/5 text-primary font-semibold'
-                : 'bg-muted py-3 hover:bg-primary/5 hover:text-primary hover:font-semibold hover:border-primary transition cursor-pointer'
-            } border p-2 rounded-xl text-center`}
+            className={`
+              ${
+                selectedAmount === amount
+                  ? 'border-primary bg-primary/5 text-primary font-semibold'
+                  : 'bg-muted py-3 hover:bg-primary/5 hover:text-primary hover:font-semibold hover:border-primary transition cursor-pointer'
+              } border p-2 rounded-xl text-center`}
             onClick={() => handleSelectAmount(amount)}
           >
             ${amount}
@@ -40,19 +47,26 @@ const SelectAmount = ({ onSelect }: { onSelect: (amount: number) => void }) => {
       </div>
 
       {/* Custom Input */}
-      <div className='relative'>
-        <DollarSign
-          className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
-          size={18}
-        />
-        <Input
-          type='number'
-          value={selectedAmount}
-          onChange={handleInputChange}
-          placeholder='Custom amount'
-          className='pl-10 w-full'
-          min={1}
-        />
+      <div>
+        <div className='relative'>
+          <DollarSign
+            className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
+            size={18}
+          />
+          <Input
+            type='number'
+            value={selectedAmount}
+            onChange={handleInputChange}
+            placeholder='Custom amount'
+            className={`${
+              isError ? 'border border-destructive' : ''
+            } pl-10 w-full`}
+            min={1}
+          />
+        </div>
+        <p className='text-sm mt-2 text-destructive'>
+          {isError && 'Invalid amount'}
+        </p>
       </div>
     </div>
   )

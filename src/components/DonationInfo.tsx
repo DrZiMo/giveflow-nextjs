@@ -16,7 +16,8 @@ const DonationInfo = () => {
   const buttonSize = 17
   const { causeId } = useParams()
   const [selectedAmount, setSelectedAmount] = useState<number | ''>()
-  const [selectedFrequency, setSelectedFrequency] = useState<string>()
+  const [selectedFrequency, setSelectedFrequency] = useState<string>('one-time')
+  const [isError, setIsError] = useState<boolean>(false)
   const selectedCause = causes.find((cause) => cause.id === +causeId!)
 
   if (!selectedCause) return null
@@ -33,7 +34,16 @@ const DonationInfo = () => {
   }
 
   const showResult = () => {
+    if (
+      selectedAmount == undefined ||
+      (selectedAmount && selectedAmount < 0) ||
+      selectedAmount == ''
+    ) {
+      setIsError(true)
+      return
+    }
     console.log(selectedAmount, selectedFrequency)
+    setIsError(false)
   }
 
   return (
@@ -71,7 +81,7 @@ const DonationInfo = () => {
           {/* Select amount section */}
           <div className='mt-6'>
             <SmallTitle text='Select Amount' />
-            <SelectAmount onSelect={saveSelectedAmount} />
+            <SelectAmount onSelect={saveSelectedAmount} isError={isError} />
           </div>
 
           {/* Frequency */}
