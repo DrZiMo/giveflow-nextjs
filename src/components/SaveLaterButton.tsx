@@ -7,9 +7,9 @@ interface SaveLaterButtonProps {
   size?: number
 }
 
-const SaveLaterButton = ({ size = 30 }: SaveLaterButtonProps) => {
+const SaveLaterButton = ({ size = 20 }: SaveLaterButtonProps) => {
   return (
-    <div className='w-fit text-primary hover:[&_svg]:fill-current'>
+    <div className='w-fit text-primary hover:[&_svg]:fill-current p-2'>
       <Heart
         size={size}
         className='fill-transparent transition cursor-pointer'

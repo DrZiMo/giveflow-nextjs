@@ -10,10 +10,13 @@ import SmallTitle from './SmallTitle'
 import SelectAmount from './SelectAmount'
 import Frequency from './Frequency'
 import { Button } from './ui/button'
+import { useState } from 'react'
 
 const DonationInfo = () => {
   const buttonSize = 17
   const { causeId } = useParams()
+  const [selectedAmount, setSelectedAmount] = useState<number | ''>()
+  const [selectedFrequency, setSelectedFrequency] = useState<string>()
   const selectedCause = causes.find((cause) => cause.id === +causeId!)
 
   if (!selectedCause) return null
@@ -21,8 +24,20 @@ const DonationInfo = () => {
   const percentage =
     (selectedCause.currentAmount / selectedCause.amountNeeded) * 100
 
+  const saveSelectedAmount = (amount: number | '') => {
+    setSelectedAmount(amount)
+  }
+
+  const saveSelectedFrequency = (frequency: string) => {
+    setSelectedFrequency(frequency)
+  }
+
+  const showResult = () => {
+    console.log(selectedAmount, selectedFrequency)
+  }
+
   return (
-    <div>
+    <form onSubmit={showResult}>
       <Card>
         <CardHeader className='flex justify-between'>
           <CardTitle className='text-xl font-semibold'>
@@ -56,17 +71,24 @@ const DonationInfo = () => {
           {/* Select amount section */}
           <div className='mt-6'>
             <SmallTitle text='Select Amount' />
-            <SelectAmount />
+            <SelectAmount onSelect={saveSelectedAmount} />
           </div>
 
           {/* Frequency */}
           <div className='mt-6'>
             <SmallTitle text='Frequency' />
-            <Frequency />
+            <Frequency onSelect={saveSelectedFrequency} />
           </div>
 
           {/* Donate now Button */}
-          <Button className='mt-6 w-full rounded-lg py-5'>
+          <Button
+            className='mt-6 w-full rounded-lg py-5'
+            type='submit'
+            onClick={(e) => {
+              e.preventDefault()
+              showResult()
+            }}
+          >
             Donate now <ArrowRight />
           </Button>
 
@@ -77,7 +99,7 @@ const DonationInfo = () => {
           </p>
         </CardContent>
       </Card>
-    </div>
+    </form>
   )
 }
 

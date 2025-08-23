@@ -5,17 +5,19 @@ import { Card } from './ui/card'
 import { DollarSign } from 'lucide-react'
 import { Input } from './ui/input'
 
-const SelectAmount = () => {
+const SelectAmount = ({ onSelect }: { onSelect: (amount: number) => void }) => {
   const amounts = [10, 25, 50, 100]
   const [selectedAmount, setSelectedAmount] = useState<number | ''>('')
 
   const handleSelectAmount = (amount: number) => {
     setSelectedAmount(amount)
+    onSelect(amount)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setSelectedAmount(value === '' ? '' : Number(value))
+    onSelect(value === '' ? '' : Number(value))
   }
 
   return (

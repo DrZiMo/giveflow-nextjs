@@ -1,11 +1,15 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Button } from './ui/button'
 import { Card } from './ui/card'
 
-const Frequency = () => {
+const Frequency = ({ onSelect }: { onSelect: (frequency: string) => void }) => {
   const [selectedFrequency, setSelectedFrequency] = useState('one-time')
+
+  const handleSelect = (frequency: string) => {
+    setSelectedFrequency(frequency)
+    onSelect(frequency)
+  }
 
   return (
     <div className='grid grid-cols-2 gap-4'>
@@ -15,7 +19,7 @@ const Frequency = () => {
             ? 'bg-primary/5 text-primary border-primary font-semibold'
             : 'bg-muted text-muted-foreground hover:bg-primary/5 hover:text-primary hover:border-primary hover:font-semibold'
         }`}
-        onClick={() => setSelectedFrequency('one-time')}
+        onClick={() => handleSelect('one-time')}
       >
         One-time
       </Card>
@@ -25,7 +29,7 @@ const Frequency = () => {
             ? 'bg-primary/5 text-primary border-primary font-semibold'
             : 'bg-muted text-muted-foreground hover:bg-primary/5 hover:text-primary hover:border-primary hover:font-semibold'
         }`}
-        onClick={() => setSelectedFrequency('monthly')}
+        onClick={() => handleSelect('monthly')}
       >
         Monthly
       </Card>
