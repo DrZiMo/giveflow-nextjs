@@ -9,6 +9,7 @@ export interface CauseProps {
   imageUrl: string
   longDescription?: string | JSON
   donors: number
+  likes: number
 }
 
 export interface CauseGroupProps {
