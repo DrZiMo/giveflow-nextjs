@@ -9,7 +9,7 @@ const BackButton = () => {
   const route = useRouter()
 
   return (
-    <Button onClick={() => route.back()} variant={'secondary'}>
+    <Button onClick={() => route.back()} variant={'link'}>
       <ChevronLeft /> Back
     </Button>
   )
