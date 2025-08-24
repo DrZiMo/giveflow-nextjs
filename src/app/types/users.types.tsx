@@ -8,11 +8,12 @@ export interface UsersProps {
   profile_pic: string
   profile_pic_public_id: string
   role: ROLE
-  is_anonymous: false
-  is_verified: true
-  is_deleted: false
-  is_email_verified: false
-  is_phone_number_verified: false
+  is_anonymous: boolean
+  is_verified: boolean
+  is_deleted: boolean
+  is_email_verified: boolean
+  is_phone_number_verified: boolean
+  is_public: boolean
   created_at: Date
   updated_at: Date
 }
