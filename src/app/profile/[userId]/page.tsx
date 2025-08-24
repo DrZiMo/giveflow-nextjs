@@ -1,9 +1,16 @@
+'use client'
+
+import { Users } from '@/app/data/user'
 import ProfileTitle from '@/components/ProfileTitle'
 import { Card } from '@/components/ui/card'
 import { Camera, User } from 'lucide-react'
+import { useParams } from 'next/navigation'
 import React from 'react'
 
-const page = () => {
+const ProfilePage = () => {
+  const { userId } = useParams<{ userId: string }>()
+  const user = Users.find((user) => user.id === parseInt(userId))
+
   return (
     <div className='my-10'>
       <ProfileTitle
@@ -24,11 +31,13 @@ const page = () => {
               Change Photo
             </button>
           </div>
-          <div className='border border-blue-500 col-span-4'>Column 2</div>
+          <div className='border border-blue-500 col-span-4'>
+            {user?.first_name}
+          </div>
         </div>
       </Card>
     </div>
   )
 }
 
-export default page
+export default ProfilePage

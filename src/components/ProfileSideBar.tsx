@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/sidebar'
 import Logo from './Logo'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 const items = [
   {
@@ -33,32 +33,33 @@ const items = [
   },
   {
     title: 'Summary',
-    url: '/profile/summary',
+    url: '/summary',
     icon: Newspaper,
   },
   {
     title: 'History',
-    url: '/profile/history',
+    url: '/history',
     icon: Clock,
   },
   {
     title: 'Saved Causes',
-    url: '/profile/saved-causes',
+    url: '/saved-causes',
     icon: Bookmark,
   },
   {
     title: 'Recurring',
-    url: '/profile/recurring',
+    url: '/recurring',
     icon: Calendar,
   },
   {
     title: 'Settings',
-    url: '/profile/settings',
+    url: '/settings',
     icon: Settings,
   },
 ]
 
 export function ProfileSidebar() {
+  const { userId } = useParams()
   const pathname = usePathname()
 
   return (
@@ -70,19 +71,19 @@ export function ProfileSidebar() {
           <SidebarGroupContent className='mt-6'>
             <SidebarMenu className='space-y-1'>
               {items.map((item) => {
-                const isActive =
-                  pathname === item.url ||
-                  (item.url !== '/profile' && pathname?.startsWith(item.url)) ||
-                  (pathname === '/profile' && item.url === '/profile')
+                const href = `/profile/${userId}${
+                  item.url === '/profile' ? '' : item.url
+                }`
+                const isActive = pathname === href
 
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <Link
-                        href={item.url}
-                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all ${
+                        href={href}
+                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${
                           isActive
-                            ? 'bg-primary/10 text-primary shadow-sm'
+                            ? 'bg-primary/10 text-primary shadow-sm hover:bg-primary/10! hover:text-primary!'
                             : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                         }`}
                       >
