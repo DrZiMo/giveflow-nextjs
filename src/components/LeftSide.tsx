@@ -20,7 +20,7 @@ const Leftside = () => {
         that ensures your contributions create real impact.
       </p>
       <div className='buttons flex gap-3 mt-2'>
-        <Link href='/quick-donation'>
+        <Link href='/causes/quick-donation'>
           <Button className='px-6 py-2 text-[1rem]'>Quick donation</Button>
         </Link>
         <Link href={'/causes'}>

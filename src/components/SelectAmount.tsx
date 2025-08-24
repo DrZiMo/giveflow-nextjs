@@ -7,10 +7,10 @@ import { Input } from './ui/input'
 
 const SelectAmount = ({
   onSelect,
-  isError,
+  isError = false,
 }: {
   onSelect: (amount: number | '') => void
-  isError: boolean
+  isError?: boolean
 }) => {
   const amounts = [10, 25, 50, 100]
   const [selectedAmount, setSelectedAmount] = useState<number | ''>('')

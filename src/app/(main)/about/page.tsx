@@ -3,6 +3,7 @@
 import HomeAbout from '@/components/About/HomeAbout'
 import OurTeam from '@/components/About/OurTeam'
 import OurValue from '@/components/About/OurValues'
+import BadgeCustome from '@/components/BadgeCustome'
 import Title from '@/components/Title'
 import { Badge } from '@/components/ui/badge'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -20,10 +21,10 @@ const About = () => {
 
   return (
     <div className='about'>
-      <div className='w-full flex justify-center mt-12'>
-        <Badge className='text-sm rounded-full py-1 px-3 bg-second text-primary'>
+      <div className='w-fit mx-auto mt-6'>
+        <BadgeCustome>
           <Heart size={18} /> About GiveFlow
-        </Badge>
+        </BadgeCustome>
       </div>
 
       <Title
