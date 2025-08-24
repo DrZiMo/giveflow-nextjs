@@ -1,5 +1,5 @@
 import { ProfileSidebar } from '@/components/ProfileSideBar'
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import { Metadata } from 'next'
 import React from 'react'
 export const metadata: Metadata = {
