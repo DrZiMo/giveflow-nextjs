@@ -56,7 +56,7 @@ const SignupContent = () => {
                   <FormControl>
                     <div className='relative'>
                       <User
-                        className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
+                        className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'
                         size={18}
                       />
                       <Input
@@ -80,7 +80,7 @@ const SignupContent = () => {
                   <FormControl>
                     <div className='relative'>
                       <User
-                        className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
+                        className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'
                         size={18}
                       />
                       <Input
@@ -106,7 +106,7 @@ const SignupContent = () => {
                 <FormControl>
                   <div className='relative'>
                     <Mail
-                      className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
+                      className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'
                       size={18}
                     />
                     <Input
@@ -132,7 +132,7 @@ const SignupContent = () => {
                 <FormControl>
                   <div className='relative'>
                     <Lock
-                      className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
+                      className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'
                       size={18}
                     />
                     <Input
@@ -144,7 +144,7 @@ const SignupContent = () => {
                     <button
                       type='button'
                       onClick={() => setShowPassword(!showPassword)}
-                      className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
+                      className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-gray-600'
                     >
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
@@ -165,7 +165,7 @@ const SignupContent = () => {
                 <FormControl>
                   <div className='relative'>
                     <Lock
-                      className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
+                      className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'
                       size={18}
                     />
                     <Input
@@ -179,7 +179,7 @@ const SignupContent = () => {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
+                      className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-gray-600'
                     >
                       {showConfirmPassword ? (
                         <EyeOff size={18} />

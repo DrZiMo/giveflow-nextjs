@@ -48,7 +48,7 @@ const NotFound = () => {
         </Link>{' '}
         or return to the{' '}
         <Link href={'/'} className='text-primary underline'>
-          homepage
+          Home Page
         </Link>
         .
       </p>

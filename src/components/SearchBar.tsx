@@ -3,13 +3,12 @@ import { Input } from './ui/input'
 
 const SearchBar = () => {
   return (
-    <div className='flex items-center w-full pl-3'>
-      <Search size={18} className='text-muted-foreground' />
-      <Input
-        type='text'
-        placeholder='Search causes...'
-        className='shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 ml-2 border border-input'
+    <div className='relative w-full'>
+      <Search
+        className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'
+        size={18}
       />
+      <Input type='text' placeholder='Search causes ...' className='pl-10' />
     </div>
   )
 }

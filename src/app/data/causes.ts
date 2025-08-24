@@ -278,7 +278,7 @@ const causes = [
     trending: true,
     featured: false,
     imageUrl:
-      'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      'https://media.licdn.com/dms/image/v2/D4D12AQEpZ-FES75vtw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1697787516608?e=2147483647&v=beta&t=OQsC9UTOqognZngsnBp97qoGKksuKuFgnplQUyu2b5k',
     longDescription: {
       type: 'doc',
       content: [

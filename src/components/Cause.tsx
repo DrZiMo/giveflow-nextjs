@@ -49,7 +49,7 @@ const Cause = ({
   const Icon = categoryIcon[category]
 
   return (
-    <div className='bg-white h-fit rounded-sm shadow hover:shadow-lg transition cursor-pointer'>
+    <div className='bg-white h-fit rounded-sm shadow hover:shadow-lg transition'>
       {/* Header Section */}
       <div className='relative h-[150px] w-full rounded-t-sm overflow-hidden'>
         <img
