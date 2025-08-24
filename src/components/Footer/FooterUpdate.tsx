@@ -6,7 +6,7 @@ const FooterUpdated = () => {
     <div className='flex flex-col gap-4'>
       <h2 className='text-white font-semibold'>STAY UPDATED</h2>
       <p>Subscribe to our newsletter for impact stories and updates.</p>
-      <div className='bg-faded flex justify-between items-center pl-4 rounded-l-sm'>
+      <div className='bg-muted-foreground/20 flex justify-between items-center pl-4 rounded-l-sm'>
         <input
           type='text'
           placeholder='Your Email Address'
