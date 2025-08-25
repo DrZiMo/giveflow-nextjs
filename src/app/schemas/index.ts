@@ -28,3 +28,12 @@ export const EditUserSchema = z.object({
   email: z.string().email({ message: 'Valid email is required' }),
   phoneNumber: z.string().optional(),
 })
+
+export const NotificationSchema = z.object({
+  EmailNotifications: z.boolean(),
+  SMSNotifications: z.boolean(),
+  PushNotifications: z.boolean(),
+  NewsLetter: z.boolean(),
+  DonationReciepts: z.boolean(),
+  DonationReminder: z.boolean(),
+})

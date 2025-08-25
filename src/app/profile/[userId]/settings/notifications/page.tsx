@@ -1,19 +1,19 @@
 'use client'
 
+import { NotificationInfoContent } from '@/components/NotificationInfoContent'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import UserInfoContent from '@/components/UserInfoContent'
 
-const SettingsPage = () => {
+const NotificationsPage = () => {
   return (
     <Card className='px-2! w-full'>
       <CardHeader>
-        <CardTitle>Personal Information</CardTitle>
+        <CardTitle>Notification Preferences</CardTitle>
       </CardHeader>
       <CardContent>
-        <UserInfoContent />
+        <NotificationInfoContent />
       </CardContent>
     </Card>
   )
 }
 
-export default SettingsPage
+export default NotificationsPage
