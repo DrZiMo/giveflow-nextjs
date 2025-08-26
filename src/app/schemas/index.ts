@@ -39,6 +39,7 @@ export const NotificationSchema = z.object({
 })
 
 export const PrivacySchema = z.object({
+  isAnonymous: z.boolean(),
   isPublic: z.boolean(),
   isHistoryVisible: z.boolean(),
 })

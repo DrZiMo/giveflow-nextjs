@@ -25,6 +25,7 @@ export function PrivacyContent() {
   const form = useForm<z.infer<typeof PrivacySchema>>({
     resolver: zodResolver(PrivacySchema),
     defaultValues: {
+      isAnonymous: user?.is_anonymous || false,
       isPublic: user?.is_public || false,
       isHistoryVisible: user?.is_history_visible || false,
     },
@@ -39,6 +40,29 @@ export function PrivacyContent() {
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <div>
           <div className='space-y-2'>
+            <FormField
+              control={form.control}
+              name='isAnonymous'
+              render={({ field }) => (
+                <FormItem className='flex flex-row items-center justify-between p-3'>
+                  <div className='space-y-0'>
+                    <FormLabel className='text-md'>
+                      Donate Anonymously
+                    </FormLabel>
+                    <FormDescription className='text-sm'>
+                      Hide your name from donation lists and public pages.
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className='scale-130'
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name='isPublic'
