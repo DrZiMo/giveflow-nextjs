@@ -172,7 +172,7 @@ const SecurityContent = () => {
             Object.values(form.getValues()).some((v) => !v)
           }
         >
-          <Save /> Save
+          Update Password
         </Button>
       </form>
     </Form>

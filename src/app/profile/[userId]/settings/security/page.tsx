@@ -1,6 +1,7 @@
 'use client'
 
 import SecurityContent from '@/components/SecurityContent'
+import TwoStepVerification from '@/components/TwoStepVerification'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const SecurityPage = () => {
@@ -11,6 +12,7 @@ const SecurityPage = () => {
       </CardHeader>
       <CardContent>
         <SecurityContent />
+        <TwoStepVerification />
       </CardContent>
     </Card>
   )
