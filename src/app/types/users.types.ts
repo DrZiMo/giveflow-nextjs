@@ -14,6 +14,7 @@ export interface UsersProps {
   is_email_verified: boolean
   is_phone_number_verified: boolean
   is_public: boolean
+  is_history_visible: boolean
   created_at: Date
   updated_at: Date
 }

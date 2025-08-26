@@ -38,6 +38,11 @@ export const NotificationSchema = z.object({
   DonationReminder: z.boolean(),
 })
 
+export const PrivacySchema = z.object({
+  isPublic: z.boolean(),
+  isHistoryVisible: z.boolean(),
+})
+
 export const ChangePasswordSchema = z
   .object({
     currentPassword: z
