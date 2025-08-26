@@ -50,3 +50,8 @@ export interface Count {
   like: number
   donation: number
 }
+
+export interface SavedCauseProps {
+  userid: number
+  causeId: number
+}
