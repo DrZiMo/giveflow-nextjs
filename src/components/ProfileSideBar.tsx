@@ -74,7 +74,13 @@ export function ProfileSidebar() {
                 const href = `/profile/${userId}${
                   item.url === '/profile' ? '' : item.url
                 }`
-                const isActive = pathname === href
+                let isActive = false
+
+                if (item.url === '/profile') {
+                  isActive = pathname === href
+                } else {
+                  isActive = pathname.startsWith(href)
+                }
 
                 return (
                   <SidebarMenuItem key={item.title}>
