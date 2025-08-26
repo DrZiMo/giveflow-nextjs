@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
-import { ArrowRight, Eye, EyeOff, Lock, Mail, Save } from 'lucide-react'
+import { useState } from 'react'
+import { Eye, EyeOff, Lock, Save } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -142,7 +142,9 @@ const SecurityContent = () => {
                     />
                     <button
                       type='button'
-                      onClick={() => setShowNewPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-gray-600'
                     >
                       {showConfirmPassword ? (

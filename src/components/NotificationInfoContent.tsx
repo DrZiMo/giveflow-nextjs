@@ -17,7 +17,6 @@ import { Switch } from '@/components/ui/switch'
 import { NotificationSchema } from '@/app/schemas'
 import { settings } from '@/app/data/settings'
 import { useParams } from 'next/navigation'
-import { Users } from '@/app/data/user'
 import { SettingsProbs } from '@/app/types/settings.types'
 import { Save } from 'lucide-react'
 
