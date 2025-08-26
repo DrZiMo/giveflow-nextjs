@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, Lock, Mail, User } from 'lucide-react'
+import { ArrowRight, Mail, Phone, User } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -132,7 +132,7 @@ const UserInfoContent = () => {
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
                     <div className='relative'>
-                      <Lock
+                      <Phone
                         className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'
                         size={18}
                       />
