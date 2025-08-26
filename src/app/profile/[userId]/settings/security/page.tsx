@@ -1,6 +1,6 @@
 'use client'
 
-import { NotificationInfoContent } from '@/components/NotificationInfoContent'
+import SecurityContent from '@/components/SecurityContent'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const SecurityPage = () => {
@@ -10,7 +10,7 @@ const SecurityPage = () => {
         <CardTitle>Security Settings</CardTitle>
       </CardHeader>
       <CardContent>
-        <NotificationInfoContent />
+        <SecurityContent />
       </CardContent>
     </Card>
   )

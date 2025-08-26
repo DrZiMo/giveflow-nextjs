@@ -37,3 +37,20 @@ export const NotificationSchema = z.object({
   DonationReciepts: z.boolean(),
   DonationReminder: z.boolean(),
 })
+
+export const ChangePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(1, { message: 'Current password is required' }),
+    newPassword: z
+      .string()
+      .min(6, { message: 'New password must be at least 6 characters long' }),
+    confirmPassword: z
+      .string()
+      .min(6, { message: 'Confirm password is required' }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  })
