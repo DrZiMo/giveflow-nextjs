@@ -1,15 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetTrigger,
-} from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import { NavigationMenuTrigger } from './ui/navigation-menu'
 import Link from 'next/link'
 
 export function MobileSidebar() {

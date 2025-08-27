@@ -45,7 +45,7 @@ const Cause = () => {
         title='Browse All Causes'
         subTitle='Explore our vetted causes and find the ones that align with your values and interests.'
       />
-      <div className='flex items-center gap-3 mt-8 relative'>
+      <div className='flex items-center gap-1 md:gap-3 mt-8 relative'>
         <SearchBar />
         <Filter />
         <Sort />
