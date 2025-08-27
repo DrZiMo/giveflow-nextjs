@@ -22,7 +22,7 @@ const Cause = () => {
   return (
     <div className='w-[90%] mx-auto mt-10 grid grid-cols-2 gap-10'>
       <CauseInfo />
-      <div className='sticky top-0 h-fit'>
+      <div className='sticky top-10 h-fit'>
         <DonationInfo />
       </div>
     </div>
