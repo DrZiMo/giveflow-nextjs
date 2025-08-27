@@ -2,6 +2,7 @@ import { Globe, Heart, ShieldCheck, Sparkle } from 'lucide-react'
 import OurImpact from './OurImpact'
 import Title from '../Title'
 import OurApproach from './OurApprouch'
+import { Card } from '../ui/card'
 
 const OurValue = () => {
   const cards = [
@@ -38,27 +39,16 @@ const OurValue = () => {
 
       <div className='cards grid grid-cols-4 mt-10 gap-6 text-center'>
         {cards.map((card, index) => (
-          <div
+          <Card
             className='flex flex-col gap-2 items-center cursor-pointer p-5 rounded-md transition bg-card'
             key={index}
-            style={{
-              boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow =
-                'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow =
-                'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
-            }}
           >
-            <div className='icon bg-second p-3 rounded-full text-primary'>
+            <div className='icon bg-primary/10 p-3 rounded-full text-primary'>
               <card.icon size={24} />
             </div>
             <h1 className='text-lg font-semibold'>{card.title}</h1>
             <p className='text-muted-foreground'>{card.desc}</p>
-          </div>
+          </Card>
         ))}
       </div>
       <OurApproach />

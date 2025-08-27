@@ -28,7 +28,7 @@ const RightAboutPart = () => {
         {rightItems.map((item, index) => (
           <li key={index}>
             <div className='flex items-center gap-6'>
-              <div className='bg-second rounded-full p-4 text-primary'>
+              <div className='bg-primary/10 rounded-full p-4 text-primary'>
                 <item.icon size={iconSize} />
               </div>
               <div>

@@ -21,7 +21,7 @@ const OurApproach = () => {
         about.
       </p>
       <Link href={'/Causes'}>
-        <button className='border border-primary py-2 px-4 text-primary rounded-full cursor-pointer hover:bg-second/60 transition'>
+        <button className='border border-primary py-2 px-4 text-primary rounded-full cursor-pointer hover:bg-primary/5 transition'>
           Explore all Causes
         </button>
       </Link>

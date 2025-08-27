@@ -1,13 +1,9 @@
 import { Building } from 'lucide-react'
+import { Card } from '../ui/card'
 
 const JoinOurTeam = () => {
   return (
-    <div
-      className='mt-18 bg-second p-10 rounded-lg'
-      style={{
-        boxShadow: 'rgb(204, 219, 232) 0px 1px 6px 0px inset',
-      }}
-    >
+    <Card className='mt-18 bg-primary/10 p-10 rounded-lg'>
       <div className='flex gap-6 w-[60%] mx-auto'>
         <div className='text-primary'>
           <Building size={35} />
@@ -19,12 +15,12 @@ const JoinOurTeam = () => {
             passionate about making a difference. Check out our open positions
             and see if there&apos;s a fit for you.
           </p>
-          <button className='border border-primary bg-card w-fit py-2 px-4 text-primary rounded-full cursor-pointer hover:bg-second/60 transition'>
+          <button className='border border-primary bg-card w-fit py-2 px-4 text-primary rounded-full cursor-pointer hover:bg-primary/5 transition'>
             View Open Positions
           </button>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
 

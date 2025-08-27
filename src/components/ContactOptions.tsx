@@ -1,11 +1,9 @@
 'use client'
 
 import { Clock, Mail, MapPin, Phone } from 'lucide-react'
-import { useTheme } from 'next-themes'
-import React from 'react'
+import { Card } from './ui/card'
 
 const ContactOptions = () => {
-  const { theme } = useTheme()
   const cards = [
     {
       icon: Mail,
@@ -35,30 +33,11 @@ const ContactOptions = () => {
   return (
     <div className='cards grid grid-cols-4 mt-12 gap-6 text-center'>
       {cards.map((card, index) => (
-        <div
+        <Card
           className='flex flex-col gap-2 items-center cursor-pointer p-5 rounded-md transition bg-card'
           key={index}
-          style={{
-            boxShadow: `${
-              theme === 'light'
-                ? 'rgba(0, 0, 0, 0.16)'
-                : 'rgba(255, 255, 255, 0.16)'
-            } 0px 1px 4px`,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow =
-              theme === 'light'
-                ? 'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px'
-                : 'rgba(255, 255, 255, 0.2) 0px 13px 27px -5px, rgba(255, 255, 255, 0.1) 0px 8px 16px -8px'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow =
-              theme === 'light'
-                ? 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
-                : 'rgba(255, 255, 255, 0.1) 0px 2px 8px 0px'
-          }}
         >
-          <div className='icon bg-second p-3 rounded-full text-primary'>
+          <div className='icon bg-primary/10 p-3 rounded-full text-primary'>
             <card.icon size={24} />
           </div>
           <div>
@@ -66,7 +45,7 @@ const ContactOptions = () => {
             <p className='text-muted-foreground'>{card.desc}</p>
           </div>
           <h1 className='text-primary text-lg font-semibold'>{card.value}</h1>
-        </div>
+        </Card>
       ))}
     </div>
   )

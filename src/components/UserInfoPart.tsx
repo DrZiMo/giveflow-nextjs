@@ -66,8 +66,8 @@ const UserInfoPart = ({ user }: { user: UsersProps }) => {
       <div className='space-y-3'>
         {userInfo.map((info, key) => (
           <div key={key} className='flex items-center gap-3 p-3'>
-            <info.icon className='text-gray-500 h-5 w-5' />
-            <span className='text-gray-700 text-sm flex items-center'>
+            <info.icon className='text-muted-foreground h-5 w-5' />
+            <span className='text-muted-foreground text-sm flex items-center'>
               {info.value}
             </span>
           </div>

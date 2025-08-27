@@ -1,3 +1,5 @@
+import { Card } from '../ui/card'
+
 const OurImpact = () => {
   const boxes = [
     { title: 'Funds Rised', number: '$12M+' },
@@ -17,18 +19,12 @@ const OurImpact = () => {
 
       <div className='boxes grid grid-cols-4 gap-8 mt-10 text-center'>
         {boxes.map((box, index) => (
-          <div
-            key={index}
-            className='py-8 rounded-lg bg-card'
-            style={{
-              boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
-            }}
-          >
+          <Card key={index} className='py-8 gap-1! rounded-lg bg-card'>
             <h1 className='text-primary text-4xl font-semibold mb-2'>
               {box.number}
             </h1>
             <p className='text-muted-foreground'>{box.title}</p>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

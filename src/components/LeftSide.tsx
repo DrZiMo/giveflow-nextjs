@@ -15,7 +15,7 @@ const Leftside = () => {
         </h1>
         <Divider />
       </div>
-      <p className='text-slate-500 w-[80%] text-xl'>
+      <p className='text-muted-foreground w-[80%] text-xl'>
         Support causes you care about with our streamlined donation platform
         that ensures your contributions create real impact.
       </p>

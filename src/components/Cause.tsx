@@ -20,6 +20,7 @@ import { Button } from './ui/button'
 import Link from 'next/link'
 import shortenText from '@/lib/shortenText'
 import SaveLaterButton from './SaveLaterButton'
+import { Card } from './ui/card'
 
 const Cause = ({
   id,
@@ -49,7 +50,7 @@ const Cause = ({
   const Icon = categoryIcon[category]
 
   return (
-    <div className='bg-white h-fit rounded-sm shadow hover:shadow-lg transition'>
+    <Card className='h-fit py-0!'>
       {/* Header Section */}
       <div className='relative h-[150px] w-full rounded-t-sm overflow-hidden'>
         <img
@@ -65,7 +66,7 @@ const Cause = ({
             {category}
           </span>
           {trending && (
-            <span className='bg-primary text-background px-3 py-1 rounded-full text-[0.7rem] 2xl:text-sm h-fit flex gap-2 items-center'>
+            <span className='bg-primary text-white px-3 py-1 rounded-full text-[0.7rem] 2xl:text-sm h-fit flex gap-2 items-center'>
               <TrendingUp size={15} /> Trending
             </span>
           )}
@@ -95,7 +96,7 @@ const Cause = ({
           <SaveLaterButton />
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
 

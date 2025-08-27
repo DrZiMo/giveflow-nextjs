@@ -5,7 +5,6 @@ import OurTeam from '@/components/About/OurTeam'
 import OurValue from '@/components/About/OurValues'
 import BadgeCustome from '@/components/BadgeCustome'
 import Title from '@/components/Title'
-import { Badge } from '@/components/ui/badge'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Heart } from 'lucide-react'
 import { useState } from 'react'
@@ -33,12 +32,14 @@ const About = () => {
       />
 
       <div className='tabs-container w-full mt-8 mb-4'>
-        <div className='tabs bg-second py-1 px-2 rounded-full w-fit mx-auto flex items-center gap-4'>
+        <div className='tabs bg-primary/10 py-1 px-2 rounded-full w-fit mx-auto flex items-center gap-4'>
           {tabs.map((tab, index) => (
             <button
               key={tab}
               className={`${
-                activeTab === index ? 'bg-card' : ''
+                activeTab === index
+                  ? 'bg-white dark:bg-primary dark:text-white'
+                  : ''
               } px-3 py-1 rounded-full hover:text-muted-foreground text-sm cursor-pointer transition`}
               onClick={() => setActiveTab(index)}
             >

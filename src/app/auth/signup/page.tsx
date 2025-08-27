@@ -34,7 +34,7 @@ const SignupPage = () => {
         </CardContent>
       </Card>
       <p className='text-sm text-muted-foreground mb-5'>
-        &copy; 2024 GiveFlow. All rights reserved.
+        &copy; 2025 GiveFlow. All rights reserved.
       </p>
     </div>
   )
