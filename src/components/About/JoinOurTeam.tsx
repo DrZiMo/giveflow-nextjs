@@ -4,7 +4,7 @@ import { Card } from '../ui/card'
 const JoinOurTeam = () => {
   return (
     <Card className='mt-18 bg-primary/10 p-10 rounded-lg'>
-      <div className='flex gap-6 w-[60%] mx-auto'>
+      <div className='flex flex-col md:flex-row gap-6 w-[90%] md:w-[60%] mx-auto'>
         <div className='text-primary'>
           <Building size={35} />
         </div>

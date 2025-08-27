@@ -6,7 +6,9 @@ const Home = () => {
   return (
     <div>
       <TopPart />
-      <HomeAbout />
+      <div className='mb-16'>
+        <HomeAbout />
+      </div>
     </div>
   )
 }

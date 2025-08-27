@@ -39,7 +39,7 @@ const OurTeam = () => {
         isLine={false}
       />
 
-      <div className='members grid grid-cols-3 gap-6 mt-8'>
+      <div className='members grid grid-cols-1 md:grid-cols-3 gap-6 mt-8'>
         {teamMembers.map((teamMember, index) => (
           <div
             className='membe flex flex-col items-center gap-3 p-6'
@@ -60,7 +60,9 @@ const OurTeam = () => {
             />
             <div className='text-center'>
               <h1 className='text-xl font-semibold'>{teamMember.name}</h1>
-              <p className='text-md text-neutral/60'>{teamMember.title}</p>
+              <p className='text-md text-muted-foreground'>
+                {teamMember.title}
+              </p>
             </div>
           </div>
         ))}
