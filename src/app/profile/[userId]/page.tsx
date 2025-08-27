@@ -22,8 +22,8 @@ const ProfilePage = () => {
       />
 
       <Suspense fallback={<Loading />}>
-        <Card className='mt-7 p-6'>
-          <div className='grid grid-cols-5 gap-7'>
+        <Card className='mt-7 px-2 py-6 md:px-6'>
+          <div className='flex flex-col items-center md:grid md:grid-cols-5 gap-7'>
             <div className='flex flex-col items-center'>
               <div className='w-34 h-34 relative'>
                 {user?.profile_pic ? (

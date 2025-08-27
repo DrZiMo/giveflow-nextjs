@@ -43,7 +43,7 @@ const UserInfoContent = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit((value) => onSubmit(value))}>
         <div className='flex flex-col gap-6'>
-          <div className='grid grid-cols-2 gap-3'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-3'>
             {/* First name Input */}
             <FormField
               control={form.control}
@@ -96,7 +96,7 @@ const UserInfoContent = () => {
             />
           </div>
 
-          <div className='grid grid-cols-2 gap-3 items-center'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-3 items-center'>
             {/* Email Input */}
             <FormField
               control={form.control}

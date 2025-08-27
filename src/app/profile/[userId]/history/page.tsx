@@ -28,7 +28,7 @@ const HistoryPage = () => {
       />
 
       {/* Top Part */}
-      <Card className='p-3 grid grid-cols-4 gap-3 mt-10'>
+      <Card className='p-3 grid grid-cols-2 md:grid-cols-4 gap-3 mt-10'>
         <div className='col-span-2'>
           <SearchBar />
         </div>

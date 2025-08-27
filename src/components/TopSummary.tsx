@@ -35,7 +35,7 @@ const TopSummary = () => {
   ]
 
   return (
-    <div className='grid grid-cols-4 gap-3 mt-8'>
+    <div className='grid grid-cols-2 md:grid-cols-4 gap-3 mt-8'>
       {summaries.map((summary, index) => (
         <Card key={index} className='py-3! px-3'>
           <div className={`flex flex-col gap-3 p-4 rounded-md`}>

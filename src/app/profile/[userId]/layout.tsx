@@ -1,6 +1,6 @@
 import { Users } from '@/app/data/user'
 import { ProfileSidebar } from '@/components/ProfileSideBar'
-import { SidebarProvider } from '@/components/ui/sidebar'
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Metadata } from 'next'
 import React from 'react'
 
@@ -33,6 +33,7 @@ export default function ProfileLayout({
       <div className='min-h-screen flex w-full'>
         <ProfileSidebar />
         <main className='flex-1'>
+          <SidebarTrigger />
           <div className='w-[90%] mx-auto mt-10'>{children}</div>
         </main>
       </div>

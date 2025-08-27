@@ -6,8 +6,8 @@ import { Button } from './ui/button'
 const TwoStepVerification = () => {
   const twoFAEnabled = true
   return (
-    <div className=' mt-10 bg-primary/5 p-3 rounded-md'>
-      <div className='flex gap-3 items-center'>
+    <div className=' mt-10 bg-primary/5 p-6 text-center md:text-left md:p-3 rounded-md'>
+      <div className='flex flex-col md:flex-row justify-start gap-3 items-center'>
         <div className='text-primary'>
           <Smartphone />
         </div>
@@ -17,7 +17,7 @@ const TwoStepVerification = () => {
             Add an extra layer of security to your account
           </p>
         </div>
-        <div>
+        <div className='mb-5 md:mb-0'>
           <Badge variant={twoFAEnabled ? 'success' : 'destructive'}>
             {twoFAEnabled ? 'Enabled' : 'Disabled'}
           </Badge>

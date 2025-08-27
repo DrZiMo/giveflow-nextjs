@@ -37,7 +37,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
         title='Settings & Security'
         subtitle='Manage your account preferences and security settings'
       />
-      <div className='flex mt-10 gap-7'>
+      <div className='flex flex-col md:flex-row mt-10 gap-10 md:gap-7'>
         <ul className='space-y-3'>
           {subSideBar.map((item) => {
             const isActive = pathname === item.href
