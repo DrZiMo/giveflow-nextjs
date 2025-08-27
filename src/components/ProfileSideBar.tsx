@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Calendar,
   Home,
   Settings,
   LogOut,
@@ -45,11 +44,6 @@ const items = [
     title: 'Saved Causes',
     url: '/saved-causes',
     icon: Bookmark,
-  },
-  {
-    title: 'Recurring',
-    url: '/recurring',
-    icon: Calendar,
   },
   {
     title: 'Settings',

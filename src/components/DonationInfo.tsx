@@ -8,7 +8,6 @@ import { Progress } from './ui/progress'
 import { ArrowRight, ThumbsUp, Users } from 'lucide-react'
 import SmallTitle from './SmallTitle'
 import SelectAmount from './SelectAmount'
-import Frequency from './Frequency'
 import { Button } from './ui/button'
 import { useState } from 'react'
 
@@ -16,7 +15,6 @@ const DonationInfo = () => {
   const buttonSize = 17
   const { causeId } = useParams()
   const [selectedAmount, setSelectedAmount] = useState<number | ''>()
-  const [selectedFrequency, setSelectedFrequency] = useState<string>('one-time')
   const [isError, setIsError] = useState<boolean>(false)
   const selectedCause = causes.find((cause) => cause.id === +causeId!)
 
@@ -29,10 +27,6 @@ const DonationInfo = () => {
     setSelectedAmount(amount)
   }
 
-  const saveSelectedFrequency = (frequency: string) => {
-    setSelectedFrequency(frequency)
-  }
-
   const showResult = () => {
     if (
       selectedAmount == undefined ||
@@ -42,7 +36,7 @@ const DonationInfo = () => {
       setIsError(true)
       return
     }
-    console.log(selectedAmount, selectedFrequency)
+    console.log(selectedAmount)
     setIsError(false)
   }
 
@@ -82,12 +76,6 @@ const DonationInfo = () => {
           <div className='mt-6'>
             <SmallTitle text='Select Amount' />
             <SelectAmount onSelect={saveSelectedAmount} isError={isError} />
-          </div>
-
-          {/* Frequency */}
-          <div className='mt-6'>
-            <SmallTitle text='Frequency' />
-            <Frequency onSelect={saveSelectedFrequency} />
           </div>
 
           {/* Donate now Button */}
