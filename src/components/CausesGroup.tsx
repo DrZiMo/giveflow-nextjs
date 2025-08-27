@@ -3,7 +3,7 @@ import Cause from './Cause'
 
 const CauseGroup: React.FC<CauseGroupProps> = ({ causes, number = 4 }) => {
   return (
-    <div className='grid grid-cols-4 gap-6 mt-10'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10'>
       {causes.slice(0, number).map((cause, index) => (
         <Cause
           key={index}

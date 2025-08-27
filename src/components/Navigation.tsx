@@ -20,7 +20,7 @@ const Navigation = () => {
   ]
 
   return (
-    <NavigationMenu className='flex-1'>
+    <NavigationMenu className='flex-1 hidden md:block'>
       <NavigationMenuList className='flex justify-around'>
         {tabs.map((tab) => {
           const isActive =

@@ -20,16 +20,16 @@ const Footer = () => {
   return (
     <div className='bg-dark-primary mt-20 text-gray-400 w-full'>
       <div className='w-[90%] 2xl:w-[1300px] mx-auto py-16'>
-        <div className='grid grid-cols-4 gap-10'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
           <FooterMain />
           <FooterLinks title='Explore' links={exploreLinks} />
           <FooterLinks title='Resource' links={resourceLinks} />
           <FooterUpdated />
         </div>
         <div className='divider w-full h-[1px] bg-faded mt-16'></div>
-        <div className='footer-bottom text-sm flex justify-between mt-5'>
+        <div className='footer-bottom text-sm flex flex-col md:flex-row justify-center md:justify-between mt-5 text-center md:text-left'>
           <h5>© 2025 GiveFlow. All rights reserved.</h5>
-          <h5 className='flex gap-1 items-center'>
+          <h5 className='flex gap-1 items-center  justify-center md:justify-start'>
             Made with <Heart size={16} className='text-primary' /> for a better
             world
           </h5>

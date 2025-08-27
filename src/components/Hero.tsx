@@ -7,11 +7,11 @@ import { ArrowDown } from 'lucide-react'
 const Hero = () => {
   return (
     <div className='relative'>
-      <div className='flex justify-between items-center py-10'>
-        <div className='w-1/2 py-10'>
+      <div className='flex justify-center md:justify-between items-center py-10'>
+        <div className='w-full md:w-1/2 py-10'>
           <Leftside />
         </div>
-        <div className='w-1/2'>
+        <div className='w-1/2 hidden md:block'>
           <div className='h-full'>
             <Image
               src='/hero image.svg'

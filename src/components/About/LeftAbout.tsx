@@ -22,13 +22,15 @@ const LeftAboutPart = ({ size = 3 }: LeftAboutPartProps) => {
 
   return (
     <div className='flex flex-col gap-3'>
-      <BadgeCustome text='About' />
+      <div className='w-full flex justify-center md:justify-start'>
+        <BadgeCustome text='About' />
+      </div>
       <TitleV2
         text1='Revolutionizing'
         text2='charitable giving'
         subText='GiveFlow empowers donors with cutting-edge technology to make informed decisions and create lasting positive change in communities worldwide.'
       />
-      <div className='list-none flex flex-col gap-1 2xl:gap-3 text-md 2xl:text-lg text-neutral/90 mt-4'>
+      <div className='list-none flex flex-col items-center md:items-start gap-1 2xl:gap-3 text-md 2xl:text-lg text-neutral/90 mt-4'>
         {size < 4 ? (
           aboutList.slice(0, size).map((item) => (
             <li className='flex items-center gap-2' key={item}>
@@ -39,7 +41,7 @@ const LeftAboutPart = ({ size = 3 }: LeftAboutPartProps) => {
             </li>
           ))
         ) : (
-          <div className='grid grid-cols-2'>
+          <div className='grid grid-cols-1 md:grid-cols-2'>
             {aboutList.slice(0, size).map((item) => (
               <li className='flex items-center gap-2' key={item}>
                 <div className='p-2 text-primary'>
@@ -51,7 +53,7 @@ const LeftAboutPart = ({ size = 3 }: LeftAboutPartProps) => {
           </div>
         )}
       </div>
-      <Link href={'/about'}>
+      <Link href={'/about'} className='mx-auto md:mx-0'>
         <Button className='w-fit mt-4 rounded-full font-normal flex items-center px-6'>
           Discover Our Platform <ArrowRight size={20} />
         </Button>

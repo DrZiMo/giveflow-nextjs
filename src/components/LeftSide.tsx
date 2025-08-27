@@ -9,24 +9,28 @@ const Leftside = () => {
   return (
     <div className='flex flex-col gap-6'>
       <div>
-        <BadgeCustome text='Effortless Giving for Maximum Impact' />
-        <h1 className='text-neutral text-6xl font-bold mt-3'>
+        <div className='flex justify-center md:justify-start'>
+          <BadgeCustome text='Effortless Giving for Maximum Impact' />
+        </div>
+        <h1 className='text-neutral text-4xl md:text-6xl text-center md:text-left font-bold mt-3'>
           Make a difference with every donation
         </h1>
         <Divider />
       </div>
-      <p className='text-muted-foreground w-[80%] text-xl'>
+      <p className='text-muted-foreground w-full md:w-[80%] text-lg md:text-xl text-center md:text-left'>
         Support causes you care about with our streamlined donation platform
         that ensures your contributions create real impact.
       </p>
-      <div className='buttons flex gap-3 mt-2'>
-        <Link href='/causes/quick-donation'>
-          <Button className='px-6 py-2 text-[1rem]'>Quick donation</Button>
+      <div className='buttons flex flex-col md:flex-row w-full gap-3 mt-2'>
+        <Link href='/causes/quick-donation' className='w-full md:w-fit'>
+          <Button className='px-6 py-2 text-[1rem] w-full md:w-fit'>
+            Quick donation
+          </Button>
         </Link>
-        <Link href={'/causes'}>
+        <Link href={'/causes'} className='w-full md:w-fit'>
           <Button
             variant={'secondary'}
-            className='px-6 py-2 text-[1rem] hover:bg-primary-content/50 hover:text-primary/90 border-none'
+            className='px-6 py-2 text-[1rem] hover:bg-primary-content/50 hover:text-primary/90 border-none w-full md:w-fit'
           >
             Explore causes
           </Button>
