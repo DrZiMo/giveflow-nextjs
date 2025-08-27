@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 
 const LoginPage = () => {
   return (
-    <div className='w-full flex flex-col items-center gap-6 mt-10'>
+    <div className='w-full flex flex-col items-center gap-6 pt-10 md:pt-0 mt-10'>
       <AuthTitle
         title='Welcome Back'
         subtitle='Sign in to continue your giving journey'
       />
-      <Card className='w-full max-w-md p-6'>
+      <Card className='w-full max-w-md px-3 py-6 md:px-6'>
         <CardHeader className='w-full text-center'>
           <CardTitle className='text-2xl'>Login</CardTitle>
           <CardDescription className='text-muted-foreground text-md'>

@@ -45,7 +45,7 @@ const SignupContent = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit((value) => onSubmit(value))}>
         <div className='flex flex-col gap-6'>
-          <div className='grid grid-cols-2 gap-3'>
+          <div className='grid grid-cols-1 md:grid-cols-2 md:gap-3 gap-6'>
             {/* First name Input */}
             <FormField
               control={form.control}
