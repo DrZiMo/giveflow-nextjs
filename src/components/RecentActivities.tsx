@@ -25,7 +25,7 @@ const RecentActivities = () => {
   ]
 
   return (
-    <Card className='mt-8'>
+    <Card className='my-8'>
       <CardHeader>
         <CardTitle>Recent Activities</CardTitle>
       </CardHeader>
