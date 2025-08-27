@@ -13,7 +13,7 @@ const Contact = () => {
         subTitle="Have questions about our platform? Want to partner with us? Or just want to say hello? We'd love to hear from you. Let's start a conversation."
       />
       <ContactOptions />
-      <div className='mt-32 grid grid-cols-2 gap-10'>
+      <div className='mt-32 grid grid-cols-1 md:grid-cols-2 gap-10'>
         <SendUsMessage />
         <div className='flex flex-col gap-5'>
           <WhyContactUs />

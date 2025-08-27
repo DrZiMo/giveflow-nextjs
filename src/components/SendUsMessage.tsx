@@ -25,7 +25,7 @@ const SendUsMessage = () => {
       <CardContent>
         <form>
           <div className='flex flex-col gap-6'>
-            <div className='flex justify-between gap-5'>
+            <div className='flex flex-col md:flex-row justify-between gap-5'>
               <div className='grid gap-2 w-full'>
                 <Label htmlFor='fullname'>Full Name *</Label>
                 <Input

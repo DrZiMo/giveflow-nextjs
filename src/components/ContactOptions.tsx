@@ -31,7 +31,7 @@ const ContactOptions = () => {
     },
   ]
   return (
-    <div className='cards grid grid-cols-4 mt-12 gap-6 text-center'>
+    <div className='cards grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-12 gap-6 text-center'>
       {cards.map((card, index) => (
         <Card
           className='flex flex-col gap-2 items-center cursor-pointer p-5 rounded-md transition bg-card'
