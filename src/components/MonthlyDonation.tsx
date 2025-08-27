@@ -66,12 +66,12 @@ const MonthlyDonation = () => {
 
           return (
             <div
-              className='grid grid-cols-[50px_3fr_50px] items-center gap-3 text-sm'
+              className='grid grid-cols-[30px_3fr_50px] items-center gap-3 text-sm'
               key={d.month}
             >
               <h3 className='text-muted-foreground font-medium'>{d.month}</h3>
               <Progress value={percentage} className='h-6' />
-              <h3 className='font-medium'>${d.amount}</h3>
+              <h3 className='font-medium'>${d.amount.toLocaleString()}</h3>
             </div>
           )
         })}
