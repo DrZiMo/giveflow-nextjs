@@ -1,13 +1,21 @@
+import { Inter_Tight } from 'next/font/google'
 import { ICategory } from './category'
 
-/** For the <CauseGroup /> component */
 export interface CauseGroupProps {
   causes: ICause[]
   number?: number
 }
-
-/** Shape returned from the backend */
 export interface IGetAllCausesResponse {
+  ok: boolean
+  causes: ICause[]
+}
+
+export interface IGetSingleCauseRes {
+  ok: boolean
+  cause: ICause
+}
+
+export interface IGetFeaturedCausesRes {
   ok: boolean
   causes: ICause[]
 }

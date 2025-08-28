@@ -1,7 +1,13 @@
+'use client'
+
 import causes from '@/app/data/causes'
+import Loading from '@/app/loading'
 import CauseInfo from '@/components/CauseInfo'
 import DonationInfo from '@/components/DonationInfo'
+import { useSingleCause } from '@/lib/hook/useCauses'
 import { Metadata } from 'next'
+import { useParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 export const getMetadata = ({
   params,
@@ -19,11 +25,23 @@ export const getMetadata = ({
 }
 
 const Cause = () => {
-  return (
+  const { causeId } = useParams()
+  const { data, isLoading } = useSingleCause(causeId as string)
+  const selectedCause = data?.cause
+
+  return isLoading ? (
+    <Loading />
+  ) : !selectedCause ? (
+    'cause not found' // TODO: make it professional
+  ) : (
     <div className='w-[90%] mx-auto mt-10 grid grid-cols-2 gap-10'>
-      <CauseInfo />
+      <Suspense fallback={<Loading />}>
+        <CauseInfo selectedCause={selectedCause} />
+      </Suspense>
       <div className='sticky top-10 h-fit'>
-        <DonationInfo />
+        <Suspense fallback={<Loading />}>
+          <DonationInfo selectedCause={selectedCause} />
+        </Suspense>
       </div>
     </div>
   )

@@ -1,12 +1,37 @@
 import { BackendBaseUrl } from '@/app/_constants/backendBaseUrl'
-import { IGetALlCausesResponse } from '@/app/types/causes.types'
+import {
+  IGetAllCausesResponse,
+  IGetFeaturedCausesRes,
+  IGetSingleCauseRes,
+} from '@/app/types/causes.types'
 import axios from 'axios'
 
 export const getCauses = async () => {
   try {
-    const res = await axios.get(`http://localhost:3002/api/causes/all`)
-    return res.data as IGetALlCausesResponse
+    const res = await axios.get(`${BackendBaseUrl}/api/causes/all`)
+    return res.data as IGetAllCausesResponse
   } catch (error) {
     console.log(error)
+    throw error
+  }
+}
+
+export const getSingleCause = async (id: string) => {
+  try {
+    const res = await axios.get(`${BackendBaseUrl}/api/causes/detail/${id}`)
+    return res.data as IGetSingleCauseRes
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
+export const getFeaturedCauses = async () => {
+  try {
+    const res = await axios.get(`${BackendBaseUrl}/api/causes/featured`)
+    return res.data as IGetFeaturedCausesRes
+  } catch (error) {
+    console.log(error)
+    throw error
   }
 }

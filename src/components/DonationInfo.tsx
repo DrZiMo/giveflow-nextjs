@@ -10,18 +10,21 @@ import SmallTitle from './SmallTitle'
 import SelectAmount from './SelectAmount'
 import { Button } from './ui/button'
 import { useState } from 'react'
+import { useSingleCause } from '@/lib/hook/useCauses'
+import { ICause } from '@/app/types/causes.types'
 
-const DonationInfo = () => {
+const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
   const buttonSize = 17
   const { causeId } = useParams()
   const [selectedAmount, setSelectedAmount] = useState<number | ''>()
   const [isError, setIsError] = useState<boolean>(false)
-  const selectedCause = causes.find((cause) => cause.id === +causeId!)
+
+  if (!selectedCause) return 'Cause not found'
 
   if (!selectedCause) return null
 
   const percentage =
-    (selectedCause.currentAmount / selectedCause.amountNeeded) * 100
+    (selectedCause.current_amount / selectedCause.amount_needed) * 100
 
   const saveSelectedAmount = (amount: number | '') => {
     setSelectedAmount(amount)
@@ -45,12 +48,12 @@ const DonationInfo = () => {
       <Card>
         <CardHeader className='flex justify-between'>
           <CardTitle className='text-xl font-semibold'>
-            Donate to {selectedCause.title}
+            Donate to {selectedCause.name}
           </CardTitle>
           <div className='flex gap-4 items-center'>
             <SaveLaterButton size={buttonSize} />
             <div className='text-muted-foreground text-sm flex items-center gap-2 hover:text-primary transition cursor-pointer'>
-              <ThumbsUp size={buttonSize} /> {selectedCause.likes}
+              <ThumbsUp size={buttonSize} /> {selectedCause._count.like}
             </div>
           </div>
         </CardHeader>
@@ -58,17 +61,17 @@ const DonationInfo = () => {
           {/* Progress Section */}
           <div className='flex justify-between items-center text-sm'>
             <span className='text-md font-semibold'>
-              ${selectedCause.currentAmount.toLocaleString()}
+              ${selectedCause.current_amount.toLocaleString()}
             </span>
             <span className='text-muted-foreground'>
-              Goal: ${selectedCause.amountNeeded.toLocaleString()}
+              Goal: ${selectedCause.amount_needed.toLocaleString()}
             </span>
           </div>
           <Progress value={percentage} className='mt-2' />
           <div className='flex justify-between items-center text-sm text-muted-foreground mt-1'>
             <span>{percentage.toFixed(0)}% completed</span>
             <span className='flex items-center gap-1'>
-              <Users size={15} /> {selectedCause.donors} donors
+              <Users size={15} /> {selectedCause._count.donation} donors
             </span>
           </div>
 
