@@ -18,7 +18,6 @@ import {
   FormControl,
   FormMessage,
 } from '../ui/form'
-import SocialButtons from './SocialButtons'
 import FormError from '../FormError'
 
 const SignupContent = () => {
@@ -208,18 +207,6 @@ const SignupContent = () => {
         >
           Create account <ArrowRight />
         </Button>
-
-        {/* Divider */}
-        <div className='flex items-center gap-4 text-sm text-muted-foreground mt-6'>
-          <div className='flex-grow h-px bg-muted-foreground' />
-          <p className='uppercase px-1 text-xs tracking-wider'>
-            Or Continue with
-          </p>
-          <div className='flex-grow h-px bg-muted-foreground' />
-        </div>
-
-        {/* Social login */}
-        <SocialButtons />
 
         {/* sign up */}
         <div className='text-muted-foreground text-center mt-6'>

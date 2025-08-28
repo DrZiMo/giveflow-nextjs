@@ -21,7 +21,7 @@ export interface UserProps {
 
 export interface ILoginResponse {
   ok: boolean
-  user: UserProps[]
+  user: UserProps
   token: string
 }
 

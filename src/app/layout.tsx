@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import '@/app/globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import { Providers } from './providers'
+import { ReactQueryProviders, StoreProvider } from './providers'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -30,16 +30,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
         cz-shortcut-listen='true'
       >
-        <Providers>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </Providers>
+        <StoreProvider>
+          <ReactQueryProviders>
+            <ThemeProvider
+              attribute='class'
+              defaultTheme='system'
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </ReactQueryProviders>
+        </StoreProvider>
       </body>
     </html>
   )

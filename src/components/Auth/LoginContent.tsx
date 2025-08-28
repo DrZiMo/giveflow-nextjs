@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
@@ -20,10 +20,24 @@ import {
 } from '../ui/form'
 import FormError from '../FormError'
 import { useLogin } from '@/lib/hook/useAuth'
+import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
+import { loginSuccess } from '@/lib/redux/auth/authSlice'
+import { UserProps } from '@/app/types/users.types'
+import { useAppSelector } from '@/lib/hooks'
 
 const LoginContent = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [loginError, setLoginError] = useState<string | null>(null)
+  const dispatch = useDispatch()
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/causes')
+    }
+  }, [isLoggedIn, router])
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -39,9 +53,9 @@ const LoginContent = () => {
   const onSubmit = (value: z.infer<typeof LoginSchema>) => {
     login(value, {
       onSuccess: (res) => {
-        alert('logged in successfully')
-        console.log(res.user)
         setLoginError(null)
+        dispatch(loginSuccess(res.user as UserProps))
+        router.push('/causes')
       },
       onError: (err) => {
         setLoginError(err.message)
