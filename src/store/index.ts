@@ -27,14 +27,16 @@ const persistConfig = {
   storage: storage,
 }
 
-const persistState = persistReducer(persistConfig, authSlice)
+// const persistState = persistReducer(persistConfig, authSlice)
 
-const rootReducer = combineReducers({
-  auth: persistState,
-})
+// const rootReducer = combineReducers({
+//   auth: persistState,
+// })
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    auth: authSlice,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
 })

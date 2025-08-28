@@ -31,8 +31,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
         cz-shortcut-listen='true'
       >
-        <StoreProvider>
-          <ReactQueryProviders>
+        <ReactQueryProviders>
+          <StoreProvider>
             <ThemeProvider
               attribute='class'
               defaultTheme='system'
@@ -41,8 +41,8 @@ export default function RootLayout({
             >
               {children}
             </ThemeProvider>
-          </ReactQueryProviders>
-        </StoreProvider>
+          </StoreProvider>
+        </ReactQueryProviders>
       </body>
     </html>
   )

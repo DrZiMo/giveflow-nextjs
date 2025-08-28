@@ -25,6 +25,11 @@ export interface ILoginResponse {
   token: string
 }
 
+export interface IWhoAmIRes {
+  ok: boolean
+  user: UserProps
+}
+
 export enum ROLE {
   USER = 'user',
   ADMIN = 'admin',

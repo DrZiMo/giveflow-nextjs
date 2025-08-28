@@ -13,7 +13,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import { Button } from './ui/button'
 import { UserProps } from '@/app/types/users.types'
 import { User } from 'lucide-react'
 
@@ -21,7 +20,7 @@ const UserProfilePicture = ({ user }: { user: UserProps }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className='w-10 h-10 rounded-full cursor-pointer'>
+        <div className='w-9 h-9 rounded-full cursor-pointer'>
           {user.profile_pic ? (
             <img
               src={user.profile_pic}

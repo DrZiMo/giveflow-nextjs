@@ -1,11 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Provider } from 'react-redux'
-import { persistor, store } from '@/store'
-import { PersistGate } from 'redux-persist/integration/react'
+import { Provider, useDispatch } from 'react-redux'
+import { store } from '@/store'
+import { useWhoAmI } from '@/lib/hook/useAuth'
+import { setUser } from '@/store/authSlice'
+import { UserProps } from './types/users.types'
+import Loading from './loading'
 
+// React Query wrapper
 export const ReactQueryProviders = ({
   children,
 }: {
@@ -16,7 +20,21 @@ export const ReactQueryProviders = ({
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   )
 }
+const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
+  const { data, isLoading } = useWhoAmI()
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (data?.user) {
+      dispatch(setUser(data.user as UserProps))
+    }
+  }, [data?.user, dispatch])
+
+  if (isLoading) return <Loading />
+  return <>{children}</>
+}
+
+// Main StoreProvider
 export default function StoreProvider({
   children,
 }: {
@@ -24,9 +42,7 @@ export default function StoreProvider({
 }) {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        {children}
-      </PersistGate>
+      <WhoAmIFetcher>{children}</WhoAmIFetcher>
     </Provider>
   )
 }
