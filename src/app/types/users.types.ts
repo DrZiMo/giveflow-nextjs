@@ -1,4 +1,4 @@
-export interface UsersProps {
+export interface UserProps {
   id: number
   first_name: string
   last_name: string
@@ -17,6 +17,12 @@ export interface UsersProps {
   is_history_visible: boolean
   created_at: Date
   updated_at: Date
+}
+
+export interface ILoginResponse {
+  ok: boolean
+  user: UserProps[]
+  token: string
 }
 
 export enum ROLE {

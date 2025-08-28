@@ -18,11 +18,12 @@ import {
   FormControl,
   FormMessage,
 } from '../ui/form'
-import SocialButtons from './SocialButtons'
 import FormError from '../FormError'
+import { useLogin } from '@/lib/hook/useAuth'
 
 const LoginContent = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [loginError, setLoginError] = useState<string | null>(null)
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -30,11 +31,22 @@ const LoginContent = () => {
       email: '',
       password: '',
     },
-    mode: 'onBlur',
+    mode: 'onTouched',
   })
 
+  const { mutate: login, isPending } = useLogin()
+
   const onSubmit = (value: z.infer<typeof LoginSchema>) => {
-    console.log(value)
+    login(value, {
+      onSuccess: (res) => {
+        alert('logged in successfully')
+        console.log(res.user)
+        setLoginError(null)
+      },
+      onError: (err) => {
+        setLoginError(err.message)
+      },
+    })
   }
 
   return (
@@ -106,7 +118,7 @@ const LoginContent = () => {
           />
         </div>
 
-        <FormError message='' />
+        <FormError message={loginError} />
 
         {/* Submit button */}
         <Button
@@ -114,23 +126,18 @@ const LoginContent = () => {
           className='w-full mt-4'
           disabled={
             !form.formState.isValid ||
-            Object.values(form.getValues()).some((v) => !v)
+            Object.values(form.getValues()).some((v) => !v) ||
+            isPending
           }
         >
-          Login <ArrowRight />
+          {isPending ? (
+            'Logging in ...'
+          ) : (
+            <>
+              Login <ArrowRight />
+            </>
+          )}
         </Button>
-
-        {/* Divider */}
-        <div className='flex items-center gap-4 text-sm text-muted-foreground mt-6'>
-          <div className='flex-grow h-px bg-muted-foreground' />
-          <p className='uppercase px-1 text-xs tracking-wider'>
-            Or Continue with
-          </p>
-          <div className='flex-grow h-px bg-muted-foreground' />
-        </div>
-
-        {/* Social login */}
-        <SocialButtons />
 
         {/* sign up */}
         <div className='text-muted-foreground text-center mt-6'>
