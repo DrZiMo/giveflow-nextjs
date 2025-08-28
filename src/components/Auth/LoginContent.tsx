@@ -19,12 +19,12 @@ import {
   FormMessage,
 } from '../ui/form'
 import FormError from '../FormError'
-import { useLogin } from '@/lib/hook/useAuth'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { loginSuccess } from '@/lib/redux/auth/authSlice'
+import { loginSuccess } from '@/store/authSlice'
 import { UserProps } from '@/app/types/users.types'
-import { useAppSelector } from '@/lib/hooks'
+import { useAppSelector } from '@/store/redux/hooks'
+import { useLogin } from '@/lib/hook/useAuth'
 
 const LoginContent = () => {
   const [showPassword, setShowPassword] = useState(false)
