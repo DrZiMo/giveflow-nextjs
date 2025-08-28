@@ -12,7 +12,7 @@ const Title = ({ title, subTitle, isLine = true, size = 4 }: ITitleV1) => {
   return (
     <div className='mt-5 text-center'>
       <h1
-        className={`text-neutral font-bold md:${sizeMap[size]} ${
+        className={`text-neutral text-center font-bold md:${sizeMap[size]} ${
           sizeMap[size - 1]
         } mb-2`}
       >

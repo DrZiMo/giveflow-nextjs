@@ -8,16 +8,14 @@ const CauseGroup: React.FC<CauseGroupProps> = ({ causes, number = 4 }) => {
         <Cause
           key={index}
           id={cause.id}
-          title={cause.title}
-          description={cause.description}
-          amountNeeded={cause.amountNeeded}
-          currentAmount={cause.currentAmount}
+          name={cause.name}
+          short_description={cause.short_description}
+          amount_needed={cause.amount_needed}
+          current_amount={cause.current_amount}
           category={cause.category}
-          trending={cause.trending!}
-          imageUrl={cause.imageUrl}
-          donors={cause.donors}
-          likes={cause.likes}
-          longDescription={cause.longDescription}
+          is_trending={cause.is_trending!}
+          cause_pic={cause.cause_pic}
+          long_description={cause.long_description}
         />
       ))}
     </div>

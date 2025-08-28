@@ -1,30 +1,32 @@
-export interface CauseProps {
-  id: number
-  title: string
-  description: string
-  amountNeeded: number
-  currentAmount: number
-  category: string
-  trending: boolean
-  imageUrl: string
-  longDescription?: string | JSON
-  donors: number
-  likes: number
-}
+import { ICategory } from './category'
 
+/** For the <CauseGroup /> component */
 export interface CauseGroupProps {
-  causes: CauseProps[]
+  causes: ICause[]
   number?: number
 }
 
-export interface ICausesResponse {
+/** Shape returned from the backend */
+export interface IGetAllCausesResponse {
   ok: boolean
-  causes: Cause[]
+  causes: ICause[]
 }
 
-export interface Cause {
+export enum CausesStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
+
+export enum UrgencyLevel {
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+}
+
+export interface ICause {
   id: string
-  giving_page_id: string
+  user_id: number
   name: string
   short_description: string
   long_description: string
@@ -32,26 +34,39 @@ export interface Cause {
   cause_pic_public_id: string
   amount_needed: number
   current_amount: number
-  status: string
+  status: CausesStatus
   is_deleted: boolean
   is_featured: boolean
   is_trending: boolean
   category_id: string
-  urgency_level: string
+  urgency_level: UrgencyLevel
   is_expired: boolean
-  expiration_date: Date
-  created_at: Date
-  updated_at: Date
-  userId: null
-  _count: Count
+  expiration_date: string
+  created_at: string
+  updated_at: string
+  _count: CauseCount
+  category: ICategory
 }
 
-export interface Count {
+export interface CauseCount {
   like: number
   donation: number
 }
 
+/** If you need a minimal saved cause */
 export interface SavedCauseProps {
   userid: number
   causeId: number
+}
+
+export interface CauseProps {
+  id: string
+  name: string
+  short_description: string
+  long_description?: string
+  cause_pic: string
+  amount_needed: number
+  current_amount: number
+  is_trending: boolean
+  category: ICategory | string
 }

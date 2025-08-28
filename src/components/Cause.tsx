@@ -1,10 +1,8 @@
-import { CauseProps } from '@/app/types/causes.types'
 import {
   Ambulance,
   Apple,
   GraduationCap,
   HandHeart,
-  Heart,
   Leaf,
   LeafyGreen,
   Palette,
@@ -14,27 +12,27 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react'
-import Image from 'next/image'
 import { Progress } from './ui/progress'
 import { Button } from './ui/button'
 import Link from 'next/link'
 import shortenText from '@/lib/shortenText'
 import SaveLaterButton from './SaveLaterButton'
 import { Card } from './ui/card'
+import { CauseProps } from '@/app/types/causes.types'
 
 const Cause = ({
   id,
-  title,
-  description,
-  amountNeeded,
-  currentAmount,
+  name,
+  short_description,
+  amount_needed,
+  current_amount,
   category,
-  trending,
-  imageUrl,
+  is_trending,
+  cause_pic,
 }: CauseProps) => {
-  const percentage = (currentAmount / amountNeeded) * 100
+  const percentage = (current_amount / amount_needed) * 100
 
-  const categoryIcon: { [key: string]: React.ElementType } = {
+  const categoryIcon: Record<string, React.ElementType> = {
     Environment: LeafyGreen,
     Education: GraduationCap,
     Hunger: Apple,
@@ -47,48 +45,51 @@ const Cause = ({
     'Arts and Culture': Palette,
   }
 
-  const Icon = categoryIcon[category]
+  // Safely pick icon or fallback
+  const Icon =
+    categoryIcon[typeof category === 'string' ? category : category.name] ||
+    Leaf
 
   return (
     <Card className='h-fit py-0!'>
       {/* Header Section */}
       <div className='relative h-[150px] w-full rounded-t-sm overflow-hidden'>
         <img
-          src={imageUrl}
-          alt={title}
-          width={0}
-          height={0}
+          src={cause_pic ? cause_pic : '/no photo.jpg'}
+          alt={name}
           className='w-full h-full object-cover'
         />
         <div className='absolute top-0 left-0 w-full h-full flex justify-between px-3 py-2 z-10'>
           <span className='bg-background px-3 py-1 shadow rounded-full text-[0.7rem] 2xl:text-sm h-fit flex items-center gap-2'>
-            <Icon size={15}></Icon>
-            {category}
+            <Icon size={15} />
+            {typeof category === 'string' ? category : category.name}
           </span>
-          {trending && (
+          {is_trending && (
             <span className='bg-primary text-white px-3 py-1 rounded-full text-[0.7rem] 2xl:text-sm h-fit flex gap-2 items-center'>
               <TrendingUp size={15} /> Trending
             </span>
           )}
         </div>
       </div>
+
       {/* Content Section */}
       <div className='p-4'>
-        <h2 className='text-lg font-semibold'>{title}</h2>
-        <p className='text-gray-500 text-sm'>{shortenText(description)}</p>
+        <h2 className='text-lg font-semibold'>{name}</h2>
+        <p className='text-gray-500 text-sm'>
+          {shortenText(short_description)}
+        </p>
 
         {/* Progress Section */}
         <div className='mt-3'>
           <div className='flex justify-between text-sm'>
-            <span>${currentAmount} raised</span>
-            <span className='text-gray-500'>${amountNeeded} goal</span>
+            <span>${current_amount} raised</span>
+            <span className='text-gray-500'>${amount_needed} goal</span>
           </div>
           <Progress value={percentage} className='mt-2' />
         </div>
+
         <div className='flex items-center gap-2 mt-4'>
           <Link href={`/causes/cause/${id}`} className='flex-1'>
-            {' '}
-            {/* FIX This later */}
             <Button className='w-full'>
               <HandHeart size={24} /> Donate
             </Button>
