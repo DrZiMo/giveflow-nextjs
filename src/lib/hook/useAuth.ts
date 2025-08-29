@@ -1,8 +1,7 @@
 'use client'
 
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { loginUser, whoami } from '../api/auth'
-import api from '../api/axios'
+import { loginUser, logoutUser, whoami } from '../api/auth'
 
 export const useLogin = () => {
   return useMutation({
@@ -19,4 +18,9 @@ export const useWhoAmI = () => {
   })
 }
 
-export default api
+export const useLogout = () => {
+  return useQuery({
+    queryKey: ['logout'],
+    queryFn: logoutUser,
+  })
+}

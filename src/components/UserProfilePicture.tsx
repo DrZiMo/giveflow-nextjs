@@ -1,22 +1,71 @@
-import React from 'react'
+'use client'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { UserProps } from '@/app/types/users.types'
-import { User } from 'lucide-react'
+import {
+  Bookmark,
+  Clock,
+  LogOut,
+  Newspaper,
+  Settings,
+  User,
+} from 'lucide-react'
+import Link from 'next/link'
+import { useQueryClient } from '@tanstack/react-query'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/store'
+import { logoutUser } from '@/lib/api/auth'
+import { logout } from '@/store/authSlice'
 
 const UserProfilePicture = ({ user }: { user: UserProps }) => {
+  const queryClient = useQueryClient()
+  const dispatch = useDispatch<AppDispatch>()
+  const links = [
+    {
+      title: 'Profile',
+      url: `/profile/${user.id}`,
+      icon: User,
+    },
+    {
+      title: 'Summary',
+      url: `/profile/${user.id}/summary`,
+      icon: Newspaper,
+    },
+    {
+      title: 'History',
+      url: `/profile/${user.id}/history`,
+      icon: Clock,
+    },
+    {
+      title: 'Saved Causes',
+      url: `/profile/${user.id}/saved-causes`,
+      icon: Bookmark,
+    },
+    {
+      title: 'Settings',
+      url: `/profile/${user.id}/settings`,
+      icon: Settings,
+    },
+  ]
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser()
+      queryClient.removeQueries({ queryKey: ['whoami'], exact: true })
+      dispatch(logout())
+    } catch (error) {
+      console.error('Error logging out:', error)
+    }
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,50 +86,22 @@ const UserProfilePicture = ({ user }: { user: UserProps }) => {
       <DropdownMenuContent className='w-56' align='start'>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          {links.map((link) => (
+            <DropdownMenuItem key={link.title}>
+              <Link href={link.url} className='w-full flex gap-2 items-center'>
+                <link.icon /> {link.title}
+              </Link>
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-          <DropdownMenuItem>
-            New Team
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          <Link href={'/contact'}>Contact Support</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled>Recurring</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleLogout}>
+          <LogOut /> Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

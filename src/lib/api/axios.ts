@@ -1,40 +1,43 @@
-import axios from 'axios'
-
-const api = axios.create({
-  baseURL: 'http://localhost:3002',
-  withCredentials: true,
-})
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 interface FailedQueueItem {
   resolve: (value?: unknown) => void
   reject: (error?: any) => void
 }
 
+interface AxiosRequestConfigWithRetry extends AxiosRequestConfig {
+  _retry?: boolean
+}
+
+const api = axios.create({
+  baseURL: 'http://localhost:3002',
+  withCredentials: true, // ✅ important for cookies
+})
+
 let isRefreshing = false
 let failedQueue: FailedQueueItem[] = []
 
-const processQueue = (error: any, token: string | null = null) => {
+const processQueue = (error: any = null) => {
   failedQueue.forEach((prom) => {
     if (error) prom.reject(error)
-    else prom.resolve(token)
+    else prom.resolve()
   })
   failedQueue = []
 }
 
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config
+  (response: AxiosResponse) => response,
+  async (error: AxiosError) => {
+    const originalRequest = error.config as AxiosRequestConfigWithRetry
 
-    // prevent loop
+    // only trigger on 401 and not retried yet
     if (error.response?.status === 401 && !originalRequest._retry) {
-      if (originalRequest.url === '/api/auth/refresh-token') {
-        // refresh token itself failed → logout user
+      if (originalRequest.url?.includes('/refresh-token')) {
+        // refresh token failed → logout user
         return Promise.reject(error)
       }
 
       if (isRefreshing) {
-        // queue the requests until refresh finishes
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject })
         }).then(() => api(originalRequest))
@@ -45,11 +48,12 @@ api.interceptors.response.use(
 
       return new Promise(async (resolve, reject) => {
         try {
-          await api.get('/api/auth/refresh-token') // refresh cookies
-          processQueue(null)
+          // ✅ send GET request to refresh-token route (cookies automatically included)
+          await api.get('/api/auth/refresh-token')
+          processQueue()
           resolve(api(originalRequest)) // retry original request
         } catch (err) {
-          processQueue(err, null)
+          processQueue(err)
           reject(err)
         } finally {
           isRefreshing = false

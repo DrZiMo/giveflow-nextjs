@@ -38,3 +38,28 @@ export const loginUser = async (data: { email: string; password: string }) => {
     throw error
   }
 }
+
+export const logoutUser = async () => {
+  try {
+    const res = await api.get(`${BackendBaseUrl}/api/auth/logout`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Logout failed')
+    }
+
+    return res.data
+  } catch (error) {
+    console.error(error)
+
+    // Safe check for Axios errors
+    if (axios.isAxiosError(error)) {
+      const message =
+        (error.response?.data as { message?: string })?.message ||
+        'Unknown Error'
+      throw new Error(message)
+    }
+
+    // Non-Axios error
+    throw new Error('Unknown Error')
+  }
+}
