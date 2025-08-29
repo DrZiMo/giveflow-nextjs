@@ -1,12 +1,11 @@
 import { BackendBaseUrl } from '@/app/_constants/backendBaseUrl'
 import { ILoginResponse, IWhoAmIRes } from '@/app/types/users.types'
 import axios from 'axios'
+import api from './axios'
 
 export const whoami = async () => {
   try {
-    const res = await axios.get(`${BackendBaseUrl}/api/auth/whoami`, {
-      withCredentials: true,
-    })
+    const res = await api.get(`${BackendBaseUrl}/api/auth/whoami`)
 
     if (!res.data.ok) {
       throw new Error(res.data.message || 'Fieled to get the user')
@@ -24,7 +23,7 @@ export const whoami = async () => {
 
 export const loginUser = async (data: { email: string; password: string }) => {
   try {
-    const res = await axios.post(`${BackendBaseUrl}/api/auth/login`, data)
+    const res = await api.post(`${BackendBaseUrl}/api/auth/login`, data)
 
     if (!res.data.ok) {
       throw new Error(res.data.message || 'Login fieled')

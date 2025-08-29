@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { loginUser, whoami } from '../api/auth'
+import api from '../api/axios'
 
 export const useLogin = () => {
   return useMutation({
@@ -17,3 +18,5 @@ export const useWhoAmI = () => {
     staleTime: Infinity,
   })
 }
+
+export default api
