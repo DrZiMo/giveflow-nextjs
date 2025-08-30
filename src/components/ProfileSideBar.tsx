@@ -25,7 +25,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
-import { useEffect } from 'react'
+import { useMemo } from 'react'
 
 interface SidebarItem {
   title: string
@@ -33,63 +33,30 @@ interface SidebarItem {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
 }
 
-let items: SidebarItem[] = []
-
 export function ProfileSidebar() {
   const user = useSelector((state: RootState) => state.selectedUser.user)
   const isUser = useSelector((state: RootState) => state.selectedUser.isUser)
-  const userId = user.id
+  const userId = user?.id
   const pathname = usePathname()
 
-  useEffect(() => {
-    if (isUser) {
-      items = [
-        {
-          title: 'Profile',
-          url: '/profile',
-          icon: User,
-        },
-        {
-          title: 'Summary',
-          url: '/summary',
-          icon: Newspaper,
-        },
-        {
-          title: 'History',
-          url: '/history',
-          icon: Clock,
-        },
-        {
-          title: 'Saved Causes',
-          url: '/saved-causes',
-          icon: Bookmark,
-        },
-        {
-          title: 'Settings',
-          url: '/settings',
-          icon: Settings,
-        },
-      ]
-    } else {
-      items = [
-        {
-          title: 'Profile',
-          url: '/profile',
-          icon: User,
-        },
-        {
-          title: 'Summary',
-          url: '/summary',
-          icon: Newspaper,
-        },
-        {
-          title: 'History',
-          url: '/history',
-          icon: Clock,
-        },
+  const items: SidebarItem[] = useMemo(() => {
+    if (!isUser) {
+      return [
+        { title: 'Profile', url: '/profile', icon: User },
+        { title: 'Summary', url: '/summary', icon: Newspaper },
+        { title: 'History', url: '/history', icon: Clock },
       ]
     }
+    return [
+      { title: 'Profile', url: '/profile', icon: User },
+      { title: 'Summary', url: '/summary', icon: Newspaper },
+      { title: 'History', url: '/history', icon: Clock },
+      { title: 'Saved Causes', url: '/saved-causes', icon: Bookmark },
+      { title: 'Settings', url: '/settings', icon: Settings },
+    ]
   }, [isUser])
+
+  if (!userId) return null
 
   return (
     <Sidebar className='border-r bg-white shadow-sm'>
@@ -103,13 +70,11 @@ export function ProfileSidebar() {
                 const href = `/profile/${userId}${
                   item.url === '/profile' ? '' : item.url
                 }`
-                let isActive = false
 
-                if (item.url === '/profile') {
-                  isActive = pathname === href
-                } else {
-                  isActive = pathname.startsWith(href)
-                }
+                const isActive =
+                  item.url === '/profile'
+                    ? pathname === href
+                    : pathname.startsWith(href)
 
                 return (
                   <SidebarMenuItem key={item.title}>
@@ -147,7 +112,7 @@ export function ProfileSidebar() {
           </Link>
 
           {/* Logout Button */}
-          {isUser ? (
+          {isUser && (
             <button
               onClick={() => console.log('Logout clicked')}
               className='flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-destructive/5 transition'
@@ -155,7 +120,7 @@ export function ProfileSidebar() {
               <LogOut className='h-5 w-5' />
               <span>Logout</span>
             </button>
-          ) : null}
+          )}
         </div>
       </SidebarFooter>
     </Sidebar>

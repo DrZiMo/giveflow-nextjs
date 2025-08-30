@@ -1,15 +1,12 @@
-export interface SettingsProbs {
-  userId: number
-  EmailNotifications: NotificationItemValue
-  SMSNotifications: NotificationItemValue
-  PushNotifications: NotificationItemValue
-  NewsLetter: NotificationItemValue
-  DonationReciepts: NotificationItemValue
-  DonationReminder: NotificationItemValue
-}
-
-interface NotificationItemValue {
-  title: string
-  value: boolean
-  desc: string
+export interface SettingsProps {
+  id: string
+  user_id: number
+  email_notifications: boolean
+  sms_notifications: boolean
+  push_notifications: boolean
+  news_letter: boolean
+  donation_receipts: boolean
+  donation_reminds: boolean
+  created_at: Date
+  updated_at: Date
 }

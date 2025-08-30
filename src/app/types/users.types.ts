@@ -1,4 +1,5 @@
 import { ICause } from './causes.types'
+import { SettingsProps } from './settings.types'
 
 export interface UserProps {
   id: number
@@ -9,12 +10,14 @@ export interface UserProps {
   profile_pic: string
   role: ROLE
   is_anonymous: boolean
-  is_verified: boolean
+  is_public: boolean
+  is_history_visible: boolean
   is_deleted: boolean
   is_email_verified: boolean
   is_phone_number_verified: boolean
   saveForLater: ICause[]
-  notification: any[] // or create a proper type if you have it
+  notification: any[]
+  user_settings: SettingsProps[]
   created_at: Date
   updated_at: Date
 }

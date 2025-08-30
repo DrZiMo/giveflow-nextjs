@@ -15,21 +15,31 @@ import {
 } from '@/components/ui/form'
 import { Switch } from '@/components/ui/switch'
 import { PrivacySchema } from '@/app/schemas'
-import { useParams } from 'next/navigation'
 import { Save } from 'lucide-react'
-import { Users } from '@/app/data/user'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
+import { useEffect } from 'react'
 
 export function PrivacyContent() {
-  const { userId } = useParams<{ userId: string }>()
-  const user = Users.find((user) => user.id === +userId)
+  const user = useSelector((state: RootState) => state.selectedUser.user)
   const form = useForm<z.infer<typeof PrivacySchema>>({
     resolver: zodResolver(PrivacySchema),
     defaultValues: {
-      isAnonymous: user?.is_anonymous || false,
-      isPublic: user?.is_public || false,
-      isHistoryVisible: user?.is_history_visible || false,
+      isAnonymous: false,
+      isPublic: false,
+      isHistoryVisible: false,
     },
   })
+
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        isAnonymous: user.is_anonymous || false,
+        isPublic: user.is_public || false,
+        isHistoryVisible: user.is_history_visible || false,
+      })
+    }
+  }, [user, form])
 
   function onSubmit(data: z.infer<typeof PrivacySchema>) {
     console.log(data)
