@@ -38,6 +38,11 @@ export interface IWhoAmIRes {
   user: UserProps
 }
 
+export interface IUpdateUserRes {
+  ok: boolean
+  message: string
+}
+
 export enum ROLE {
   USER = 'USER',
   ADMIN = 'ADMIN',
