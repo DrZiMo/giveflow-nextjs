@@ -25,8 +25,13 @@ export const SignupSchema = z
 export const EditUserSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
   lastName: z.string().min(1, { message: 'Last name is required' }),
-  email: z.string().email({ message: 'Valid email is required' }),
-  phoneNumber: z.string().optional(),
+})
+
+export const PhoneNumberSchema = z.object({
+  email: z.string(),
+  phoneNumber: z
+    .string()
+    .min(10, { message: 'Phone number must be at least 10 digits long' }),
 })
 
 export const NotificationSchema = z.object({

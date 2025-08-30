@@ -1,6 +1,8 @@
 'use client'
 
+import PhoneNumber from '@/components/PhoneNumber'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import UserInfoContent from '@/components/UserInfoContent'
 
 const SettingsPage = () => {
@@ -11,6 +13,8 @@ const SettingsPage = () => {
       </CardHeader>
       <CardContent>
         <UserInfoContent />
+        <Separator />
+        <PhoneNumber />
       </CardContent>
     </Card>
   )

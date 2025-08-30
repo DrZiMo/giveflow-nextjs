@@ -3,6 +3,7 @@ import { ProfileSidebar } from '@/components/ProfileSideBar'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Metadata } from 'next'
 import React from 'react'
+import UserProvider from './userProvider'
 
 export const getMetadata = async ({
   params,
@@ -33,8 +34,12 @@ export default function ProfileLayout({
       <div className='min-h-screen flex w-full'>
         <ProfileSidebar />
         <main className='flex-1'>
-          <SidebarTrigger />
-          <div className='w-[90%] mx-auto mt-10'>{children}</div>
+          <div className='block md:hidden'>
+            <SidebarTrigger />
+          </div>
+          <div className='w-[90%] mx-auto mt-10'>
+            <UserProvider>{children}</UserProvider>
+          </div>
         </main>
       </div>
     </SidebarProvider>

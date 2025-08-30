@@ -1,18 +1,18 @@
 'use client'
 
-import { Users } from '@/app/data/user'
 import Loading from '@/app/loading'
-import { UsersProps } from '@/app/types/users.types'
 import ProfileTitle from '@/components/ProfileTitle'
 import { Card } from '@/components/ui/card'
 import UserInfoPart from '@/components/UserInfoPart'
 import { Camera, User } from 'lucide-react'
-import { useParams } from 'next/navigation'
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
+import { UserProps } from '@/app/types/users.types'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
 
 const ProfilePage = () => {
-  const { userId } = useParams<{ userId: string }>()
-  const user = Users.find((user) => user.id === parseInt(userId))
+  const user = useSelector((state: RootState) => state.selectedUser.user)
+  const isUser = useSelector((state: RootState) => state.selectedUser.isUser)
 
   return (
     <div className='my-10'>
@@ -37,16 +37,20 @@ const ProfilePage = () => {
                     <User size={70} />
                   </div>
                 )}
-                <div className='absolute w-10 h-10 bg-card rounded-full bottom-0 right-0 flex justify-center items-center border border-muted-foreground/60 text-muted-foreground cursor-pointer hover:text-muted-foreground transition'>
-                  <Camera />
-                </div>
+                {!isUser ? null : (
+                  <div className='absolute w-10 h-10 bg-card rounded-full bottom-0 right-0 flex justify-center items-center border border-muted-foreground/60 text-muted-foreground cursor-pointer hover:text-muted-foreground transition'>
+                    <Camera />
+                  </div>
+                )}
               </div>
-              <button className='mt-3 text-primary hover:underline transition font-semibold'>
-                Change Photo
-              </button>
+              {!isUser ? null : (
+                <button className='mt-3 text-primary hover:underline transition font-semibold'>
+                  Change Photo
+                </button>
+              )}
             </div>
             <div className='col-span-4'>
-              <UserInfoPart user={user as UsersProps} />
+              <UserInfoPart user={user as UserProps} />
             </div>
           </div>
         </Card>

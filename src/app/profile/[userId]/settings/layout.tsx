@@ -1,14 +1,19 @@
 'use client'
 
 import ProfileTitle from '@/components/ProfileTitle'
+import { RootState } from '@/store'
 import { Bell, Eye, Lock, Shield } from 'lucide-react'
 import Link from 'next/link'
-import { useParams, usePathname } from 'next/navigation'
-import React from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
-  const { userId } = useParams<{ userId: string }>()
+  const user = useSelector((state: RootState) => state.selectedUser.user)
+  const isUser = useSelector((state: RootState) => state.selectedUser.isUser)
+  const userId = user?.id
   const pathname = usePathname()
+  const router = useRouter()
   const subSideBar = [
     {
       icon: Shield,
@@ -31,7 +36,14 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
       href: `/profile/${userId}/settings/privacy`,
     },
   ]
-  return (
+
+  useEffect(() => {
+    if (!isUser) {
+      router.push(`/profile/${userId}`)
+    }
+  }, [isUser, router, userId])
+
+  return !isUser ? null : (
     <div>
       <ProfileTitle
         title='Settings & Security'
