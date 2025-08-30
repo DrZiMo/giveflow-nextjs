@@ -24,7 +24,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
     if (authUser.id !== user.id) {
       router.replace(`/profile/${user.id}`)
     }
-  }, [authUser, user, authUser?.id, user.id, router, isUser])
+  }, [authUser, user, authUser?.id, user.id, router, isUser, userId])
 
   const subSideBar = useMemo(
     () => [

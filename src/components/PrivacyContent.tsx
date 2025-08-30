@@ -19,30 +19,45 @@ import { Save } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 import { useEffect } from 'react'
+import { useUpdatePrivacySettings } from '@/lib/hook/useUser'
+import toast from 'react-hot-toast'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function PrivacyContent() {
   const user = useSelector((state: RootState) => state.selectedUser.user)
+  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof PrivacySchema>>({
     resolver: zodResolver(PrivacySchema),
     defaultValues: {
-      isAnonymous: false,
-      isPublic: false,
-      isHistoryVisible: false,
+      is_anonymous: false,
+      is_public: false,
+      is_history_visible: false,
     },
   })
 
   useEffect(() => {
     if (user) {
       form.reset({
-        isAnonymous: user.is_anonymous || false,
-        isPublic: user.is_public || false,
-        isHistoryVisible: user.is_history_visible || false,
+        is_anonymous: user.is_anonymous || false,
+        is_public: user.is_public || false,
+        is_history_visible: user.is_history_visible || false,
       })
     }
   }, [user, form])
 
+  const { mutate: updatePrivacySettings, isPending } =
+    useUpdatePrivacySettings()
+
   function onSubmit(data: z.infer<typeof PrivacySchema>) {
-    console.log(data)
+    updatePrivacySettings(data, {
+      onSuccess: () => {
+        toast.success('Privacy settings updated successfully')
+        queryClient.invalidateQueries({ queryKey: ['single-user'] })
+      },
+      onError: () => {
+        toast.error('Failed to update privacy settings')
+      },
+    })
   }
 
   return (
@@ -52,7 +67,7 @@ export function PrivacyContent() {
           <div className='space-y-2'>
             <FormField
               control={form.control}
-              name='isAnonymous'
+              name='is_anonymous'
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between p-3'>
                   <div className='space-y-0'>
@@ -75,7 +90,7 @@ export function PrivacyContent() {
             />
             <FormField
               control={form.control}
-              name='isPublic'
+              name='is_public'
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between p-3'>
                   <div className='space-y-0'>
@@ -98,7 +113,7 @@ export function PrivacyContent() {
             />
             <FormField
               control={form.control}
-              name='isHistoryVisible'
+              name='is_history_visible'
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between p-3'>
                   <div className='space-y-0'>
@@ -122,7 +137,13 @@ export function PrivacyContent() {
           </div>
         </div>
         <Button type='submit'>
-          <Save /> Save
+          {isPending ? (
+            'Saving...'
+          ) : (
+            <>
+              <Save /> Save
+            </>
+          )}
         </Button>
       </form>
     </Form>

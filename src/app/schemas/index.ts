@@ -44,9 +44,9 @@ export const NotificationSchema = z.object({
 })
 
 export const PrivacySchema = z.object({
-  isAnonymous: z.boolean(),
-  isPublic: z.boolean(),
-  isHistoryVisible: z.boolean(),
+  is_anonymous: z.boolean(),
+  is_public: z.boolean(),
+  is_history_visible: z.boolean(),
 })
 
 export const ChangePasswordSchema = z

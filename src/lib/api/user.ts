@@ -68,3 +68,46 @@ export const changePassword = async (data: {
     throw error
   }
 }
+
+export const updatePrivacySettings = async (data: {
+  is_public: boolean
+  is_history_visible: boolean
+  is_anonymous: boolean
+}) => {
+  try {
+    const res = await api.put(
+      `${BackendBaseUrl}/api/auth/update-privacy-settings`,
+      data
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to update privacy settings')
+    }
+
+    return res.data
+  } catch (error) {
+    console.log(error)
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const deleteUserTemp = async () => {
+  try {
+    const res = await api.delete(`${BackendBaseUrl}/api/auth/delete-user-temp`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to delete user temporarily')
+    }
+
+    return res.data
+  } catch (error) {
+    console.log(error)
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
