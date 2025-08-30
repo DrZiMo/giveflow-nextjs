@@ -19,65 +19,87 @@ import { Save } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 import { useEffect } from 'react'
+import { useUpdateSettings } from '@/lib/hook/useSettings'
+import toast from 'react-hot-toast'
+import { toastId } from '@/app/_constants/backendBaseUrl'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function NotificationInfoContent() {
   const user = useSelector((state: RootState) => state.selectedUser.user)
+  const queryClient = useQueryClient()
 
   // react-hook-form
   const form = useForm<z.infer<typeof NotificationSchema>>({
     resolver: zodResolver(NotificationSchema),
     defaultValues: {
-      EmailNotifications: false,
-      SMSNotifications: false,
-      PushNotifications: false,
-      NewsLetter: false,
-      DonationReciepts: false,
-      DonationReminder: false,
+      email_notifications: false,
+      sms_notifications: false,
+      push_notifications: false,
+      newsletter: false,
+      donation_receipts: false,
+      donation_reminders: false,
     },
   })
 
   useEffect(() => {
     if (user?.user_settings?.[0]) {
       form.reset({
-        EmailNotifications: user.user_settings[0].email_notifications ?? false,
-        SMSNotifications: user.user_settings[0].sms_notifications ?? false,
-        PushNotifications: user.user_settings[0].push_notifications ?? false,
-        NewsLetter: user.user_settings[0].news_letter ?? false,
-        DonationReciepts: user.user_settings[0].donation_receipts ?? false,
-        DonationReminder: user.user_settings[0].donation_reminds ?? false,
+        email_notifications: user.user_settings[0].email_notifications ?? false,
+        sms_notifications: user.user_settings[0].sms_notifications ?? false,
+        push_notifications: user.user_settings[0].push_notifications ?? false,
+        newsletter: user.user_settings[0].news_letter ?? false,
+        donation_receipts: user.user_settings[0].donation_receipts ?? false,
+        donation_reminders: user.user_settings[0].donation_reminds ?? false,
       })
     }
   }, [user, form])
 
+  const { mutate: updateSettings, isPending } = useUpdateSettings()
   function onSubmit(data: z.infer<typeof NotificationSchema>) {
-    console.log('Submitted values:', data)
+    updateSettings(data, {
+      onSuccess: () => {
+        toast.success('Notification settings updated successfully', {
+          id: toastId,
+        })
+        queryClient.invalidateQueries({ queryKey: ['single-user'] })
+
+        form.reset({
+          email_notifications: data.email_notifications,
+          sms_notifications: data.sms_notifications,
+          push_notifications: data.push_notifications,
+          newsletter: data.newsletter,
+          donation_receipts: data.donation_receipts,
+          donation_reminders: data.donation_reminders,
+        })
+      },
+    })
   }
 
   const settingEntries: Record<
     keyof z.infer<typeof NotificationSchema>,
     { title: string; desc: string }
   > = {
-    EmailNotifications: {
+    email_notifications: {
       title: 'Email Notifications',
       desc: 'Receive updates and alerts via email.',
     },
-    SMSNotifications: {
+    sms_notifications: {
       title: 'SMS Notifications',
       desc: 'Get important messages via text message.',
     },
-    PushNotifications: {
+    push_notifications: {
       title: 'Push Notifications',
       desc: 'Allow push notifications on your device.',
     },
-    NewsLetter: {
+    newsletter: {
       title: 'Newsletter',
       desc: 'Stay informed with our monthly newsletter.',
     },
-    DonationReciepts: {
+    donation_receipts: {
       title: 'Donation Receipts',
       desc: 'Automatically receive receipts for your donations.',
     },
-    DonationReminder: {
+    donation_reminders: {
       title: 'Donation Reminders',
       desc: 'Get reminders about recurring or missed donations.',
     },
@@ -119,7 +141,13 @@ export function NotificationInfoContent() {
         </div>
 
         <Button type='submit'>
-          <Save className='mr-2 h-4 w-4' /> Save
+          {isPending ? (
+            'Saving...'
+          ) : (
+            <>
+              <Save className='mr-2 h-4 w-4' /> Save Changes
+            </>
+          )}
         </Button>
       </form>
     </Form>

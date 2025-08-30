@@ -35,12 +35,12 @@ export const PhoneNumberSchema = z.object({
 })
 
 export const NotificationSchema = z.object({
-  EmailNotifications: z.boolean(),
-  SMSNotifications: z.boolean(),
-  PushNotifications: z.boolean(),
-  NewsLetter: z.boolean(),
-  DonationReciepts: z.boolean(),
-  DonationReminder: z.boolean(),
+  email_notifications: z.boolean(),
+  sms_notifications: z.boolean(),
+  push_notifications: z.boolean(),
+  newsletter: z.boolean(),
+  donation_receipts: z.boolean(),
+  donation_reminders: z.boolean(),
 })
 
 export const PrivacySchema = z.object({

@@ -58,8 +58,13 @@ const UserInfoContent = () => {
         queryClient.invalidateQueries({ queryKey: ['single-user'] })
 
         form.reset({
-          first_name: user.first_name,
-          last_name: user.last_name,
+          first_name: res.user.first_name,
+          last_name: res.user.last_name,
+        })
+      },
+      onError: (err: any) => {
+        toast.error(err.response?.data?.message || 'Failed to update user 😢', {
+          id: toastId,
         })
       },
     })
