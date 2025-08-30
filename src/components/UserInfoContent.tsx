@@ -16,18 +16,26 @@ import {
   FormControl,
   FormMessage,
 } from './ui/form'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/store'
 import { useEffect } from 'react'
+import { useUpdateUser } from '@/lib/hook/useUser'
+import { setSelectedUser } from '@/store/userSlice'
+import { IUpdateUserRes } from '@/app/types/users.types'
+import { useQueryClient } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
+import { toastId } from '@/app/_constants/backendBaseUrl'
 
 const UserInfoContent = () => {
   const user = useSelector((state: RootState) => state.selectedUser.user)
+  const dispatch = useDispatch<AppDispatch>()
+  const queryClient = useQueryClient()
 
   const form = useForm<z.infer<typeof EditUserSchema>>({
     resolver: zodResolver(EditUserSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      first_name: '',
+      last_name: '',
     },
     mode: 'onTouched',
   })
@@ -35,14 +43,26 @@ const UserInfoContent = () => {
   useEffect(() => {
     if (user) {
       form.reset({
-        firstName: user.first_name || '',
-        lastName: user.last_name || '',
+        first_name: user.first_name || '',
+        last_name: user.last_name || '',
       })
     }
   }, [user, form])
 
+  const { mutate: update, isPending } = useUpdateUser()
   const onSubmit = (value: z.infer<typeof EditUserSchema>) => {
-    console.log(value)
+    update(value, {
+      onSuccess: (res: IUpdateUserRes) => {
+        toast.success('User updated successfully', { id: toastId })
+        dispatch(setSelectedUser(res.user))
+        queryClient.invalidateQueries({ queryKey: ['single-user'] })
+
+        form.reset({
+          first_name: user.first_name,
+          last_name: user.last_name,
+        })
+      },
+    })
   }
 
   return (
@@ -53,7 +73,7 @@ const UserInfoContent = () => {
             {/* First name Input */}
             <FormField
               control={form.control}
-              name='firstName'
+              name='first_name'
               render={({ field }) => (
                 <FormItem className='grid w-full max-w-sm items-center gap-3'>
                   <FormLabel>First Name</FormLabel>
@@ -78,7 +98,7 @@ const UserInfoContent = () => {
             {/* First name Input */}
             <FormField
               control={form.control}
-              name='lastName'
+              name='last_name'
               render={({ field }) => (
                 <FormItem className='grid w-full max-w-sm items-center gap-3'>
                   <FormLabel>Last Name</FormLabel>
@@ -108,10 +128,17 @@ const UserInfoContent = () => {
             className='w-fit mt-4 ml-auto'
             disabled={
               !form.formState.isValid ||
-              Object.values(form.getValues()).some((v) => !v)
+              Object.values(form.getValues()).some((v) => !v) ||
+              isPending
             }
           >
-            Save Changes <ArrowRight />
+            {isPending ? (
+              'Saving...'
+            ) : (
+              <>
+                Save Changes <ArrowRight />
+              </>
+            )}
           </Button>
         </div>
       </form>

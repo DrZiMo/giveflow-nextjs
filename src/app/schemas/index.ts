@@ -23,8 +23,8 @@ export const SignupSchema = z
   })
 
 export const EditUserSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name is required' }),
-  lastName: z.string().min(1, { message: 'Last name is required' }),
+  first_name: z.string().min(1, { message: 'First name is required' }),
+  last_name: z.string().min(1, { message: 'Last name is required' }),
 })
 
 export const PhoneNumberSchema = z.object({

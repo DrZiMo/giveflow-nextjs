@@ -40,7 +40,7 @@ export interface IWhoAmIRes {
 
 export interface IUpdateUserRes {
   ok: boolean
-  message: string
+  user: UserProps
 }
 
 export enum ROLE {
