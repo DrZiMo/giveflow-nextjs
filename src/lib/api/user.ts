@@ -43,3 +43,28 @@ export const updateUser = async (data: {
     throw error
   }
 }
+
+export const changePassword = async (data: {
+  currentPassword: string
+  newPassword: string
+  confirmPassword: string
+}) => {
+  try {
+    const res = await api.put(
+      `${BackendBaseUrl}/api/auth/change-password`,
+      data
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to change password')
+    }
+
+    return res.data
+  } catch (error) {
+    console.log(error)
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}

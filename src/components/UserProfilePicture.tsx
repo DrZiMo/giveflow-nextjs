@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/store'
 import { logoutUser } from '@/lib/api/auth'
 import { logout } from '@/store/authSlice'
+import { clearUser } from '@/store/userSlice'
 
 const UserProfilePicture = ({ user }: { user: UserProps }) => {
   const queryClient = useQueryClient()
@@ -61,6 +62,7 @@ const UserProfilePicture = ({ user }: { user: UserProps }) => {
       await logoutUser()
       queryClient.removeQueries({ queryKey: ['whoami'], exact: true })
       dispatch(logout())
+      dispatch(clearUser())
     } catch (error) {
       console.error('Error logging out:', error)
     }

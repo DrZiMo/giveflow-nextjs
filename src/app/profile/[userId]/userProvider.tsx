@@ -16,17 +16,17 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const loggedInUser = useSelector((state: RootState) => state.auth.user)
 
   useEffect(() => {
-    if (user) {
-      dispatch(setSelectedUser(user))
-      if (user.id === loggedInUser?.id) {
-        dispatch(setIsUser(true))
-      } else {
-        dispatch(setIsUser(false))
-      }
-    }
+    if (!user) return
+
+    // Set the selected user
+    dispatch(setSelectedUser(user))
+
+    // Set isUser only if logged-in user matches selected user
+    dispatch(setIsUser(loggedInUser?.id === user.id))
   }, [user, loggedInUser, dispatch])
 
-  if (isLoading) return <Loading />
+  // Show loading while fetching user data or if userId is invalid
+  if (isLoading || !user) return <Loading />
 
   return <>{children}</>
 }

@@ -5,45 +5,58 @@ import { RootState } from '@/store'
 import { Bell, Eye, Lock, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
 const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
+  const authUser = useSelector((state: RootState) => state.auth.user)
   const user = useSelector((state: RootState) => state.selectedUser.user)
   const isUser = useSelector((state: RootState) => state.selectedUser.isUser)
-  const userId = user?.id
   const pathname = usePathname()
   const router = useRouter()
-  const subSideBar = [
-    {
-      icon: Shield,
-      value: 'Personal Info',
-      href: `/profile/${userId}/settings`,
-    },
-    {
-      icon: Bell,
-      value: 'Notifications',
-      href: `/profile/${userId}/settings/notifications`,
-    },
-    {
-      icon: Lock,
-      value: 'Security',
-      href: `/profile/${userId}/settings/security`,
-    },
-    {
-      icon: Eye,
-      value: 'Privacy',
-      href: `/profile/${userId}/settings/privacy`,
-    },
-  ]
+
+  const userId = user?.id
 
   useEffect(() => {
-    if (!isUser) {
-      router.push(`/profile/${userId}`)
+    if (!authUser || !user || !userId || !isUser) {
+      return
     }
-  }, [isUser, router, userId])
+    if (authUser.id !== user.id) {
+      router.replace(`/profile/${user.id}`)
+    }
+  }, [authUser, user, authUser?.id, user.id, router, isUser])
 
-  return !isUser ? null : (
+  const subSideBar = useMemo(
+    () => [
+      {
+        icon: Shield,
+        value: 'Personal Info',
+        href: `/profile/${userId}/settings`,
+      },
+      {
+        icon: Bell,
+        value: 'Notifications',
+        href: `/profile/${userId}/settings/notifications`,
+      },
+      {
+        icon: Lock,
+        value: 'Security',
+        href: `/profile/${userId}/settings/security`,
+      },
+      {
+        icon: Eye,
+        value: 'Privacy',
+        href: `/profile/${userId}/settings/privacy`,
+      },
+    ],
+    [userId]
+  )
+
+  if (!authUser || !user || !userId || !isUser) {
+    return null
+  }
+
+  return (
     <div>
       <ProfileTitle
         title='Settings & Security'

@@ -16,8 +16,12 @@ export const userSlice = createSlice({
     setIsUser(state, action: PayloadAction<boolean>) {
       state.isUser = action.payload
     },
+    clearUser(state) {
+      state.user = {} as UserProps
+      state.isUser = false
+    },
   },
 })
 
-export const { setSelectedUser, setIsUser } = userSlice.actions
+export const { setSelectedUser, setIsUser, clearUser } = userSlice.actions
 export default userSlice.reducer

@@ -19,6 +19,9 @@ import {
   FormMessage,
 } from './ui/form'
 import FormError from './FormError'
+import toast from 'react-hot-toast'
+import { toastId } from '@/app/_constants/backendBaseUrl'
+import { useChangePassword } from '@/lib/hook/useAuth'
 
 const SecurityContent = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -32,11 +35,17 @@ const SecurityContent = () => {
       newPassword: '',
       confirmPassword: '',
     },
-    mode: 'onBlur',
+    mode: 'onTouched',
   })
 
+  const { mutate: changePassword, isPending, error } = useChangePassword()
+
   const onSubmit = (value: z.infer<typeof ChangePasswordSchema>) => {
-    console.log(value)
+    changePassword(value, {
+      onSuccess: () => {
+        toast.success('Password changed successfully', { id: toastId })
+      },
+    })
   }
 
   return (
@@ -161,7 +170,7 @@ const SecurityContent = () => {
           />
         </div>
 
-        <FormError message='' />
+        <FormError message={error?.message || null} />
 
         {/* Submit button */}
         <Button
@@ -169,10 +178,11 @@ const SecurityContent = () => {
           className='w-fit mt-4'
           disabled={
             !form.formState.isValid ||
-            Object.values(form.getValues()).some((v) => !v)
+            Object.values(form.getValues()).some((v) => !v) ||
+            isPending
           }
         >
-          Update Password
+          {isPending ? 'Changing ...' : 'Change password'}
         </Button>
       </form>
     </Form>

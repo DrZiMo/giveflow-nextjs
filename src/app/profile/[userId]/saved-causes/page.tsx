@@ -5,13 +5,31 @@ import Cause from '@/components/Cause'
 import ProfileTitle from '@/components/ProfileTitle'
 import { RootState } from '@/store'
 import Link from 'next/link'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 const SavedCauses = () => {
+  const router = useRouter()
+  const authUser = useSelector((state: RootState) => state.auth.user)
   const selectedUser = useSelector(
     (state: RootState) => state.selectedUser.user
   )
+
+  // Redirect if the page is accessed by a non-auth user
+  useEffect(() => {
+    if (!authUser || !selectedUser) return
+
+    // Only allow access if the logged-in user is viewing their own saved causes
+    if (authUser.id !== selectedUser.id) {
+      router.replace(`/profile/${selectedUser.id}`)
+    }
+  }, [authUser, selectedUser, router])
+
+  if (!authUser || !selectedUser || authUser.id !== selectedUser.id) {
+    return null // render nothing until validation passes
+  }
+
   const causeSaved = selectedUser.saveForLater
 
   return (

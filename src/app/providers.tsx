@@ -8,6 +8,8 @@ import { useWhoAmI } from '@/lib/hook/useAuth'
 import { setUser } from '@/store/authSlice'
 import { UserProps } from './types/users.types'
 import Loading from './loading'
+import { clearUser } from '@/store/userSlice'
+import { usePathname } from 'next/navigation'
 
 // React Query wrapper
 export const ReactQueryProviders = ({
@@ -22,6 +24,7 @@ export const ReactQueryProviders = ({
 }
 const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
   const { data, isLoading } = useWhoAmI()
+  const pathname = usePathname()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -29,6 +32,12 @@ const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
       dispatch(setUser(data.user as UserProps))
     }
   }, [data?.user, dispatch])
+
+  useEffect(() => {
+    if (!pathname.startsWith('/profile')) {
+      dispatch(clearUser())
+    }
+  }, [dispatch, pathname])
 
   if (isLoading) return <Loading />
   return <>{children}</>

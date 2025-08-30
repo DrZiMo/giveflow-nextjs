@@ -22,10 +22,14 @@ import {
 } from '@/components/ui/sidebar'
 import Logo from './Logo'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store'
+import { usePathname, useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/store'
 import { useMemo } from 'react'
+import { logoutUser } from '@/lib/api/auth'
+import { useQueryClient } from '@tanstack/react-query'
+import { logout } from '@/store/authSlice'
+import { clearUser } from '@/store/userSlice'
 
 interface SidebarItem {
   title: string
@@ -38,6 +42,21 @@ export function ProfileSidebar() {
   const isUser = useSelector((state: RootState) => state.selectedUser.isUser)
   const userId = user?.id
   const pathname = usePathname()
+  const queryClient = useQueryClient()
+  const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser()
+      queryClient.removeQueries({ queryKey: ['whoami'], exact: true })
+      dispatch(logout())
+      dispatch(clearUser())
+      router.push('/')
+    } catch (error) {
+      console.error('Error logging out:', error)
+    }
+  }
 
   const items: SidebarItem[] = useMemo(() => {
     if (!isUser) {
@@ -114,7 +133,7 @@ export function ProfileSidebar() {
           {/* Logout Button */}
           {isUser && (
             <button
-              onClick={() => console.log('Logout clicked')}
+              onClick={handleLogout}
               className='flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-destructive/5 transition'
             >
               <LogOut className='h-5 w-5' />
