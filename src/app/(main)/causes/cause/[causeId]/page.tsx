@@ -6,8 +6,9 @@ import CauseInfo from '@/components/CauseInfo'
 import DonationInfo from '@/components/DonationInfo'
 import { useSingleCause } from '@/lib/hook/useCauses'
 import { Metadata } from 'next'
-import { useParams } from 'next/navigation'
-import { Suspense } from 'react'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { Suspense, useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 export const getMetadata = ({
   params,
@@ -28,6 +29,20 @@ const Cause = () => {
   const { causeId } = useParams()
   const { data, isLoading } = useSingleCause(causeId as string)
   const selectedCause = data?.cause
+  const searchParams = useSearchParams()
+  const success = searchParams.get('success')
+  const cancel = searchParams.get('canceled')
+  const router = useRouter()
+
+  useEffect(() => {
+    if (success) {
+      toast.success('Donated successfully')
+      router.replace(window.location.pathname)
+    } else if (cancel) {
+      toast.error('Donation canceled')
+      router.replace(window.location.pathname)
+    }
+  }, [success, cancel, router])
 
   return isLoading ? (
     <Loading />

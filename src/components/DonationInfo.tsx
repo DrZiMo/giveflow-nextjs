@@ -1,106 +1,133 @@
 'use client'
 
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import { useParams } from 'next/dist/client/components/navigation'
-import causes from '@/app/data/causes'
 import SaveLaterButton from './SaveLaterButton'
 import { Progress } from './ui/progress'
 import { ArrowRight, ThumbsUp, Users } from 'lucide-react'
 import SmallTitle from './SmallTitle'
-import SelectAmount from './SelectAmount'
 import { Button } from './ui/button'
-import { useState } from 'react'
-import { useSingleCause } from '@/lib/hook/useCauses'
 import { ICause } from '@/app/types/causes.types'
+import { useCreateDonation } from '@/lib/hook/useDonation'
+import toast from 'react-hot-toast'
+import { toastId } from '@/app/_constants/backendBaseUrl'
+import { Form, FormField, FormItem, FormControl, FormMessage } from './ui/form'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { DonationSchema } from '@/app/schemas'
+import * as z from 'zod'
+import SelectAmount from './SelectAmount'
+
+type DonationFormValues = z.infer<typeof DonationSchema>
 
 const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
   const buttonSize = 17
-  const { causeId } = useParams()
-  const [selectedAmount, setSelectedAmount] = useState<number | ''>()
-  const [isError, setIsError] = useState<boolean>(false)
+  const { mutate: createDonation, isPending } = useCreateDonation()
+
+  const form = useForm<DonationFormValues>({
+    resolver: zodResolver(DonationSchema),
+    defaultValues: {
+      cause_id: selectedCause.id,
+      amount: 0,
+    },
+  })
 
   if (!selectedCause) return 'Cause not found'
-
-  if (!selectedCause) return null
 
   const percentage =
     (selectedCause.current_amount / selectedCause.amount_needed) * 100
 
-  const saveSelectedAmount = (amount: number | '') => {
-    setSelectedAmount(amount)
-  }
-
-  const showResult = () => {
-    if (
-      selectedAmount == undefined ||
-      (selectedAmount && selectedAmount < 0) ||
-      selectedAmount == ''
-    ) {
-      setIsError(true)
-      return
-    }
-    console.log(selectedAmount)
-    setIsError(false)
+  const onSubmit = (data: DonationFormValues) => {
+    createDonation(
+      { cause_id: data.cause_id, amount: data.amount },
+      {
+        onSuccess: (res) => {
+          if (res?.sessionUrl) {
+            window.location.href = res.sessionUrl
+          }
+        },
+        onError: () => {
+          toast.error('Failed to create donation session', { id: toastId })
+        },
+      }
+    )
   }
 
   return (
-    <form onSubmit={showResult}>
-      <Card>
-        <CardHeader className='flex justify-between'>
-          <CardTitle className='text-xl font-semibold'>
-            Donate to {selectedCause.name}
-          </CardTitle>
-          <div className='flex gap-4 items-center'>
-            <SaveLaterButton size={buttonSize} />
-            <div className='text-muted-foreground text-sm flex items-center gap-2 hover:text-primary transition cursor-pointer'>
-              <ThumbsUp size={buttonSize} /> {selectedCause._count.like}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Card>
+          <CardHeader className='flex justify-between'>
+            <CardTitle className='text-xl font-semibold'>
+              Donate to {selectedCause.name}
+            </CardTitle>
+            <div className='flex gap-4 items-center'>
+              <SaveLaterButton size={buttonSize} />
+              <div className='text-muted-foreground text-sm flex items-center gap-2 hover:text-primary transition cursor-pointer'>
+                <ThumbsUp size={buttonSize} /> {selectedCause._count.like}
+              </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {/* Progress Section */}
-          <div className='flex justify-between items-center text-sm'>
-            <span className='text-md font-semibold'>
-              ${selectedCause.current_amount.toLocaleString()}
-            </span>
-            <span className='text-muted-foreground'>
-              Goal: ${selectedCause.amount_needed.toLocaleString()}
-            </span>
-          </div>
-          <Progress value={percentage} className='mt-2' />
-          <div className='flex justify-between items-center text-sm text-muted-foreground mt-1'>
-            <span>{percentage.toFixed(0)}% completed</span>
-            <span className='flex items-center gap-1'>
-              <Users size={15} /> {selectedCause._count.donation} donors
-            </span>
-          </div>
+          </CardHeader>
+          <CardContent>
+            {/* Progress */}
+            <div className='flex justify-between items-center text-sm'>
+              <span className='text-md font-semibold'>
+                ${selectedCause.current_amount.toLocaleString()}
+              </span>
+              <span className='text-muted-foreground'>
+                Goal: ${selectedCause.amount_needed.toLocaleString()}
+              </span>
+            </div>
+            <Progress value={percentage} className='mt-2' />
+            <div className='flex justify-between items-center text-sm text-muted-foreground mt-1'>
+              <span>{percentage.toFixed(0)}% completed</span>
+              <span className='flex items-center gap-1'>
+                <Users size={15} /> {selectedCause._count.donation} donors
+              </span>
+            </div>
 
-          {/* Select amount section */}
-          <div className='mt-6'>
-            <SmallTitle text='Select Amount' />
-            <SelectAmount onSelect={saveSelectedAmount} isError={isError} />
-          </div>
+            {/* Select Amount */}
+            <div className='mt-6'>
+              <SmallTitle text='Select Amount' />
+              <FormField
+                control={form.control}
+                name='amount'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <SelectAmount
+                        onSelect={(val) => field.onChange(val)}
+                        isError={!!form.formState.errors.amount}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          {/* Donate now Button */}
-          <Button
-            className='mt-6 w-full rounded-lg py-5'
-            type='submit'
-            onClick={(e) => {
-              e.preventDefault()
-              showResult()
-            }}
-          >
-            Donate now <ArrowRight />
-          </Button>
+            {/* Donate Button */}
+            <Button
+              className='mt-6 w-full rounded-lg py-5'
+              type='submit'
+              disabled={isPending}
+            >
+              {isPending ? (
+                'Processing...'
+              ) : (
+                <>
+                  Donate now <ArrowRight />
+                </>
+              )}
+            </Button>
 
-          <div className='w-full my-5 bg-muted-foreground/70 h-[1px]'></div>
-
-          <p className='text-center text-sm text-muted-foreground/90'>
-            Secured by GiveFlow • 100% secure payment
-          </p>
-        </CardContent>
-      </Card>
-    </form>
+            <div className='w-full my-5 bg-muted-foreground/70 h-[1px]'></div>
+            <p className='text-center text-sm text-muted-foreground/90'>
+              Secured by GiveFlow • 100% secure payment
+            </p>
+          </CardContent>
+        </Card>
+      </form>
+    </Form>
   )
 }
 

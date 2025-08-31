@@ -65,3 +65,8 @@ export const ChangePasswordSchema = z
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   })
+
+export const DonationSchema = z.object({
+  cause_id: z.string().uuid(),
+  amount: z.number().min(1, { message: 'Amount must be at least 1' }),
+})

@@ -1,0 +1,27 @@
+import axios from 'axios'
+import api from './axios'
+import { BackendBaseUrl } from '@/app/_constants/backendBaseUrl'
+import { ICreateSessionRes } from '@/app/types/donation'
+
+export const newDonation = async (data: {
+  cause_id: string
+  amount: number
+}) => {
+  try {
+    const res = await api.post(
+      `${BackendBaseUrl}/api/donations/create-session`,
+      data
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to create donation session')
+    }
+
+    return res.data as ICreateSessionRes
+  } catch (error) {
+    console.log(error)
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+  }
+}
