@@ -19,7 +19,6 @@ export const newDonation = async (data: {
 
     return res.data as ICreateSessionRes
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }
@@ -36,7 +35,6 @@ export const getTopDonors = async (causeId: string) => {
     }
     return res.data as IGetTopDonorsRes
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }

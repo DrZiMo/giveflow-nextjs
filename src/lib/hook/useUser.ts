@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   deleteUserTemp,
+  getDonationHistory,
   getSingleUser,
   updatePrivacySettings,
   updateUser,
@@ -33,5 +34,12 @@ export const useUpdatePrivacySettings = () => {
 export const useDeleteUser = () => {
   return useMutation({
     mutationFn: () => deleteUserTemp(),
+  })
+}
+
+export const useGetDonationsHistory = () => {
+  return useQuery({
+    queryKey: ['donation-history'],
+    queryFn: getDonationHistory,
   })
 }

@@ -9,19 +9,19 @@ import {
   TableRow,
 } from './ui/table'
 import { Card } from './ui/card'
-import { useParams } from 'next/navigation'
-import { historyData } from '@/app/data/history'
 import Link from 'next/link'
-import causes from '@/app/data/causes'
 import { Badge } from './ui/badge'
-import { HistoryStatus } from '@/app/types/history'
-import { Download } from 'lucide-react'
+import { useGetDonationsHistory } from '@/lib/hook/useUser'
+import Loading from '@/app/loading'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 const HistoryTable = () => {
-  const { userId } = useParams<{ userId: string }>()
-  const userHistory = historyData.filter(
-    (item) => item.userId === Number(userId)
-  )
+  const { data: userHistory, isLoading } = useGetDonationsHistory()
+
+  if (isLoading) return <Loading />
 
   return (
     <Card className='mt-10 py-3! px-3'>
@@ -31,44 +31,29 @@ const HistoryTable = () => {
             <TableHead className='w-[100px]'>Date</TableHead>
             <TableHead>Cause</TableHead>
             <TableHead>Amount</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className='text-right'>Receipt</TableHead>
+            <TableHead className='text-right'>Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className='p-3'>
-          {userHistory.map((history) => {
-            const causeName =
-              causes.find((c) => c.id === history.causeId)?.title ||
-              'Unknown Cause'
-            return (
-              <TableRow key={history.id}>
-                <TableCell>{history.date}</TableCell>
-                <TableCell className='font-medium'>{causeName}</TableCell>
-                <TableCell className='font-medium'>${history.amount}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant={
-                      history.status === HistoryStatus.PAID
-                        ? 'success'
-                        : history.status === HistoryStatus.FAILED
-                        ? 'destructive'
-                        : 'warning'
-                    }
-                  >
-                    {history.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className='text-right'>
-                  <Link
-                    href={`/receipts/${history.id}`}
-                    className='text-primary flex items-center justify-end gap-1 font-medium'
-                  >
-                    <Download size={16} /> Download
-                  </Link>
-                </TableCell>
-              </TableRow>
-            )
-          })}
+          {userHistory?.history.map((history) => (
+            <TableRow key={history.id}>
+              <TableCell className='text-muted-foreground'>
+                {dayjs(history.donated_at).fromNow()}
+              </TableCell>
+              <TableCell className='font-medium'>
+                <Link
+                  href={`/causes/cause/${history.cause.id}`}
+                  className='hover:text-primary transition'
+                >
+                  {history.cause.name}
+                </Link>
+              </TableCell>
+              <TableCell className='font-medium'>${history.amount}</TableCell>
+              <TableCell className='text-right'>
+                <Badge variant={'success'}>Completed</Badge>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </Card>

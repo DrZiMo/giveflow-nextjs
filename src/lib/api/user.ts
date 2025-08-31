@@ -1,5 +1,9 @@
 import { BackendBaseUrl } from '@/app/_constants/backendBaseUrl'
-import { IGetSingleUserRes, IUpdateUserRes } from '@/app/types/users.types'
+import {
+  IGetSingleUserRes,
+  IUpdateUserRes,
+  IDonationHistoryRes,
+} from '@/app/types/users.types'
 import api from './axios'
 import axios from 'axios'
 
@@ -15,7 +19,6 @@ export const getSingleUser = async (userId: number) => {
 
     return res.data as IGetSingleUserRes
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }
@@ -36,7 +39,6 @@ export const updateUser = async (data: {
 
     return res.data as IUpdateUserRes
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }
@@ -61,7 +63,6 @@ export const changePassword = async (data: {
 
     return res.data
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }
@@ -86,7 +87,6 @@ export const updatePrivacySettings = async (data: {
 
     return res.data
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }
@@ -104,7 +104,23 @@ export const deleteUserTemp = async () => {
 
     return res.data
   } catch (error) {
-    console.log(error)
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const getDonationHistory = async () => {
+  try {
+    const res = await api.get(`${BackendBaseUrl}/api/auth/donation-history`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to get donation history')
+    }
+
+    return res.data as IDonationHistoryRes
+  } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }

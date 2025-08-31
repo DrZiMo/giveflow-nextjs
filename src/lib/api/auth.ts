@@ -13,7 +13,6 @@ export const whoami = async () => {
 
     return res.data as IWhoAmIRes
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }
@@ -31,7 +30,6 @@ export const loginUser = async (data: { email: string; password: string }) => {
 
     return res.data as ILoginResponse
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }

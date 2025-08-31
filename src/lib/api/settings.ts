@@ -13,7 +13,6 @@ export const updateSettings = async (data: IUpdateSettings) => {
 
     return res.data as IUpdateSettingsRes
   } catch (error) {
-    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
     }

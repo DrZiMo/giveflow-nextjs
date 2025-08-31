@@ -1,3 +1,5 @@
+'use client'
+
 import HistoryTable from '@/components/HistoryTable'
 import ProfileTitle from '@/components/ProfileTitle'
 import SearchBar from '@/components/SearchBar'
@@ -9,8 +11,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { RootState } from '@/store'
+import { EyeOff } from 'lucide-react'
+import { useSelector } from 'react-redux'
 
 const HistoryPage = () => {
+  const { user, isUser } = useSelector((state: RootState) => state.selectedUser)
+
+  if (!isUser && !user.is_history_visible) {
+    return (
+      <p className='text-muted-foreground flex items-center gap-3 font-medium'>
+        <EyeOff /> User history is not visible
+      </p>
+    )
+  }
+
   const statusOptions = ['All Status', 'Compeleted', 'Pending', 'Refunded']
   const timeOptions = [
     'All Time',

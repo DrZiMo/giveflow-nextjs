@@ -13,7 +13,6 @@ export const getCauses = async () => {
     const res = await axios.get(`${BackendBaseUrl}/api/causes/all`)
     return res.data as IGetAllCausesResponse
   } catch (error) {
-    console.log(error)
     throw error
   }
 }
@@ -23,7 +22,6 @@ export const getSingleCause = async (id: string) => {
     const res = await axios.get(`${BackendBaseUrl}/api/causes/detail/${id}`)
     return res.data as IGetSingleCauseRes
   } catch (error) {
-    console.log(error)
     throw error
   }
 }
@@ -33,7 +31,6 @@ export const getFeaturedCauses = async () => {
     const res = await axios.get(`${BackendBaseUrl}/api/causes/featured`)
     return res.data as IGetFeaturedCausesRes
   } catch (error) {
-    console.log(error)
     throw error
   }
 }
@@ -43,7 +40,6 @@ export const getNumberOfDonors = async (causeId: string) => {
     const res = await api.get(`${BackendBaseUrl}/api/causes/donors/${causeId}`)
     return res.data as IGetNumberOfDonorsRes
   } catch (error) {
-    console.log(error)
     throw error
   }
 }

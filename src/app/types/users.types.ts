@@ -1,4 +1,5 @@
 import { ICause } from './causes.types'
+import { IDonationCause } from './donation'
 import { SettingsProps } from './settings.types'
 
 export interface UserProps {
@@ -46,4 +47,9 @@ export interface IUpdateUserRes {
 export enum ROLE {
   USER = 'USER',
   ADMIN = 'ADMIN',
+}
+
+export interface IDonationHistoryRes {
+  ok: boolean
+  history: IDonationCause[]
 }
