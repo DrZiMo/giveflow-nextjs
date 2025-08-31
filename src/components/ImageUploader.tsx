@@ -4,11 +4,16 @@ import { Button } from './ui/button'
 import { DialogClose } from './ui/dialog'
 import { useChangeProfilePicture } from '@/lib/hook/useUser'
 import { useQueryClient } from '@tanstack/react-query'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/store'
+import { setUser } from '@/store/authSlice'
 
 export default function ImageUploader() {
   const [preview, setPreview] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const queryClient = useQueryClient()
+  const authUser = useSelector((state: RootState) => state.auth.user)
+  const dispatch = useDispatch<AppDispatch>()
 
   const changeProfilePicture = useChangeProfilePicture()
 
@@ -32,6 +37,7 @@ export default function ImageUploader() {
     changeProfilePicture.mutate(formData, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['whoami'] })
+        dispatch(setUser(authUser!))
         setFile(null)
         setPreview(null)
       },

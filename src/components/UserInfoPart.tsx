@@ -32,7 +32,7 @@ const UserInfoPart = () => {
         </div>
       ),
     },
-    ...(!isUser && is_public
+    ...(isUser || is_public
       ? [
           {
             icon: Mail,
@@ -47,7 +47,7 @@ const UserInfoPart = () => {
           },
         ]
       : []),
-    ...(!isUser && is_public
+    ...(isUser || is_public
       ? [
           {
             icon: Phone,
@@ -62,7 +62,7 @@ const UserInfoPart = () => {
           },
         ]
       : []),
-    ...(!isUser && is_public
+    ...(isUser || is_public
       ? [
           {
             icon: HatGlasses,
