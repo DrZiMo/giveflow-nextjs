@@ -11,7 +11,7 @@ interface AxiosRequestConfigWithRetry extends AxiosRequestConfig {
 
 const api = axios.create({
   baseURL: 'http://localhost:3002',
-  withCredentials: true, // ✅ important for cookies
+  withCredentials: true,
 })
 
 let isRefreshing = false

@@ -16,6 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { DonationSchema } from '@/app/schemas'
 import * as z from 'zod'
 import SelectAmount from './SelectAmount'
+import { useGetNumberOfDonors } from '@/lib/hook/useCauses'
 
 type DonationFormValues = z.infer<typeof DonationSchema>
 
@@ -30,6 +31,8 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
       amount: 0,
     },
   })
+
+  const { data: donorsData, isLoading } = useGetNumberOfDonors(selectedCause.id)
 
   if (!selectedCause) return 'Cause not found'
 
@@ -81,7 +84,8 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
             <div className='flex justify-between items-center text-sm text-muted-foreground mt-1'>
               <span>{percentage.toFixed(0)}% completed</span>
               <span className='flex items-center gap-1'>
-                <Users size={15} /> {selectedCause._count.donation} donors
+                <Users size={15} />{' '}
+                {isLoading ? '...' : `${donorsData?.donorsCount} donors`}
               </span>
             </div>
 

@@ -1,4 +1,3 @@
-import { Inter_Tight } from 'next/font/google'
 import { ICategory } from './category'
 
 export interface CauseGroupProps {
@@ -58,7 +57,6 @@ export interface ICause {
 
 export interface CauseCount {
   like: number
-  donation: number
 }
 
 /** If you need a minimal saved cause */
@@ -77,4 +75,9 @@ export interface CauseProps {
   current_amount: number
   is_trending: boolean
   category: ICategory | string
+}
+
+export interface IGetNumberOfDonorsRes {
+  ok: boolean
+  donorsCount: number
 }
