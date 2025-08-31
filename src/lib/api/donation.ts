@@ -1,7 +1,7 @@
 import axios from 'axios'
 import api from './axios'
 import { BackendBaseUrl } from '@/app/_constants/backendBaseUrl'
-import { ICreateSessionRes } from '@/app/types/donation'
+import { ICreateSessionRes, IGetTopDonorsRes } from '@/app/types/donation'
 
 export const newDonation = async (data: {
   cause_id: string
@@ -18,6 +18,23 @@ export const newDonation = async (data: {
     }
 
     return res.data as ICreateSessionRes
+  } catch (error) {
+    console.log(error)
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+  }
+}
+
+export const getTopDonors = async (causeId: string) => {
+  try {
+    const res = await api.get(
+      `${BackendBaseUrl}/api/donations/top-donors/${causeId}`
+    )
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to fetch top donors')
+    }
+    return res.data as IGetTopDonorsRes
   } catch (error) {
     console.log(error)
     if (axios.isAxiosError(error) && error.response) {

@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import SaveLaterButton from './SaveLaterButton'
 import { Progress } from './ui/progress'
-import { ArrowRight, ThumbsUp, Users } from 'lucide-react'
+import { ArrowRight, ThumbsUp } from 'lucide-react'
 import SmallTitle from './SmallTitle'
 import { Button } from './ui/button'
 import { ICause } from '@/app/types/causes.types'
@@ -17,6 +17,7 @@ import { DonationSchema } from '@/app/schemas'
 import * as z from 'zod'
 import SelectAmount from './SelectAmount'
 import { useGetNumberOfDonors } from '@/lib/hook/useCauses'
+import NumberOfDonors from './NumberOfDonors'
 
 type DonationFormValues = z.infer<typeof DonationSchema>
 
@@ -83,10 +84,11 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
             <Progress value={percentage} className='mt-2' />
             <div className='flex justify-between items-center text-sm text-muted-foreground mt-1'>
               <span>{percentage.toFixed(0)}% completed</span>
-              <span className='flex items-center gap-1'>
-                <Users size={15} />{' '}
-                {isLoading ? '...' : `${donorsData?.donorsCount} donors`}
-              </span>
+              <NumberOfDonors
+                donors={donorsData?.donorsCount || 0}
+                selectedCauseId={selectedCause.id}
+                isLoadingDonor={isLoading}
+              />
             </div>
 
             {/* Select Amount */}
