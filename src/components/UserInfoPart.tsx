@@ -7,7 +7,8 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 
-const UserInfoPart = ({ user }: { user: UserProps }) => {
+const UserInfoPart = () => {
+  const { isUser, user } = useSelector((state: RootState) => state.selectedUser)
   const {
     first_name,
     last_name,
@@ -17,9 +18,11 @@ const UserInfoPart = ({ user }: { user: UserProps }) => {
     is_email_verified,
     is_phone_number_verified,
     role,
+    id,
+    is_public,
   } = user
 
-  const userInfo = [
+  const userInfo: { icon: React.ElementType; value: React.ReactNode }[] = [
     {
       icon: User,
       value: (
@@ -29,33 +32,45 @@ const UserInfoPart = ({ user }: { user: UserProps }) => {
         </div>
       ),
     },
-    {
-      icon: Mail,
-      value: (
-        <div className='flex items-center gap-2'>
-          {email}
-          {is_email_verified && <Badge variant={'secondary'}>Verified</Badge>}
-        </div>
-      ),
-    },
-    {
-      icon: Phone,
-      value: (
-        <div className='flex items-center gap-2'>
-          {phone_number ? phone_number : 'No Phone Number'}
-          {phone_number && is_phone_number_verified && (
-            <Badge variant={'outline'}>Verified</Badge>
-          )}
-        </div>
-      ),
-    },
-    {
-      icon: HatGlasses,
-      value: is_anonymous ? 'Anonymous User' : 'Not Anonymous',
-    },
+    ...(!isUser && is_public
+      ? [
+          {
+            icon: Mail,
+            value: (
+              <div className='flex items-center gap-2'>
+                {email}
+                {is_email_verified && (
+                  <Badge variant={'secondary'}>Verified</Badge>
+                )}
+              </div>
+            ),
+          },
+        ]
+      : []),
+    ...(!isUser && is_public
+      ? [
+          {
+            icon: Phone,
+            value: (
+              <div className='flex items-center gap-2'>
+                {phone_number ? phone_number : 'No Phone Number'}
+                {phone_number && is_phone_number_verified && (
+                  <Badge variant={'outline'}>Verified</Badge>
+                )}
+              </div>
+            ),
+          },
+        ]
+      : []),
+    ...(!isUser && is_public
+      ? [
+          {
+            icon: HatGlasses,
+            value: is_anonymous ? 'Anonymous User' : 'Not Anonymous',
+          },
+        ]
+      : []),
   ]
-
-  const isUser = useSelector((state: RootState) => state.selectedUser.isUser)
 
   return (
     <div className='bg-card rounded-2xl space-y-4'>
@@ -64,7 +79,7 @@ const UserInfoPart = ({ user }: { user: UserProps }) => {
           User Information
         </h2>
         {isUser ? (
-          <Link href={`/profile/${user.id}/settings`}>
+          <Link href={`/profile/${id}/settings`}>
             <Button>
               <Edit />
               Edit
@@ -81,6 +96,11 @@ const UserInfoPart = ({ user }: { user: UserProps }) => {
             </span>
           </div>
         ))}
+        {!isUser && !is_public ? (
+          <p className='text-muted-foreground font-medium'>
+            This account is private
+          </p>
+        ) : null}
       </div>
     </div>
   )

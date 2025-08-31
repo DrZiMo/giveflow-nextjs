@@ -6,13 +6,11 @@ import { Card } from '@/components/ui/card'
 import UserInfoPart from '@/components/UserInfoPart'
 import { Camera, User } from 'lucide-react'
 import { Suspense } from 'react'
-import { UserProps } from '@/app/types/users.types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 
 const ProfilePage = () => {
-  const user = useSelector((state: RootState) => state.selectedUser.user)
-  const isUser = useSelector((state: RootState) => state.selectedUser.isUser)
+  const { user, isUser } = useSelector((state: RootState) => state.selectedUser)
 
   return (
     <div className='my-10'>
@@ -50,7 +48,7 @@ const ProfilePage = () => {
               )}
             </div>
             <div className='col-span-4'>
-              <UserInfoPart user={user as UserProps} />
+              <UserInfoPart />
             </div>
           </div>
         </Card>
