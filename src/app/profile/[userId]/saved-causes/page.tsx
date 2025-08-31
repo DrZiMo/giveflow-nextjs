@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { Suspense, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
+import { useGetUserSaves } from '@/lib/hook/useSaves'
 
 const SavedCauses = () => {
   const router = useRouter()
@@ -15,22 +16,26 @@ const SavedCauses = () => {
   const selectedUser = useSelector(
     (state: RootState) => state.selectedUser.user
   )
+  const isUser = useSelector((state: RootState) => state.selectedUser.isUser)
+  const { data: savedCauses, isLoading } = useGetUserSaves()
 
-  // Redirect if the page is accessed by a non-auth user
   useEffect(() => {
-    if (!authUser || !selectedUser) return
-
-    // Only allow access if the logged-in user is viewing their own saved causes
+    if (!authUser || !selectedUser || !selectedUser.id || !isUser) {
+      return
+    }
     if (authUser.id !== selectedUser.id) {
       router.replace(`/profile/${selectedUser.id}`)
     }
-  }, [authUser, selectedUser, router])
+  }, [authUser, selectedUser, authUser?.id, selectedUser.id, router, isUser])
 
-  if (!authUser || !selectedUser || authUser.id !== selectedUser.id) {
-    return null // render nothing until validation passes
+  if (!authUser || !selectedUser || !selectedUser.id || !isUser) {
+    return null
   }
 
-  const causeSaved = selectedUser.saveForLater
+  if (isLoading) return <Loading />
+
+  const causeSaved = savedCauses?.savedCauses
+  console.log(causeSaved)
 
   return (
     <div>
@@ -44,15 +49,15 @@ const SavedCauses = () => {
             {causeSaved.map((cause, index) => (
               <Cause
                 key={index}
-                id={cause.id}
-                name={cause.name}
-                short_description={cause.short_description}
-                amount_needed={cause.amount_needed}
-                current_amount={cause.current_amount}
-                category={cause.category}
-                is_trending={cause.is_trending!}
-                cause_pic={cause.cause_pic}
-                long_description={cause.long_description}
+                id={cause.cause.id}
+                name={cause.cause.name}
+                short_description={cause.cause.short_description}
+                amount_needed={cause.cause.amount_needed}
+                current_amount={cause.cause.current_amount}
+                category={cause.cause.category}
+                is_trending={cause.cause.is_trending!}
+                cause_pic={cause.cause.cause_pic}
+                long_description={cause.cause.long_description}
               />
             ))}
           </div>

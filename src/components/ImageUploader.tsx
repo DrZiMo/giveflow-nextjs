@@ -58,7 +58,7 @@ export default function ImageUploader() {
             className='w-full h-full object-cover rounded-lg'
           />
         ) : (
-          <p>Click or drag image here</p>
+          <p className='text-primary'>Click or drag image here</p>
         )}
       </div>
 
