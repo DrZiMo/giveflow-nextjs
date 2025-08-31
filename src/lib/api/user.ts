@@ -127,3 +127,26 @@ export const getDonationHistory = async () => {
     throw error
   }
 }
+
+export const changeProfilePic = async (formData: FormData) => {
+  try {
+    const res = await api.post(
+      `${BackendBaseUrl}/api/auth/profile-picture`,
+      formData,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to change profile picture')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}

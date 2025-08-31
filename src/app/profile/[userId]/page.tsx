@@ -4,10 +4,12 @@ import Loading from '@/app/loading'
 import ProfileTitle from '@/components/ProfileTitle'
 import { Card } from '@/components/ui/card'
 import UserInfoPart from '@/components/UserInfoPart'
-import { Camera, User } from 'lucide-react'
+import { User } from 'lucide-react'
 import { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
+import ProfileImageUploader from '@/components/ProfileImageUploader'
+import CameraImageUploader from '@/components/CameraImageUploader'
 
 const ProfilePage = () => {
   const { user, isUser } = useSelector((state: RootState) => state.selectedUser)
@@ -35,17 +37,9 @@ const ProfilePage = () => {
                     <User size={70} />
                   </div>
                 )}
-                {!isUser ? null : (
-                  <div className='absolute w-10 h-10 bg-card rounded-full bottom-0 right-0 flex justify-center items-center border border-muted-foreground/60 text-muted-foreground cursor-pointer hover:text-muted-foreground transition'>
-                    <Camera />
-                  </div>
-                )}
+                {!isUser ? null : <CameraImageUploader />}
               </div>
-              {!isUser ? null : (
-                <button className='mt-3 text-primary hover:underline transition font-semibold'>
-                  Change Photo
-                </button>
-              )}
+              {!isUser ? null : <ProfileImageUploader />}
             </div>
             <div className='col-span-4'>
               <UserInfoPart />
