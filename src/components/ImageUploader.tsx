@@ -45,10 +45,10 @@ export default function ImageUploader() {
   }
 
   return (
-    <div>
+    <div className='flex flex-col items-center'>
       <div
         {...getRootProps()}
-        className='w-40 h-40 border-2 border-dashed border-primary text-center rounded-lg flex items-center justify-center cursor-pointer'
+        className='w-60 h-40 border-2 border-dashed border-primary text-center rounded-lg flex items-center justify-center cursor-pointer'
       >
         <input {...getInputProps()} />
         {preview ? (
@@ -62,7 +62,7 @@ export default function ImageUploader() {
         )}
       </div>
 
-      <div className='buttons flex gap-4 mt-6'>
+      <div className='buttons mx-auto flex gap-4 mt-6'>
         <DialogClose>
           <Button variant={'outline'}>Cancel</Button>
         </DialogClose>
