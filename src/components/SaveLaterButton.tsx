@@ -9,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { setUser } from '@/store/authSlice'
+import { useRouter } from 'next/navigation'
 
 interface SaveLaterButtonProps {
   size?: number
@@ -21,12 +22,17 @@ const SaveLaterButton = ({ size = 20, causeId }: SaveLaterButtonProps) => {
 
   const isSaved = savedCauses?.some((c) => c.id === causeId)
   const [optimisticSaved, toggleOptimistic] = useOptimistic(isSaved)
+  const router = useRouter()
 
   const { mutate: toggleSave } = useToggleSaveCause()
   const dispatch = useDispatch<AppDispatch>()
   const queryClient = useQueryClient()
 
   const handleToggleSave = () => {
+    if (!user) {
+      router.replace('/auth/login')
+      return
+    }
     const action = optimisticSaved ? 'removed' : 'saved'
 
     startTransition(() => {
@@ -36,7 +42,7 @@ const SaveLaterButton = ({ size = 20, causeId }: SaveLaterButtonProps) => {
     toggleSave(causeId, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['whoami'] })
-        dispatch(setUser(user!))
+        dispatch(setUser(user))
         toast.success(`Cause ${action} successfully`, { id: toastId })
       },
       onError: () => {
