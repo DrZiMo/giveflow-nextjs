@@ -53,3 +53,16 @@ export interface IDonationHistoryRes {
   ok: boolean
   history: IDonationCause[]
 }
+
+export interface ISignUpDataProp {
+  first_name: string
+  last_name: string
+  email: string
+  password: string
+  confirm_password: string
+}
+
+export interface ISignUpRes {
+  ok: boolean
+  user: UserProps
+}

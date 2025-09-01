@@ -19,25 +19,38 @@ import {
   FormMessage,
 } from '../ui/form'
 import FormError from '../FormError'
+import { useSignUp } from '@/lib/hook/useAuth'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 const SignupContent = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      first_name: '',
+      last_name: '',
       email: '',
       password: '',
-      confirmPassword: '',
+      confirm_password: '',
     },
-    mode: 'onBlur',
+    mode: 'onTouched',
   })
 
+  const { mutate: singUp, error, isPending } = useSignUp()
+
   const onSubmit = (value: z.infer<typeof SignupSchema>) => {
-    console.log(value)
+    singUp(value, {
+      onSuccess: () => {
+        router.replace('/auth/email-verification')
+      },
+      onError: (err) => {
+        toast.error(err.message)
+      },
+    })
   }
 
   return (
@@ -48,7 +61,7 @@ const SignupContent = () => {
             {/* First name Input */}
             <FormField
               control={form.control}
-              name='firstName'
+              name='first_name'
               render={({ field }) => (
                 <FormItem className='grid w-full max-w-sm items-center gap-3'>
                   <FormLabel>First Name *</FormLabel>
@@ -72,7 +85,7 @@ const SignupContent = () => {
             {/* First name Input */}
             <FormField
               control={form.control}
-              name='lastName'
+              name='last_name'
               render={({ field }) => (
                 <FormItem className='grid w-full max-w-sm items-center gap-3'>
                   <FormLabel>Last Name *</FormLabel>
@@ -157,7 +170,7 @@ const SignupContent = () => {
           {/*Confirm Password Input */}
           <FormField
             control={form.control}
-            name='confirmPassword'
+            name='confirm_password'
             render={({ field }) => (
               <FormItem className='grid w-full max-w-sm items-center gap-3'>
                 <FormLabel>Confirm Password *</FormLabel>
@@ -194,7 +207,7 @@ const SignupContent = () => {
           />
         </div>
 
-        <FormError message='' />
+        <FormError message={error?.message || null} />
 
         {/* Submit button */}
         <Button
@@ -202,10 +215,17 @@ const SignupContent = () => {
           className='w-full mt-4'
           disabled={
             !form.formState.isValid ||
-            Object.values(form.getValues()).some((v) => !v)
+            Object.values(form.getValues()).some((v) => !v) ||
+            isPending
           }
         >
-          Create account <ArrowRight />
+          {isPending ? (
+            'Creating ...'
+          ) : (
+            <>
+              Create account <ArrowRight />
+            </>
+          )}
         </Button>
 
         {/* sign up */}

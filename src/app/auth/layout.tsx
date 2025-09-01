@@ -1,6 +1,7 @@
 import BackButton from '@/components/BackButton'
 import { Metadata } from 'next'
 import React from 'react'
+import AuthProvider from './authProvider'
 export const metadata: Metadata = {
   title: {
     default: 'GiveFlow',
@@ -19,7 +20,9 @@ export default function AuthLayout({
       <div className='absolute left-0 top-0'>
         <BackButton />
       </div>
-      <main>{children}</main>
+      <main>
+        <AuthProvider>{children}</AuthProvider>
+      </main>
     </div>
   )
 }

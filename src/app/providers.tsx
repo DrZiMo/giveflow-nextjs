@@ -28,10 +28,12 @@ const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (data?.user) {
-      dispatch(setUser(data.user as UserProps))
+    if (!pathname.startsWith('/auth')) {
+      if (data?.user) {
+        dispatch(setUser(data.user as UserProps))
+      }
     }
-  }, [data?.user, dispatch])
+  }, [data?.user, dispatch, pathname])
 
   useEffect(() => {
     if (!pathname.startsWith('/profile')) {

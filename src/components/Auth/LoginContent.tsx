@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
@@ -23,21 +23,13 @@ import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from '@/store/authSlice'
 import { UserProps } from '@/app/types/users.types'
-import { useAppSelector } from '@/store/redux/hooks'
 import { useLogin } from '@/lib/hook/useAuth'
 
 const LoginContent = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [loginError, setLoginError] = useState<string | null>(null)
   const dispatch = useDispatch()
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
   const router = useRouter()
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push('/causes')
-    }
-  }, [isLoggedIn, router])
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),

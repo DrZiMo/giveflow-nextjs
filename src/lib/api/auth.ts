@@ -1,5 +1,10 @@
 import { BackendBaseUrl } from '@/app/_constants/backendBaseUrl'
-import { ILoginResponse, IWhoAmIRes } from '@/app/types/users.types'
+import {
+  ILoginResponse,
+  ISignUpDataProp,
+  ISignUpRes,
+  IWhoAmIRes,
+} from '@/app/types/users.types'
 import axios from 'axios'
 import api from './axios'
 
@@ -58,5 +63,39 @@ export const logoutUser = async () => {
 
     // Non-Axios error
     throw new Error('Unknown Error')
+  }
+}
+
+export const singUpUser = async (data: ISignUpDataProp) => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/auth/signup`, data)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Signup fieled')
+    }
+
+    return res.data as ISignUpRes
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const sendCodeEmail = async () => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/auth/send-code-email`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Sending code fieled')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
   }
 }
