@@ -7,7 +7,7 @@ import {
   FormLabel,
   FormMessage,
 } from './ui/form'
-import { Mail, Phone } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import { Input } from './ui/input'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
@@ -18,10 +18,10 @@ import { RootState } from '@/store'
 import { Button } from './ui/button'
 import FormError from './FormError'
 import Link from 'next/link'
+import { PhoneInput } from './PhoneNumberInput'
 
 const PhoneNumber = () => {
   const user = useSelector((state: RootState) => state.selectedUser.user)
-
   const form = useForm<z.infer<typeof PhoneNumberSchema>>({
     resolver: zodResolver(PhoneNumberSchema),
     defaultValues: {
@@ -41,7 +41,7 @@ const PhoneNumber = () => {
   }, [user, form])
 
   const onSubmit = (value: z.infer<typeof PhoneNumberSchema>) => {
-    console.log(value)
+    console.log(value.phoneNumber)
   }
 
   return (
@@ -92,23 +92,19 @@ const PhoneNumber = () => {
                 <FormItem className='grid w-full max-w-sm items-center gap-3 flex-1'>
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
-                    <div className='relative'>
-                      <Phone
-                        className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'
-                        size={18}
-                      />
-                      <Input
-                        {...field}
-                        type='text'
-                        placeholder='Enter your phone number '
-                        className='pl-10 pr-10'
-                      />
-                    </div>
+                    <PhoneInput
+                      {...field} // spreads onChange, onBlur, value, ref
+                      value={field.value || ''} // ensure value is string
+                      onChange={(value) => field.onChange(value || '')} // update react-hook-form
+                      defaultCountry='SO'
+                      placeholder='Enter your phone number'
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             {/* Submit button */}
             <Button
               type='submit'

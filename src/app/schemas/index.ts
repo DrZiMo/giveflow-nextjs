@@ -1,4 +1,5 @@
 import * as z from 'zod'
+import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
 export const LoginSchema = z.object({
   email: z.string().email({ message: 'Valid email is required' }),
@@ -28,10 +29,17 @@ export const EditUserSchema = z.object({
 })
 
 export const PhoneNumberSchema = z.object({
-  email: z.string(),
+  email: z.string().email({ message: 'Invalid email address' }),
   phoneNumber: z
     .string()
-    .min(10, { message: 'Phone number must be at least 10 digits long' }),
+    .min(1, { message: 'Phone number is required' })
+    .refine(
+      (val) => {
+        const phoneNumber = parsePhoneNumberFromString(val)
+        return phoneNumber?.isValid() ?? false
+      },
+      { message: 'Invalid phone number' }
+    ),
 })
 
 export const NotificationSchema = z.object({
