@@ -1,11 +1,12 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   getCauses,
   getFeaturedCauses,
   getNumberOfDonors,
   getSingleCause,
+  toggleLikeCause,
 } from '../api/causes'
 
 export const useCauses = () => {
@@ -33,5 +34,11 @@ export const useGetNumberOfDonors = (causeId: string) => {
   return useQuery({
     queryKey: ['donors', causeId],
     queryFn: () => getNumberOfDonors(causeId),
+  })
+}
+
+export const useToggleLikeCause = () => {
+  return useMutation({
+    mutationFn: (causeId: string) => toggleLikeCause(causeId),
   })
 }

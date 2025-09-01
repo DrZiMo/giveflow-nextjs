@@ -10,6 +10,8 @@ import { UserProps } from './types/users.types'
 import Loading from './loading'
 import { clearUser } from '@/store/userSlice'
 import { usePathname } from 'next/navigation'
+import { useGetUserLike } from '@/lib/hook/useLike'
+import { clearLikeCauses, setLikedCauses } from '@/store/likeSlice'
 
 // React Query wrapper
 export const ReactQueryProviders = ({
@@ -24,8 +26,13 @@ export const ReactQueryProviders = ({
 }
 const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
   const { data, isLoading } = useWhoAmI()
+  const { data: liked } = useGetUserLike()
   const pathname = usePathname()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(clearLikeCauses())
+  }, [dispatch])
 
   useEffect(() => {
     if (!pathname.startsWith('/auth')) {
@@ -40,6 +47,12 @@ const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
       dispatch(clearUser())
     }
   }, [dispatch, pathname])
+
+  useEffect(() => {
+    if (liked?.causes) {
+      dispatch(setLikedCauses(liked.causes))
+    }
+  }, [liked, dispatch])
 
   if (isLoading) return <Loading />
   return <>{children}</>

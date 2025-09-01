@@ -43,3 +43,17 @@ export const getNumberOfDonors = async (causeId: string) => {
     throw error
   }
 }
+
+export const toggleLikeCause = async (causeId: string) => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/causes/like/${causeId}`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed liking cause')
+    }
+
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}

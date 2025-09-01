@@ -18,6 +18,7 @@ import * as z from 'zod'
 import SelectAmount from './SelectAmount'
 import { useGetNumberOfDonors } from '@/lib/hook/useCauses'
 import NumberOfDonors from './NumberOfDonors'
+import LikeButton from './LikeButton'
 
 type DonationFormValues = z.infer<typeof DonationSchema>
 
@@ -66,9 +67,11 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
             </CardTitle>
             <div className='flex gap-4 items-center'>
               <SaveLaterButton causeId={selectedCause.id} size={buttonSize} />
-              <div className='text-muted-foreground text-sm flex items-center gap-2 hover:text-primary transition cursor-pointer'>
-                <ThumbsUp size={buttonSize} /> {selectedCause._count.like}
-              </div>
+              <LikeButton
+                causeId={selectedCause.id}
+                likes={selectedCause._count.like}
+                buttonSize={buttonSize}
+              />
             </div>
           </CardHeader>
           <CardContent>
