@@ -10,8 +10,6 @@ import { UserProps } from './types/users.types'
 import Loading from './loading'
 import { clearUser } from '@/store/userSlice'
 import { usePathname } from 'next/navigation'
-import { useGetUserSaves } from '@/lib/hook/useSaves'
-import { setSavedCauses } from '@/store/causeSlice'
 
 // React Query wrapper
 export const ReactQueryProviders = ({
@@ -26,17 +24,12 @@ export const ReactQueryProviders = ({
 }
 const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
   const { data, isLoading } = useWhoAmI()
-  const { data: userSaves } = useGetUserSaves()
   const pathname = usePathname()
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (data?.user) {
       dispatch(setUser(data.user as UserProps))
-    }
-
-    if (userSaves?.savedCauses) {
-      dispatch(setSavedCauses(userSaves.savedCauses))
     }
   }, [data?.user, dispatch])
 

@@ -49,7 +49,7 @@ const Cause = () => {
   ) : !selectedCause ? (
     'cause not found' // TODO: make it professional
   ) : (
-    <div className='w-[90%] mx-auto mt-10 grid grid-cols-2 gap-10'>
+    <div className='w-[90%] mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-10'>
       <Suspense fallback={<Loading />}>
         <CauseInfo selectedCause={selectedCause} />
       </Suspense>
