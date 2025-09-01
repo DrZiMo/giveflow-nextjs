@@ -20,7 +20,6 @@ import { useSendCodeEmail, useVerifyEmail } from '@/lib/hook/useAuth'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useRouter } from 'next/navigation'
-import { Alert } from '@/components/ui/alert'
 import FormError from '@/components/FormError'
 
 const EmailVerification = () => {
