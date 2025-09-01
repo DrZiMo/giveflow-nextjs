@@ -94,7 +94,7 @@ const Cause = ({
               <HandHeart size={24} /> Donate
             </Button>
           </Link>
-          <SaveLaterButton />
+          <SaveLaterButton causeId={id} />
         </div>
       </div>
     </Card>

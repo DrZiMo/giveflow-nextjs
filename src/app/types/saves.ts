@@ -13,3 +13,8 @@ export interface ISavedCause {
   updated_at: string
   cause: ICause
 }
+
+export interface IToggleSaveCauseRes {
+  ok: boolean
+  message: string
+}

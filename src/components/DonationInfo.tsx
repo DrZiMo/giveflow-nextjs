@@ -65,7 +65,7 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
               Donate to {selectedCause.name}
             </CardTitle>
             <div className='flex gap-4 items-center'>
-              <SaveLaterButton size={buttonSize} />
+              <SaveLaterButton causeId={selectedCause.id} size={buttonSize} />
               <div className='text-muted-foreground text-sm flex items-center gap-2 hover:text-primary transition cursor-pointer'>
                 <ThumbsUp size={buttonSize} /> {selectedCause._count.like}
               </div>

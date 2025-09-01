@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from '@/store/authSlice'
 import userSlice from '@/store/userSlice'
+import causeSlice from './causeSlice'
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     selectedUser: userSlice,
+    savedCauses: causeSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
