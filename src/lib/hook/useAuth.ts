@@ -6,6 +6,7 @@ import {
   logoutUser,
   sendCodeEmail,
   singUpUser,
+  verifyCode,
   whoami,
 } from '../api/auth'
 import { changePassword } from '../api/user'
@@ -52,5 +53,11 @@ export const useChangePassword = () => {
 export const useSendCodeEmail = () => {
   return useMutation({
     mutationFn: sendCodeEmail,
+  })
+}
+
+export const useVerifyEmail = () => {
+  return useMutation({
+    mutationFn: (code: { code: string }) => verifyCode(code),
   })
 }

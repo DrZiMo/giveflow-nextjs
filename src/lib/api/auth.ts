@@ -99,3 +99,20 @@ export const sendCodeEmail = async () => {
     throw error
   }
 }
+
+export const verifyCode = async (code: { code: string }) => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/auth/verify-email`, code)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Verifing email fieled')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
