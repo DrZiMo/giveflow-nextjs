@@ -20,6 +20,8 @@ import { useSendCodeEmail, useVerifyEmail } from '@/lib/hook/useAuth'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useRouter } from 'next/navigation'
+import { Alert } from '@/components/ui/alert'
+import FormError from '@/components/FormError'
 
 const EmailVerification = () => {
   const [otp, setOtp] = useState('')
@@ -27,7 +29,7 @@ const EmailVerification = () => {
   const [canResend, setCanResend] = useState(false)
 
   const { mutate: sendCode } = useSendCodeEmail()
-  const { mutate: verifyCode, isPending } = useVerifyEmail()
+  const { mutate: verifyCode, isPending, error } = useVerifyEmail()
   const didSendCode = useRef(false)
   const router = useRouter()
 
@@ -58,11 +60,6 @@ const EmailVerification = () => {
 
   // Verify code
   const handleVerify = () => {
-    if (otp.length !== 6) {
-      alert('Please enter a 6-digit code')
-      return
-    }
-
     verifyCode(
       { code: otp },
       {
@@ -102,6 +99,7 @@ const EmailVerification = () => {
               </InputOTPGroup>
             </InputOTP>
           </div>
+          <FormError message={error?.message || null} />
         </CardContent>
 
         <CardFooter className='!px-0 flex justify-between items-center'>
