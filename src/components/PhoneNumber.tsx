@@ -1,4 +1,6 @@
-import { useEffect } from 'react'
+'use client'
+
+import { useEffect, useState } from 'react'
 import {
   Form,
   FormControl,
@@ -13,15 +15,24 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { PhoneNumberSchema } from '@/app/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/store'
 import { Button } from './ui/button'
 import FormError from './FormError'
 import Link from 'next/link'
 import { PhoneInput } from './PhoneNumberInput'
+import { useAddPhoneNumber } from '@/lib/hook/useUser'
+import { useQueryClient } from '@tanstack/react-query'
+import { setUser } from '@/store/authSlice'
+import toast from 'react-hot-toast'
+import { toastId } from '@/app/_constants/backendBaseUrl'
 
 const PhoneNumber = () => {
   const user = useSelector((state: RootState) => state.selectedUser.user)
+  const [disable, setDisable] = useState(false)
+  const { mutate: addPhoneNumber, isPending, error } = useAddPhoneNumber()
+  const queryClient = useQueryClient()
+  const dispatch = useDispatch<AppDispatch>()
   const form = useForm<z.infer<typeof PhoneNumberSchema>>({
     resolver: zodResolver(PhoneNumberSchema),
     defaultValues: {
@@ -40,8 +51,22 @@ const PhoneNumber = () => {
     }
   }, [user, form])
 
-  const onSubmit = (value: z.infer<typeof PhoneNumberSchema>) => {
-    console.log(value.phoneNumber)
+  const onSubmit = ({ phoneNumber }: z.infer<typeof PhoneNumberSchema>) => {
+    addPhoneNumber(
+      { phone_number: phoneNumber },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['whoami'] })
+          dispatch(setUser(user))
+          toast.success('Phone number added successfully', { id: toastId })
+          setDisable(true)
+        },
+        onError: () => {
+          toast.error('Adding phone number failed')
+          setDisable(false)
+        },
+      }
+    )
   }
 
   return (
@@ -93,11 +118,12 @@ const PhoneNumber = () => {
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
                     <PhoneInput
-                      {...field} // spreads onChange, onBlur, value, ref
-                      value={field.value || ''} // ensure value is string
-                      onChange={(value) => field.onChange(value || '')} // update react-hook-form
+                      {...field}
+                      value={field.value || ''}
+                      onChange={(value) => field.onChange(value || '')}
                       defaultCountry='SO'
                       placeholder='Enter your phone number'
+                      disabled={disable || !!user.phone_number}
                     />
                   </FormControl>
                   <FormMessage />
@@ -106,19 +132,22 @@ const PhoneNumber = () => {
             />
 
             {/* Submit button */}
-            <Button
-              type='submit'
-              className='w-fit mt-4'
-              disabled={
-                !form.formState.isValid ||
-                Object.values(form.getValues()).some((v) => !v)
-              }
-            >
-              Add phone number
-            </Button>
+            {disable || !!user.phone_number ? null : (
+              <Button
+                type='submit'
+                className='w-fit mt-4'
+                disabled={
+                  !form.formState.isValid ||
+                  Object.values(form.getValues()).some((v) => !v) ||
+                  isPending
+                }
+              >
+                {isPending ? 'adding phone number ...' : 'Add phone number'}
+              </Button>
+            )}
           </div>
         </div>
-        <FormError message='' />
+        <FormError message={error?.message || null} />
       </form>
     </Form>
   )

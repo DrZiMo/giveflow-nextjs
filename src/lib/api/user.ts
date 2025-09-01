@@ -150,3 +150,20 @@ export const changeProfilePic = async (formData: FormData) => {
     throw error
   }
 }
+
+export const addPhoneNumber = async (data: { phone_number: string }) => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/auth/phone-number`, data)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to add phone number')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}

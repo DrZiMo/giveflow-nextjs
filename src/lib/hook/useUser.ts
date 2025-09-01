@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
+  addPhoneNumber,
   changeProfilePic,
   deleteUserTemp,
   getDonationHistory,
@@ -48,5 +49,11 @@ export const useGetDonationsHistory = () => {
 export const useChangeProfilePicture = () => {
   return useMutation({
     mutationFn: (formData: FormData) => changeProfilePic(formData),
+  })
+}
+
+export const useAddPhoneNumber = () => {
+  return useMutation({
+    mutationFn: (data: { phone_number: string }) => addPhoneNumber(data),
   })
 }
