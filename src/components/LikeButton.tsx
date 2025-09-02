@@ -14,10 +14,10 @@ interface ILikeButtonProps {
 
 const LikeButton = ({ likes, buttonSize, causeId }: ILikeButtonProps) => {
   const likedCauses = useSelector(
-    (state: RootState) => state.likedCauses.likedCauses.causes
+    (state: RootState) => state.likedCauses.causes
   )
-  const isLiked = likedCauses.some((c) => c.id === causeId)
-
+  const isLiked = likedCauses.some((c) => c.cause.id === causeId)
+  console.log(isLiked)
   const [optimisticLike, toggleOptimistic] = useState(isLiked)
   const [likeCount, setLikeCount] = useState(likes)
 

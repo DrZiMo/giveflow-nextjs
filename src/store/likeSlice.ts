@@ -1,26 +1,34 @@
 import { ICause } from '@/app/types/causes.types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface LikeCauses {
-  causes: ICause[]
+interface LikeCauseItem {
+  cause: ICause
 }
 
-const initialState = {
-  likedCauses: {} as LikeCauses,
+interface LikeCausesState {
+  causes: LikeCauseItem[]
+}
+
+const initialState: LikeCausesState = {
+  causes: [],
 }
 
 export const likeSlice = createSlice({
-  name: 'user like',
+  name: 'like',
   initialState,
   reducers: {
-    setLikedCauses(state, action: PayloadAction<ICause[]>) {
-      state.likedCauses = { causes: action.payload }
+    setLikedCauses(state, action: PayloadAction<LikeCauseItem[]>) {
+      state.causes = action.payload
+    },
+    addLikedCause(state, action: PayloadAction<LikeCauseItem>) {
+      state.causes.push(action.payload)
     },
     clearLikeCauses(state) {
-      state.likedCauses = { causes: [] }
+      state.causes = []
     },
   },
 })
 
-export const { setLikedCauses, clearLikeCauses } = likeSlice.actions
+export const { setLikedCauses, addLikedCause, clearLikeCauses } =
+  likeSlice.actions
 export default likeSlice.reducer
