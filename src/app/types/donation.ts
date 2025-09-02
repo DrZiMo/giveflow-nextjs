@@ -1,4 +1,5 @@
 import { ICause } from './causes.types'
+import { INotificationProp } from './notification'
 import { SettingsProps } from './settings.types'
 import { ROLE } from './users.types'
 
@@ -27,7 +28,7 @@ export interface TopUserProps {
   is_email_verified: boolean
   is_phone_number_verified: boolean
   saveForLater: ICause[]
-  notification: any[]
+  notification: INotificationProp[]
   user_settings: SettingsProps[]
   created_at: Date
   updated_at: Date

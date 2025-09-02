@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 interface FailedQueueItem {
   resolve: (value?: unknown) => void
-  reject: (error?: any) => void
+  reject: (error?: Error) => void
 }
 
 interface AxiosRequestConfigWithRetry extends AxiosRequestConfig {
@@ -17,7 +17,7 @@ const api = axios.create({
 let isRefreshing = false
 let failedQueue: FailedQueueItem[] = []
 
-const processQueue = (error: any = null) => {
+const processQueue = (error: Error | null = null) => {
   failedQueue.forEach((prom) => {
     if (error) prom.reject(error)
     else prom.resolve()
@@ -53,7 +53,7 @@ api.interceptors.response.use(
           processQueue()
           resolve(api(originalRequest)) // retry original request
         } catch (err) {
-          processQueue(err)
+          processQueue(err as Error)
           reject(err)
         } finally {
           isRefreshing = false

@@ -62,8 +62,8 @@ const UserInfoContent = () => {
           last_name: res.user.last_name,
         })
       },
-      onError: (err: any) => {
-        toast.error(err.response?.data?.message || 'Failed to update user 😢', {
+      onError: (err: Error) => {
+        toast.error(err.message || 'Failed to update user 😢', {
           id: toastId,
         })
       },

@@ -1,29 +1,12 @@
 'use client'
 
-import causes from '@/app/data/causes'
 import Loading from '@/app/loading'
 import CauseInfo from '@/components/CauseInfo'
 import DonationInfo from '@/components/DonationInfo'
 import { useSingleCause } from '@/lib/hook/useCauses'
-import { Metadata } from 'next'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useEffect } from 'react'
 import toast from 'react-hot-toast'
-
-export const getMetadata = ({
-  params,
-}: {
-  params: { causeId: string }
-}): Metadata => {
-  const cause = causes.find((c) => c.id === +params.causeId)
-
-  return {
-    title: cause ? `${cause.title} - GiveFlow` : 'Cause not found - GiveFlow',
-    description: cause
-      ? cause.description
-      : 'View details about this cause on GiveFlow.',
-  }
-}
 
 const Cause = () => {
   const { causeId } = useParams()

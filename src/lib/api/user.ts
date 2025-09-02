@@ -167,3 +167,22 @@ export const addPhoneNumber = async (data: { phone_number: string }) => {
     throw error
   }
 }
+
+export const toggleTwoFactorAuthentication = async () => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/auth/two-factor`)
+
+    if (!res.data.ok) {
+      throw new Error(
+        res.data.message || 'Failed to toggle two factor authentication'
+      )
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}

@@ -5,6 +5,7 @@ import {
   deleteUserTemp,
   getDonationHistory,
   getSingleUser,
+  toggleTwoFactorAuthentication,
   updatePrivacySettings,
   updateUser,
 } from '../api/user'
@@ -55,5 +56,11 @@ export const useChangeProfilePicture = () => {
 export const useAddPhoneNumber = () => {
   return useMutation({
     mutationFn: (data: { phone_number: string }) => addPhoneNumber(data),
+  })
+}
+
+export const useToggleTwoFactorAuthentication = () => {
+  return useMutation({
+    mutationFn: toggleTwoFactorAuthentication,
   })
 }
