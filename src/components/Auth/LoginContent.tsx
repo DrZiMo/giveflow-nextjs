@@ -46,8 +46,12 @@ const LoginContent = () => {
     login(value, {
       onSuccess: (res) => {
         setLoginError(null)
-        dispatch(loginSuccess(res.user as UserProps))
-        router.push('/causes')
+        if (res.user.is_two_factor_authentication) {
+          router.replace('/auth/email-verification?f=true')
+        } else {
+          dispatch(loginSuccess(res.user as UserProps))
+          router.push('/causes')
+        }
       },
       onError: (err) => {
         setLoginError(err.message)

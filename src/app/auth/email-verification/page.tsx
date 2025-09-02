@@ -16,19 +16,27 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp'
-import { useSendCodeEmail, useVerifyEmail } from '@/lib/hook/useAuth'
+import {
+  useSendCodeEmail,
+  useVerifyEmail,
+  useVerifyTwoFactorAuthentication,
+} from '@/lib/hook/useAuth'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import FormError from '@/components/FormError'
 
 const EmailVerification = () => {
+  const searchParams = useSearchParams()
+  const twoFactor = searchParams.get('f') === 'true'
   const [otp, setOtp] = useState('')
   const [timer, setTimer] = useState(40)
   const [canResend, setCanResend] = useState(false)
 
   const { mutate: sendCode } = useSendCodeEmail()
-  const { mutate: verifyCode, isPending, error } = useVerifyEmail()
+  const verifyEmail = useVerifyEmail()
+  const verify2FA = useVerifyTwoFactorAuthentication()
+
   const didSendCode = useRef(false)
   const router = useRouter()
 
@@ -42,7 +50,6 @@ const EmailVerification = () => {
     return () => clearInterval(interval)
   }, [timer])
 
-  // Send code once on mount
   useEffect(() => {
     if (!didSendCode.current) {
       sendCode()
@@ -50,16 +57,14 @@ const EmailVerification = () => {
     }
   }, [sendCode])
 
-  // Resend code
   const resendCode = () => {
     sendCode()
     setTimer(40)
     setCanResend(false)
   }
 
-  // Verify code
   const handleVerify = () => {
-    verifyCode(
+    verifyEmail.mutate(
       { code: otp },
       {
         onSuccess: () => {
@@ -71,11 +76,26 @@ const EmailVerification = () => {
     )
   }
 
+  const handleLogin = () => {
+    verify2FA.mutate(
+      { code: otp },
+      {
+        onSuccess: () => {
+          toast.success('Verified successfully', { id: toastId })
+          router.replace('/causes')
+        },
+        onError: () => toast.error('Verification failed'),
+      }
+    )
+  }
+
+  const isPending = twoFactor ? verify2FA.isPending : verifyEmail.isPending
+
   return (
     <div className='w-[90vw] h-[80vh] flex justify-center items-center'>
       <Card className='!py-3 !px-3 w-[400px]'>
         <CardHeader>
-          <CardTitle>Verify Your Email</CardTitle>
+          <CardTitle>Verify Your Email{twoFactor ? ' (2FA)' : null}</CardTitle>
           <CardDescription>
             We&apos;ve sent a 6-digit verification code to your email. Please
             enter it below to continue.
@@ -98,14 +118,23 @@ const EmailVerification = () => {
               </InputOTPGroup>
             </InputOTP>
           </div>
-          <FormError message={error?.message || null} />
+          <FormError
+            message={
+              twoFactor
+                ? (verify2FA.error as Error)?.message ?? null
+                : (verifyEmail.error as Error)?.message ?? null
+            }
+          />
         </CardContent>
 
         <CardFooter className='!px-0 flex justify-between items-center'>
           <Button variant='link' disabled={!canResend} onClick={resendCode}>
             Resend{canResend ? '' : ` (${timer}s)`}
           </Button>
-          <Button onClick={handleVerify} disabled={isPending}>
+          <Button
+            onClick={twoFactor ? handleLogin : handleVerify}
+            disabled={isPending}
+          >
             {isPending ? 'Verifying...' : 'Verify'}
           </Button>
         </CardFooter>

@@ -7,6 +7,7 @@ import {
   sendCodeEmail,
   singUpUser,
   verifyCode,
+  verifyTwoFactorAuthentication,
   whoami,
 } from '../api/auth'
 import { changePassword } from '../api/user'
@@ -59,5 +60,11 @@ export const useSendCodeEmail = () => {
 export const useVerifyEmail = () => {
   return useMutation({
     mutationFn: (code: { code: string }) => verifyCode(code),
+  })
+}
+
+export const useVerifyTwoFactorAuthentication = () => {
+  return useMutation({
+    mutationFn: (code: { code: string }) => verifyTwoFactorAuthentication(code),
   })
 }

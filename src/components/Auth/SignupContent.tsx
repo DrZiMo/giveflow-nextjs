@@ -22,16 +22,11 @@ import FormError from '../FormError'
 import { useSignUp } from '@/lib/hook/useAuth'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/store'
-import { loginSuccess } from '@/store/authSlice'
-import { UserProps } from '@/app/types/users.types'
 
 const SignupContent = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const router = useRouter()
-  const dispatch = useDispatch<AppDispatch>()
 
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
@@ -49,8 +44,7 @@ const SignupContent = () => {
 
   const onSubmit = (value: z.infer<typeof SignupSchema>) => {
     singUp(value, {
-      onSuccess: (res) => {
-        dispatch(loginSuccess(res.user as UserProps))
+      onSuccess: () => {
         router.replace('/auth/email-verification')
       },
       onError: (err) => {

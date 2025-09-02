@@ -9,7 +9,7 @@ import { setUser } from '@/store/authSlice'
 import { UserProps } from './types/users.types'
 import Loading from './loading'
 import { clearUser } from '@/store/userSlice'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useGetUserLike } from '@/lib/hook/useLike'
 import { clearLikeCauses, setLikedCauses } from '@/store/likeSlice'
 
@@ -27,6 +27,7 @@ export const ReactQueryProviders = ({
 const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
   const { data, isLoading } = useWhoAmI()
   const { data: liked } = useGetUserLike()
+  const router = useRouter()
   const pathname = usePathname()
   const dispatch = useDispatch()
 
@@ -37,10 +38,15 @@ const WhoAmIFetcher = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!pathname.startsWith('/auth')) {
       if (data?.user) {
+        if (data.user.is_two_factor_authentication && !data.user.is_logged_in) {
+          router.replace('/auth/login')
+          return
+        }
+
         dispatch(setUser(data.user as UserProps))
       }
     }
-  }, [data?.user, dispatch, pathname])
+  }, [data?.user, dispatch, pathname, router])
 
   useEffect(() => {
     if (!pathname.startsWith('/profile')) {

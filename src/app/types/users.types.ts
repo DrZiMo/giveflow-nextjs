@@ -17,6 +17,7 @@ export interface UserProps {
   is_email_verified: boolean
   is_phone_number_verified: boolean
   is_two_factor_authentication: boolean
+  is_logged_in: true
   saveForLater: ISaveLater[]
   notification: INotificationProp[]
   user_settings: SettingsProps[]
