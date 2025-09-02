@@ -20,7 +20,7 @@ const SaveLaterButton = ({ size = 20, causeId }: SaveLaterButtonProps) => {
   const user = useSelector((state: RootState) => state.auth.user)
   const savedCauses = user?.saveForLater
 
-  const isSaved = savedCauses?.some((c) => c.id === causeId)
+  const isSaved = savedCauses?.some((c) => c.cause_id === causeId)
   const [optimisticSaved, toggleOptimistic] = useOptimistic(isSaved)
   const router = useRouter()
 

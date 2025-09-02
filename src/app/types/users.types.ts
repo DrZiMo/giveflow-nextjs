@@ -1,4 +1,3 @@
-import { ICause } from './causes.types'
 import { IDonationCause } from './donation'
 import { INotificationProp } from './notification'
 import { SettingsProps } from './settings.types'
@@ -18,7 +17,7 @@ export interface UserProps {
   is_email_verified: boolean
   is_phone_number_verified: boolean
   is_two_factor_authentication: boolean
-  saveForLater: ICause[]
+  saveForLater: ISaveLater[]
   notification: INotificationProp[]
   user_settings: SettingsProps[]
   created_at: Date
@@ -67,4 +66,12 @@ export interface ISignUpDataProp {
 export interface ISignUpRes {
   ok: boolean
   user: UserProps
+}
+
+export interface ISaveLater {
+  id: string
+  user_id: number
+  cause_id: string
+  saved_at: string
+  updated_at: string
 }
