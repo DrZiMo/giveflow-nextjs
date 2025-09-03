@@ -85,7 +85,7 @@ export const singUpUser = async (data: ISignUpDataProp) => {
 
 export const sendCodeEmail = async () => {
   try {
-    const res = await api.post(`${BackendBaseUrl}/api/auth/send-code-email`)
+    const res = await axios.post(`${BackendBaseUrl}/api/auth/send-code-email`)
 
     if (!res.data.ok) {
       throw new Error(res.data.message || 'Sending code fieled')
@@ -141,7 +141,7 @@ export const verifyResetCode = async (data: {
   code: string
 }) => {
   try {
-    const res = await api.post(
+    const res = await axios.post(
       `${BackendBaseUrl}/api/auth/verify-reset-code`,
       data
     )
@@ -164,7 +164,7 @@ export const resetPassword = async (data: {
   confirmPassword: string
 }) => {
   try {
-    const res = await api.post(
+    const res = await axios.post(
       `${BackendBaseUrl}/api/auth/reset-password`,
       data
     )

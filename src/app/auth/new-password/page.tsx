@@ -22,7 +22,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { logoutUser } from '@/lib/api/auth'
 import { useResetPassword } from '@/lib/hook/useAuth'
-import { AppDispatch } from '@/store'
+import { AppDispatch, RootState } from '@/store'
 import { logout } from '@/store/authSlice'
 import { clearUser } from '@/store/userSlice'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,7 +32,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as z from 'zod'
 
 const ForgetPassword = () => {
@@ -41,18 +41,23 @@ const ForgetPassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const queryClient = useQueryClient()
   const dispatch = useDispatch<AppDispatch>()
+  const user = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const { mutate: resetPassword, isPending, error } = useResetPassword()
 
   const handleLogout = async () => {
-    try {
-      await logoutUser()
-      queryClient.removeQueries({ queryKey: ['whoami'], exact: true })
-      dispatch(logout())
-      dispatch(clearUser())
+    if (user) {
+      try {
+        await logoutUser()
+        queryClient.removeQueries({ queryKey: ['whoami'], exact: true })
+        dispatch(logout())
+        dispatch(clearUser())
+        router.replace('/auth/login')
+      } catch (error) {
+        console.error('Error logging out:', error)
+      }
+    } else {
       router.replace('/auth/login')
-    } catch (error) {
-      console.error('Error logging out:', error)
     }
   }
 
