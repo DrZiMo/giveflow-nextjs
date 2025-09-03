@@ -111,9 +111,11 @@ export const deleteUserTemp = async () => {
   }
 }
 
-export const getDonationHistory = async () => {
+export const getDonationHistory = async (search?: string, time?: string) => {
   try {
-    const res = await api.get(`${BackendBaseUrl}/api/auth/donation-history`)
+    const res = await api.get(`${BackendBaseUrl}/api/auth/donation-history`, {
+      params: { search, time },
+    })
 
     if (!res.data.ok) {
       throw new Error(res.data.message || 'Failed to get donation history')

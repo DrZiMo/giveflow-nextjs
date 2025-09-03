@@ -40,10 +40,10 @@ export const useDeleteUser = () => {
   })
 }
 
-export const useGetDonationsHistory = () => {
+export const useGetDonationsHistory = (search?: string, time?: string) => {
   return useQuery({
-    queryKey: ['donation-history'],
-    queryFn: getDonationHistory,
+    queryKey: ['donation-history', search, time],
+    queryFn: () => getDonationHistory(search, time),
   })
 }
 

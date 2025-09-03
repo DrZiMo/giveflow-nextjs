@@ -11,16 +11,20 @@ import {
 import { Card } from './ui/card'
 import Link from 'next/link'
 import { Badge } from './ui/badge'
-import { useGetDonationsHistory } from '@/lib/hook/useUser'
 import Loading from '@/app/loading'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { IDonationHistoryRes } from '@/app/types/users.types'
 
 dayjs.extend(relativeTime)
 
-const HistoryTable = () => {
-  const { data: userHistory, isLoading } = useGetDonationsHistory()
-
+const HistoryTable = ({
+  userHistory,
+  isLoading,
+}: {
+  userHistory: IDonationHistoryRes
+  isLoading: boolean
+}) => {
   if (isLoading) return <Loading />
 
   return (
