@@ -9,10 +9,14 @@ import {
   toggleLikeCause,
 } from '../api/causes'
 
-export const useCauses = () => {
+export const useCauses = (
+  cause_search: string,
+  category: string,
+  sort: string
+) => {
   return useQuery({
-    queryKey: ['causes'],
-    queryFn: getCauses,
+    queryKey: ['causes', cause_search, category, sort],
+    queryFn: () => getCauses(cause_search, category, sort),
   })
 }
 

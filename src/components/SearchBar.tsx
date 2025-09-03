@@ -5,8 +5,8 @@ const SearchBar = ({
   value,
   setValue,
 }: {
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  value?: string
+  setValue?: React.Dispatch<React.SetStateAction<string>>
 }) => {
   return (
     <div className='relative w-full'>
@@ -19,7 +19,7 @@ const SearchBar = ({
         placeholder='Search causes ...'
         className='pl-10'
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => (setValue ? e.target.value : null)}
       />
     </div>
   )

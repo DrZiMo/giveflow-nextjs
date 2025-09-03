@@ -8,9 +8,20 @@ import {
 import axios from 'axios'
 import api from './axios'
 
-export const getCauses = async () => {
+export const getCauses = async (
+  search: string,
+  category: string,
+  sort: string
+) => {
   try {
-    const res = await axios.get(`${BackendBaseUrl}/api/causes/all`)
+    const res = await axios.get(`${BackendBaseUrl}/api/causes/all`, {
+      params: { search, category, sort },
+    })
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed fetching causes')
+    }
+
     return res.data as IGetAllCausesResponse
   } catch (error) {
     throw error

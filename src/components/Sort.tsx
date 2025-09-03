@@ -1,11 +1,5 @@
 'use client'
 
-import React, { Suspense } from 'react'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { Button } from './ui/button'
-import { ListFilter } from 'lucide-react'
-import Loading from '@/app/loading'
-import SortDropDown from './SortDropDown'
 import {
   Select,
   SelectContent,

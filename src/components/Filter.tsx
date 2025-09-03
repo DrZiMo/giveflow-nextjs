@@ -10,9 +10,13 @@ import {
 } from './ui/select'
 import causes from '@/app/data/causes'
 
-const Filter = () => {
+const Filter = ({
+  onChange,
+}: {
+  onChange: React.Dispatch<React.SetStateAction<string>>
+}) => {
   return (
-    <Select defaultValue='All'>
+    <Select defaultValue='All' onValueChange={onChange}>
       <SelectTrigger>
         <SelectValue placeholder='Filter' />
       </SelectTrigger>
