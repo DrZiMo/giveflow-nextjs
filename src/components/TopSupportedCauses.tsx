@@ -1,43 +1,18 @@
+'use client'
+
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import {
-  Activity,
-  Ambulance,
-  Bird,
-  BookOpenText,
-  LeafyGreen,
-} from 'lucide-react'
+import { useTopSupportedCauses } from '@/lib/hook/useDonation'
+import Loading from '@/app/loading'
 
 const TopSupportedCauses = () => {
-  const supportedCauses = [
-    {
-      icon: Ambulance,
-      cause: 'Emergency Relief',
-      amount: 3200,
-    },
-    {
-      icon: BookOpenText,
-      cause: 'Education',
-      amount: 2800,
-    },
-    {
-      icon: LeafyGreen,
-      cause: 'Environment',
-      amount: 1950,
-    },
-    {
-      icon: Activity,
-      cause: 'Health Care',
-      amount: 1650,
-    },
-    {
-      icon: Bird,
-      cause: 'Animal Welfare',
-      amount: 1200,
-    },
-  ]
+  const { data, isLoading } = useTopSupportedCauses()
 
+  if (isLoading) return <Loading />
+
+  const supportedCauses = data?.causes ?? []
   const total = supportedCauses.reduce((acc, cause) => acc + cause.amount, 0)
+
   return (
     <Card>
       <CardHeader>
@@ -45,12 +20,12 @@ const TopSupportedCauses = () => {
       </CardHeader>
       <CardContent className='space-y-4'>
         {supportedCauses.map((cause, index) => {
-          const percentage = (cause.amount / total) * 100
+          const percentage = total ? (cause.amount / total) * 100 : 0
 
           return (
             <div className='flex justify-between items-center' key={index}>
               <div className='flex items-center'>
-                <cause.icon className='mr-3 text-muted-foreground' size={18} />
+                <div className='w-2 h-2 bg-muted-foreground rounded-full mr-3' />
                 <h3 className='font-medium'>{cause.cause}</h3>
               </div>
               <div className='text-right'>

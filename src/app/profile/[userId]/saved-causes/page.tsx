@@ -35,7 +35,6 @@ const SavedCauses = () => {
   if (isLoading) return <Loading />
 
   const causeSaved = savedCauses?.savedCauses
-  console.log(causeSaved)
 
   return (
     <div>

@@ -1,80 +1,61 @@
-import React from 'react'
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import { Progress } from './ui/progress'
+import Loading from '@/app/loading'
+import { useMonthlyDonations } from '@/lib/hook/useDonation'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts'
 
 const MonthlyDonation = () => {
-  const monthlyDonations = [
-    {
-      month: 'Jan',
-      amount: 850,
-    },
-    {
-      month: 'Feb',
-      amount: 920,
-    },
-    {
-      month: 'Mar',
-      amount: 1100,
-    },
-    {
-      month: 'Apr',
-      amount: 1350,
-    },
-    {
-      month: 'May',
-      amount: 1200,
-    },
-    {
-      month: 'Jun',
-      amount: 1450,
-    },
-    {
-      month: 'Jul',
-      amount: 1650,
-    },
-    {
-      month: 'Aug',
-      amount: 1400,
-    },
-    {
-      month: 'Sep',
-      amount: 1550,
-    },
-    {
-      month: 'Oct',
-      amount: 1800,
-    },
-    {
-      month: 'Nov',
-      amount: 1650,
-    },
-    {
-      month: 'Dec',
-      amount: 1900,
-    },
-  ]
+  const { data: monthlyDonations, isLoading } = useMonthlyDonations()
 
-  const maxAmount = Math.max(...monthlyDonations.map((d) => d.amount))
+  if (isLoading) return <Loading />
+
+  const monthlyTotals = monthlyDonations?.monthlyTotals ?? []
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Monthly Donations</CardTitle>
       </CardHeader>
-      <CardContent className='space-y-5'>
-        {monthlyDonations.map((d) => {
-          const percentage = (d.amount / maxAmount) * 100
-
-          return (
-            <div
-              className='grid grid-cols-[30px_3fr_50px] items-center gap-3 text-sm'
-              key={d.month}
+      <CardContent>
+        {monthlyTotals.length === 0 ? (
+          <p className='text-center text-muted-foreground'>No donations yet.</p>
+        ) : (
+          <ResponsiveContainer width='100%' height={300}>
+            <LineChart
+              data={monthlyTotals}
+              margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
             >
-              <h3 className='text-muted-foreground font-medium'>{d.month}</h3>
-              <Progress value={percentage} className='h-6' />
-              <h3 className='font-medium'>${d.amount.toLocaleString()}</h3>
-            </div>
-          )
-        })}
+              <XAxis dataKey='month' />
+              <YAxis />
+              <Tooltip
+                formatter={(value: number) => `$${value.toLocaleString()}`}
+                contentStyle={{
+                  borderRadius: 8,
+                  background: 'var(--secondary)',
+                  border: '1px solid var(--border)',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+                }}
+              />
+              <Line
+                type='monotone'
+                dataKey='amount'
+                stroke='#3b82f6'
+                strokeWidth={2}
+                dot={{ r: 3 }}
+                activeDot={{ r: 7 }}
+                animationDuration={1500}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        )}
       </CardContent>
     </Card>
   )

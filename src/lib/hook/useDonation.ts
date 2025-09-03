@@ -1,5 +1,11 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { getTopDonors, newDonation } from '../api/donation'
+import {
+  getDonationsSummary,
+  getMonthlyDonations,
+  getTopDonors,
+  getTopSupportedCauses,
+  newDonation,
+} from '../api/donation'
 
 export const useCreateDonation = () => {
   return useMutation({
@@ -12,5 +18,26 @@ export const useGetTopDonors = (causeId: string) => {
   return useQuery({
     queryKey: ['top-donors', causeId],
     queryFn: () => getTopDonors(causeId),
+  })
+}
+
+export const useDonationsSummary = () => {
+  return useQuery({
+    queryKey: ['donotions-summary'],
+    queryFn: getDonationsSummary,
+  })
+}
+
+export const useMonthlyDonations = () => {
+  return useQuery({
+    queryKey: ['donotions-monthly'],
+    queryFn: getMonthlyDonations,
+  })
+}
+
+export const useTopSupportedCauses = () => {
+  return useQuery({
+    queryKey: ['top-supported-causes'],
+    queryFn: getTopSupportedCauses,
   })
 }

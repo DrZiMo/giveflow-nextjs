@@ -1,4 +1,4 @@
-import { ICause } from './causes.types'
+import { ICause, ISupportedCause } from './causes.types'
 import { INotificationProp } from './notification'
 import { SettingsProps } from './settings.types'
 import { ROLE } from './users.types'
@@ -42,4 +42,28 @@ export interface IDonationCause {
   amount: number
   donated_at: string
   cause: ICause
+}
+
+export interface DonationsSummaryRes {
+  ok: boolean
+  totalDonated: number
+  causesSupported: number
+  averageDonation: number
+  highestDonation: number
+  message?: string
+}
+
+export interface IMonthlyDonationsRes {
+  ok: boolean
+  monthlyTotals?: {
+    month: string
+    amount: number
+  }[]
+  message?: string
+}
+
+export interface ITopSupportedCausesRes {
+  ok: boolean
+  causes: ISupportedCause[]
+  message?: string
 }

@@ -81,3 +81,8 @@ export interface IGetNumberOfDonorsRes {
   ok: boolean
   donorsCount: number
 }
+
+export interface ISupportedCause {
+  cause: string
+  amount: number
+}
