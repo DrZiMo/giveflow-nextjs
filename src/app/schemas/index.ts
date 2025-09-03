@@ -78,3 +78,21 @@ export const DonationSchema = z.object({
   cause_id: z.string().uuid(),
   amount: z.number().min(1, { message: 'Amount must be at least 1' }),
 })
+
+export const resetPasswordSchema = z.object({
+  email: z.string().email({ message: 'Valid email address is required' }),
+})
+
+export const newPasswordSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(6, { message: 'New password must be at least 6 characters long' }),
+    confirmPassword: z
+      .string()
+      .min(6, { message: 'Confirm password is required' }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  })

@@ -30,6 +30,9 @@ const LoginContent = () => {
   const [loginError, setLoginError] = useState<string | null>(null)
   const dispatch = useDispatch()
   const router = useRouter()
+  const tempToken = crypto.randomUUID()
+
+  sessionStorage.setItem('forgetPasswordToken', tempToken)
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -118,7 +121,10 @@ const LoginContent = () => {
                   </div>
                 </FormControl>
                 <FormMessage />
-                <Link href='/auth/forgot-password' className='w-fit'>
+                <Link
+                  href={`/auth/forget-password?t=${tempToken}`}
+                  className='w-fit'
+                >
                   <Button variant={'link'} className='text-sm m-0 px-0 !py-0'>
                     Forgot password?
                   </Button>

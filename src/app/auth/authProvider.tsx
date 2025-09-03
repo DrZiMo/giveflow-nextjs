@@ -1,7 +1,7 @@
 'use client'
 
 import { useAppSelector } from '@/store/redux/hooks'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 export default function AuthProvider({
@@ -12,6 +12,7 @@ export default function AuthProvider({
   const { isLoggedIn, user } = useAppSelector((state) => state.auth)
   const pathname = usePathname()
   const router = useRouter()
+  const tempToken = useSearchParams().get('t')
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -19,8 +20,21 @@ export default function AuthProvider({
         return
       }
 
+      if (
+        pathname.startsWith('/auth/forget-password') ||
+        pathname.startsWith('/auth/verify-reset-code') ||
+        pathname.startsWith('/auth/new-password')
+      ) {
+        const sessionToken = sessionStorage.getItem('forgetPasswordToken')
+        if (!tempToken || tempToken !== sessionToken) {
+          router.back()
+        }
+
+        return
+      }
+
       router.push('/causes')
     }
-  }, [isLoggedIn, router, pathname, user])
+  }, [isLoggedIn, router, pathname, user, tempToken])
   return <>{children}</>
 }

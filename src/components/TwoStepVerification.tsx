@@ -13,7 +13,6 @@ const TwoStepVerification = () => {
   const twoFAEnabled = useSelector(
     (state: RootState) => state.auth.user?.is_two_factor_authentication ?? false
   )
-  console.log(twoFAEnabled)
   const { mutate: toggle2FA, isPending } = useToggleTwoFactorAuthentication()
   const [isEnabled, setIsEnabled] = useState<boolean>(twoFAEnabled)
   const queryClient = useQueryClient()

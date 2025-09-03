@@ -135,3 +135,49 @@ export const verifyTwoFactorAuthentication = async (code: { code: string }) => {
     throw error
   }
 }
+
+export const verifyResetCode = async (data: {
+  email: string
+  code: string
+}) => {
+  try {
+    const res = await api.post(
+      `${BackendBaseUrl}/api/auth/verify-reset-code`,
+      data
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to verify reset code')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const resetPassword = async (data: {
+  newPassword: string
+  confirmPassword: string
+}) => {
+  try {
+    const res = await api.post(
+      `${BackendBaseUrl}/api/auth/reset-password`,
+      data
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to reset password')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}

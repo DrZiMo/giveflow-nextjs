@@ -4,9 +4,11 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   loginUser,
   logoutUser,
+  resetPassword,
   sendCodeEmail,
   singUpUser,
   verifyCode,
+  verifyResetCode,
   verifyTwoFactorAuthentication,
   whoami,
 } from '../api/auth'
@@ -66,5 +68,19 @@ export const useVerifyEmail = () => {
 export const useVerifyTwoFactorAuthentication = () => {
   return useMutation({
     mutationFn: (code: { code: string }) => verifyTwoFactorAuthentication(code),
+  })
+}
+
+export const useVerifyResetCode = () => {
+  return useMutation({
+    mutationFn: (data: { email: string; code: string }) =>
+      verifyResetCode(data),
+  })
+}
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: (data: { newPassword: string; confirmPassword: string }) =>
+      resetPassword(data),
   })
 }
