@@ -7,7 +7,6 @@ import { Suspense } from 'react'
 import Loading from '@/app/loading'
 import Link from 'next/link'
 import { useCauses, useFeaturedCauses } from '@/lib/hook/useCauses'
-import { ICause } from '@/app/types/causes.types'
 
 const FeaturedCauses = () => {
   const { data, isLoading } = useFeaturedCauses()

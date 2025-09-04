@@ -10,9 +10,9 @@ import {
 } from '../api/causes'
 
 export const useCauses = (
-  cause_search: string,
-  category: string,
-  sort: string
+  cause_search?: string,
+  category?: string,
+  sort?: string
 ) => {
   return useQuery({
     queryKey: ['causes', cause_search, category, sort],

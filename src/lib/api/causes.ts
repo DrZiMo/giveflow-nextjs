@@ -9,9 +9,9 @@ import axios from 'axios'
 import api from './axios'
 
 export const getCauses = async (
-  search: string,
-  category: string,
-  sort: string
+  search?: string,
+  category?: string,
+  sort?: string
 ) => {
   try {
     const res = await axios.get(`${BackendBaseUrl}/api/causes/all`, {
