@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import SaveLaterButton from './SaveLaterButton'
 import { Progress } from './ui/progress'
-import { AlertCircleIcon, ArrowRight, ThumbsUp } from 'lucide-react'
+import { AlertCircleIcon, ArrowRight } from 'lucide-react'
 import SmallTitle from './SmallTitle'
 import { Button } from './ui/button'
 import { ICause } from '@/app/types/causes.types'
