@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import SaveLaterButton from './SaveLaterButton'
 import { Progress } from './ui/progress'
-import { ArrowRight, ThumbsUp } from 'lucide-react'
+import { AlertCircleIcon, ArrowRight, ThumbsUp } from 'lucide-react'
 import SmallTitle from './SmallTitle'
 import { Button } from './ui/button'
 import { ICause } from '@/app/types/causes.types'
@@ -19,12 +19,20 @@ import SelectAmount from './SelectAmount'
 import { useGetNumberOfDonors } from '@/lib/hook/useCauses'
 import NumberOfDonors from './NumberOfDonors'
 import LikeButton from './LikeButton'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
+import { useRouter } from 'next/navigation'
+import { Alert, AlertTitle } from './ui/alert'
 
 type DonationFormValues = z.infer<typeof DonationSchema>
 
 const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
   const buttonSize = 17
   const { mutate: createDonation, isPending } = useCreateDonation()
+  const isCompleted =
+    selectedCause.amount_needed === selectedCause.current_amount
+  const router = useRouter()
 
   const form = useForm<DonationFormValues>({
     resolver: zodResolver(DonationSchema),
@@ -42,6 +50,10 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
     (selectedCause.current_amount / selectedCause.amount_needed) * 100
 
   const onSubmit = (data: DonationFormValues) => {
+    if (isLoggedIn) {
+      router.push('/auth/login')
+      return
+    }
     createDonation(
       { cause_id: data.cause_id, amount: data.amount },
       {
@@ -114,14 +126,23 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
               />
             </div>
 
+            {isLoggedIn ? null : (
+              <Alert variant={'warning'} className='w-full mt-6'>
+                <AlertCircleIcon />
+                <AlertTitle>Login first before you donate!</AlertTitle>
+              </Alert>
+            )}
+
             {/* Donate Button */}
             <Button
               className='mt-6 w-full rounded-lg py-5'
               type='submit'
-              disabled={isPending}
+              disabled={isPending || isCompleted}
             >
               {isPending ? (
                 'Processing...'
+              ) : isCompleted ? (
+                'Completed'
               ) : (
                 <>
                   Donate now <ArrowRight />
