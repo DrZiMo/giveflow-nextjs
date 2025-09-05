@@ -33,6 +33,8 @@ export default function AuthProvider({
         return
       }
 
+      if (!user?.is_logged_in && user?.is_two_factor_authentication) return
+
       router.push('/causes')
     }
   }, [isLoggedIn, router, pathname, user, tempToken])

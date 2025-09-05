@@ -6,7 +6,7 @@ export interface SettingsProps {
   push_notifications: boolean
   news_letter: boolean
   donation_receipts: boolean
-  donation_reminds: boolean
+  donation_reminders: boolean
   created_at: Date
   updated_at: Date
 }
@@ -17,7 +17,7 @@ export interface IUpdateSettings {
   push_notifications?: boolean
   news_letter?: boolean
   donation_receipts?: boolean
-  donation_reminds?: boolean
+  donation_reminders?: boolean
 }
 
 export interface IUpdateSettingsRes {

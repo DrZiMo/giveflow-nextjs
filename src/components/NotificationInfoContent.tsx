@@ -49,7 +49,7 @@ export function NotificationInfoContent() {
         push_notifications: user.user_settings[0].push_notifications ?? false,
         newsletter: user.user_settings[0].news_letter ?? false,
         donation_receipts: user.user_settings[0].donation_receipts ?? false,
-        donation_reminders: user.user_settings[0].donation_reminds ?? false,
+        donation_reminders: user.user_settings[0].donation_reminders ?? false,
       })
     }
   }, [user, form])
@@ -131,6 +131,7 @@ export function NotificationInfoContent() {
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      disabled={key === 'sms_notifications'}
                       className='scale-130'
                     />
                   </FormControl>

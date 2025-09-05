@@ -20,12 +20,15 @@ const TwoStepVerification = () => {
   const handleToggle = () => {
     const action = isEnabled ? 'disabled' : 'enabled'
     toggle2FA(undefined, {
-      onSuccess: () => {
+      onSuccess: async () => {
         toast.success(`two factor authentication is ${action} successfully`, {
           id: toastId,
         })
         setIsEnabled((prev) => !prev)
-        queryClient.invalidateQueries({ queryKey: ['whoami'] })
+        const whoami = queryClient.getQueryData(['whoami'])
+        if (whoami) {
+          await queryClient.refetchQueries({ queryKey: ['whoami'] })
+        }
       },
       onError: () => {
         toast.error('Failed to toggle two factor authentication', {
