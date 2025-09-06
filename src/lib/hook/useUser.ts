@@ -5,6 +5,7 @@ import {
   deleteUserTemp,
   getDonationHistory,
   getSingleUser,
+  getTopDonorsAdmin,
   toggleTwoFactorAuthentication,
   updatePrivacySettings,
   updateUser,
@@ -62,5 +63,12 @@ export const useAddPhoneNumber = () => {
 export const useToggleTwoFactorAuthentication = () => {
   return useMutation({
     mutationFn: toggleTwoFactorAuthentication,
+  })
+}
+
+export const useGetTopDonorsAdmin = () => {
+  return useQuery({
+    queryKey: ['top-donors'],
+    queryFn: getTopDonorsAdmin,
   })
 }

@@ -8,6 +8,7 @@ import {
   Newspaper,
   Clock,
   Bookmark,
+  ChartArea,
 } from 'lucide-react'
 
 import {
@@ -30,6 +31,7 @@ import { logoutUser } from '@/lib/api/auth'
 import { useQueryClient } from '@tanstack/react-query'
 import { logout } from '@/store/authSlice'
 import { clearUser } from '@/store/userSlice'
+import { ROLE } from '@/app/types/users.types'
 
 interface SidebarItem {
   title: string
@@ -129,6 +131,17 @@ export function ProfileSidebar() {
             <Home className='h-5 w-5' />
             <span>Home</span>
           </Link>
+
+          {/* Dashboard Button */}
+          {user.role !== ROLE.USER ? (
+            <Link
+              href='/dashboard'
+              className='flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition'
+            >
+              <ChartArea className='h-5 w-5' />
+              <span>Dashboard</span>
+            </Link>
+          ) : null}
 
           {/* Logout Button */}
           {isUser && (

@@ -49,6 +49,56 @@ export const getTopDonors = async (causeId: string) => {
   }
 }
 
+export const getAdminDonationsSummary = async () => {
+  try {
+    const res = await api.get(`${BackendBaseUrl}/api/donations/summary-admin`)
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to fetch donations summary')
+    }
+    return res.data as DonationsSummaryRes
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+
+    throw error
+  }
+}
+
+export const getAdminTopSupportedCauses = async () => {
+  try {
+    const res = await api.get(
+      `${BackendBaseUrl}/api/donations/supported-causes-admin`
+    )
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to fetch top suppoted causes')
+    }
+    return res.data as ITopSupportedCausesRes
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+
+    throw error
+  }
+}
+
+export const getAdminMonthlyDonations = async () => {
+  try {
+    const res = await api.get(`${BackendBaseUrl}/api/donations/monthly-admin`)
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to fetch monthly donations')
+    }
+    return res.data as IMonthlyDonationsRes
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+
+    throw error
+  }
+}
+
 export const getDonationsSummary = async () => {
   try {
     const res = await api.get(`${BackendBaseUrl}/api/donations/summary`)

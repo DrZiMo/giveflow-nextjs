@@ -1,7 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import React from 'react'
-import DashboardHeader from '@/components/dashboard/DashboardHeader'
-import { DashboardSidebar } from '@/components/dashboard/DashoardSidebar'
+import DashboardHeader from '@/components/Dashboard/DashboardHeader'
+import { DashboardSidebar } from '@/components/Dashboard/DashoardSidebar'
 
 export default function ProfileLayout({
   children,
@@ -16,7 +16,7 @@ export default function ProfileLayout({
           <div className='block md:hidden'>
             <SidebarTrigger />
           </div>
-          <div className='w-[90%] mx-auto mt-10'>
+          <div className='w-[90%] mx-auto my-10'>
             <DashboardHeader />
             {children}
           </div>

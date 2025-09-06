@@ -16,7 +16,7 @@ export default function ProfileLayout({
           <div className='block md:hidden'>
             <SidebarTrigger />
           </div>
-          <div className='w-[90%] mx-auto mt-10'>
+          <div className='w-[90%] mx-auto my-10'>
             <UserProvider>{children}</UserProvider>
           </div>
         </main>

@@ -1,5 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
+  getAdminDonationsSummary,
+  getAdminMonthlyDonations,
+  getAdminTopSupportedCauses,
   getDonationsSummary,
   getMonthlyDonations,
   getTopDonors,
@@ -18,6 +21,27 @@ export const useGetTopDonors = (causeId: string) => {
   return useQuery({
     queryKey: ['top-donors', causeId],
     queryFn: () => getTopDonors(causeId),
+  })
+}
+
+export const useAdminDonationsSummary = () => {
+  return useQuery({
+    queryKey: ['donotions-summary-admin'],
+    queryFn: getAdminDonationsSummary,
+  })
+}
+
+export const useAdminMonthlyDonations = () => {
+  return useQuery({
+    queryKey: ['donotions-monthly-admin'],
+    queryFn: getAdminMonthlyDonations,
+  })
+}
+
+export const useAdminTopSupportedCauses = () => {
+  return useQuery({
+    queryKey: ['top-supported-causes-admin'],
+    queryFn: getAdminTopSupportedCauses,
   })
 }
 

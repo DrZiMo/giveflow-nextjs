@@ -3,6 +3,7 @@ import {
   IGetSingleUserRes,
   IUpdateUserRes,
   IDonationHistoryRes,
+  IGetTopDonorsAdminRes,
 } from '@/app/types/users.types'
 import api from './axios'
 import axios from 'axios'
@@ -181,6 +182,23 @@ export const toggleTwoFactorAuthentication = async () => {
     }
 
     return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const getTopDonorsAdmin = async () => {
+  try {
+    const res = await api.get(`${BackendBaseUrl}/api/auth/top-donors`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to get top donors')
+    }
+
+    return res.data as IGetTopDonorsAdminRes
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')

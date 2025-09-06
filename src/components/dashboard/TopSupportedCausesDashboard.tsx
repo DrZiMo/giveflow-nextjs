@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import { useTopSupportedCauses } from '@/lib/hook/useDonation'
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import Loading from '@/app/loading'
 import {
   PieChart,
@@ -12,6 +11,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts'
+import { useAdminTopSupportedCauses } from '@/lib/hook/useDonation'
 
 const COLORS = [
   '#6366F1', // indigo
@@ -22,8 +22,8 @@ const COLORS = [
   '#A855F7', // purple
 ]
 
-const TopSupportedCauses = () => {
-  const { data, isLoading } = useTopSupportedCauses()
+const TopSupportedCausesDashboard = () => {
+  const { data, isLoading } = useAdminTopSupportedCauses()
 
   if (isLoading) return <Loading />
 
@@ -91,4 +91,4 @@ const TopSupportedCauses = () => {
   )
 }
 
-export default TopSupportedCauses
+export default TopSupportedCausesDashboard

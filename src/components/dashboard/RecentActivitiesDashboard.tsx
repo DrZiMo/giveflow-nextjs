@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import { Badge } from './ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { Badge } from '../ui/badge'
 import { useGetUserActivity } from '@/lib/hook/useActivity'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -11,7 +11,7 @@ import Loading from '@/app/loading'
 
 dayjs.extend(relativeTime)
 
-const RecentActivities = () => {
+const RecentActivitiesDashboard = () => {
   const { data, isLoading } = useGetUserActivity()
 
   if (isLoading) return <Loading />
@@ -65,4 +65,4 @@ const RecentActivities = () => {
   )
 }
 
-export default RecentActivities
+export default RecentActivitiesDashboard
