@@ -7,7 +7,7 @@ import { ROLE } from './types/users.types'
 export function Middleware(request: NextRequest) {
   const { user, isLoggedIn } = useSelector((state: RootState) => state.auth)
 
-  if (!user || !isLoggedIn || user.role !== ROLE.ADMIN) {
+  if (!user || !isLoggedIn || user.role === ROLE.USER) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
