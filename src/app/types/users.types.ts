@@ -82,6 +82,37 @@ export interface IGetTopDonorsAdminRes {
   donors: DonorProp[]
 }
 
+export interface IGetAllUsersRes {
+  ok: boolean
+  users: DashboardUser[]
+  number: number
+}
+
+export interface DashboardUser {
+  id: number
+  first_name: string
+  last_name: string
+  email: string
+  phone_number: string
+  profile_pic: string
+  role: ROLE
+  is_anonymous: boolean
+  is_public: boolean
+  is_history_visible: boolean
+  is_deleted: boolean
+  is_email_verified: boolean
+  is_phone_number_verified: boolean
+  is_two_factor_authentication: boolean
+  is_logged_in: true
+  saveForLater: ISaveLater[]
+  notification: INotificationProp[]
+  user_settings: SettingsProps[]
+  created_at: Date
+  updated_at: Date
+  totalDonated: number
+  causesSupported: number
+}
+
 export interface DonorProp {
   id: number
   first_name: string

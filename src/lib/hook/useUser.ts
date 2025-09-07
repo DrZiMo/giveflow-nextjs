@@ -3,6 +3,7 @@ import {
   addPhoneNumber,
   changeProfilePic,
   deleteUserTemp,
+  getAllUsers,
   getDonationHistory,
   getSingleUser,
   getTopDonorsAdmin,
@@ -70,5 +71,12 @@ export const useGetTopDonorsAdmin = () => {
   return useQuery({
     queryKey: ['top-donors'],
     queryFn: getTopDonorsAdmin,
+  })
+}
+
+export const useGetAllUsers = () => {
+  return useQuery({
+    queryKey: ['all-users'],
+    queryFn: getAllUsers,
   })
 }

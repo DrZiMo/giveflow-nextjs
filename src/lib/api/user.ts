@@ -4,6 +4,7 @@ import {
   IUpdateUserRes,
   IDonationHistoryRes,
   IGetTopDonorsAdminRes,
+  IGetAllUsersRes,
 } from '@/app/types/users.types'
 import api from './axios'
 import axios from 'axios'
@@ -199,6 +200,23 @@ export const getTopDonorsAdmin = async () => {
     }
 
     return res.data as IGetTopDonorsAdminRes
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const getAllUsers = async () => {
+  try {
+    const res = await api.get(`${BackendBaseUrl}/api/auth/all`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to get all the users')
+    }
+
+    return res.data as IGetAllUsersRes
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data?.message || 'Unknown Error')
