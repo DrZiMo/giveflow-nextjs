@@ -74,9 +74,9 @@ export const useGetTopDonorsAdmin = () => {
   })
 }
 
-export const useGetAllUsers = () => {
+export const useGetAllUsers = (page: number, limit: number) => {
   return useQuery({
     queryKey: ['all-users'],
-    queryFn: getAllUsers,
+    queryFn: () => getAllUsers(page, limit),
   })
 }

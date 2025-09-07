@@ -3,7 +3,6 @@
 import { DashboardUser } from '@/app/types/users.types'
 import AllUsersTab from '@/components/AllUsersTab'
 import ProfileTitle from '@/components/ProfileTitle'
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -15,10 +14,17 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Button } from '@/components/ui/button'
 import { useGetAllUsers } from '@/lib/hook/useUser'
+import { useState } from 'react'
 
 const UsersPage = () => {
-  const { data: users, isLoading } = useGetAllUsers()
+  const [page, setPage] = useState(1)
+  const limit = 10
+
+  const { data: users, isLoading } = useGetAllUsers(page, limit)
+
+  const totalPages = users?.pagination.totalPages || 1
 
   return (
     <div>
@@ -39,10 +45,16 @@ const UsersPage = () => {
 
               <TabsContent value='all'>
                 <AllUsersTab
+                  pagination={{
+                    page,
+                    totalPages,
+                  }}
+                  onPageChange={setPage}
                   users={users?.users as DashboardUser[]}
                   isLoading={isLoading}
                 />
               </TabsContent>
+
               <TabsContent value='password'>
                 <Card>
                   <CardHeader>

@@ -208,9 +208,11 @@ export const getTopDonorsAdmin = async () => {
   }
 }
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (page: number, limit: number) => {
   try {
-    const res = await api.get(`${BackendBaseUrl}/api/auth/all`)
+    const res = await api.get(`${BackendBaseUrl}/api/auth/all`, {
+      params: { page, limit },
+    })
 
     if (!res.data.ok) {
       throw new Error(res.data.message || 'Failed to get all the users')

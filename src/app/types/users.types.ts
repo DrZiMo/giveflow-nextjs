@@ -86,6 +86,11 @@ export interface IGetAllUsersRes {
   ok: boolean
   users: DashboardUser[]
   number: number
+  pagination: {
+    page: number
+    limit: number
+    totalPages: number
+  }
 }
 
 export interface DashboardUser {
