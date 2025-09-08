@@ -9,7 +9,7 @@ import {
   TableRow,
 } from './ui/table'
 import Loading from '@/app/loading'
-import { Ban, Pencil, Trash, User } from 'lucide-react'
+import { Ban, Pencil, RotateCcw, Trash, User } from 'lucide-react'
 import dayjs from 'dayjs'
 import { Badge } from './ui/badge'
 import {
@@ -23,6 +23,10 @@ import {
 import relativeTime from 'dayjs/plugin/relativeTime'
 import UserPopover from './UserPopover'
 import Link from 'next/link'
+import { useRestoreUser, useSuspendUser } from '@/lib/hook/useUser'
+import toast from 'react-hot-toast'
+import { useQueryClient } from '@tanstack/react-query'
+import { toastId } from '@/app/_constants/backendBaseUrl'
 
 dayjs.extend(relativeTime)
 
@@ -42,6 +46,40 @@ const AllUsersTab = ({
   pagination,
   onPageChange,
 }: AllUsersTabProps) => {
+  const { mutate: suspendUser } = useSuspendUser()
+  const { mutate: restoreUser } = useRestoreUser()
+  const queryClient = useQueryClient()
+
+  const handleSuspend = (id: number) => {
+    suspendUser(
+      { id },
+      {
+        onSuccess: () => {
+          toast.success('User suspended successfully', { id: toastId })
+          queryClient.invalidateQueries({ queryKey: ['all-users'] })
+        },
+        onError: () => {
+          toast.error('Failed to suspend user', { id: toastId })
+        },
+      }
+    )
+  }
+
+  const handleRestore = (id: number) => {
+    restoreUser(
+      { id },
+      {
+        onSuccess: () => {
+          toast.success('User restored successfully', { id: toastId })
+          queryClient.invalidateQueries({ queryKey: ['all-users'] })
+        },
+        onError: () => {
+          toast.error('Failed to restore user', { id: toastId })
+        },
+      }
+    )
+  }
+
   if (isLoading) return <Loading />
 
   const buttonSize = 15
@@ -113,18 +151,31 @@ const AllUsersTab = ({
                 <TableCell>{dayjs(user.created_at).fromNow()}</TableCell>
                 <TableCell className='flex gap-2 justify-end items-center'>
                   <UserPopover buttonSize={buttonSize} userId={user.id} />
-                  <Pencil
-                    size={buttonSize}
-                    className='hover:text-primary transition cursor-pointer'
-                  />
-                  <Ban
-                    size={buttonSize}
-                    className='hover:text-primary transition cursor-pointer'
-                  />
-                  <Trash
-                    size={buttonSize}
-                    className='hover:text-red-700 transition cursor-pointer text-destructive'
-                  />
+                  {user.role === ROLE.ADMIN ? null : (
+                    <Pencil
+                      size={buttonSize}
+                      className='hover:text-primary transition cursor-pointer'
+                    />
+                  )}
+                  {user.is_deleted ? (
+                    <RotateCcw
+                      size={buttonSize}
+                      className='hover:text-primary transition cursor-pointer'
+                      onClick={() => handleRestore(user.id)}
+                    />
+                  ) : user.role === ROLE.ADMIN ? null : (
+                    <Ban
+                      size={buttonSize}
+                      className='hover:text-primary transition cursor-pointer'
+                      onClick={() => handleSuspend(user.id)}
+                    />
+                  )}
+                  {user.role === ROLE.ADMIN ? null : (
+                    <Trash
+                      size={buttonSize}
+                      className='hover:text-red-700 transition cursor-pointer text-destructive'
+                    />
+                  )}
                 </TableCell>
               </TableRow>
             ))}

@@ -2,19 +2,27 @@
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Ban, Eye, Mail, Pencil, Phone, User } from 'lucide-react'
+import { Ban, Eye, Mail, Pencil, Phone, RotateCcw, User } from 'lucide-react'
 import Loading from '@/app/loading'
-import { useSingleUser } from '@/lib/hook/useUser'
+import {
+  useRestoreUser,
+  useSingleUser,
+  useSuspendUser,
+} from '@/lib/hook/useUser'
 import { Badge } from './ui/badge'
 import { ROLE } from '@/app/types/users.types'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import dayjs from 'dayjs'
 import { Button } from './ui/button'
+import toast from 'react-hot-toast'
+import { toastId } from '@/app/_constants/backendBaseUrl'
+import { useQueryClient } from '@tanstack/react-query'
 
 dayjs.extend(relativeTime)
 
@@ -27,6 +35,42 @@ const UserPopover = ({
 }) => {
   const { data, isLoading, refetch } = useSingleUser(userId)
   const user = data?.user
+  const id = userId
+  const queryClient = useQueryClient()
+
+  const { mutate: suspendUser } = useSuspendUser()
+  const { mutate: restoreUser } = useRestoreUser()
+  const handleSuspend = () => {
+    suspendUser(
+      { id },
+      {
+        onSuccess: () => {
+          toast.success('User suspended successfully', { id: toastId })
+          refetch()
+          queryClient.invalidateQueries({ queryKey: ['all-users'] })
+        },
+        onError: () => {
+          toast.error('Failed to suspend user', { id: toastId })
+        },
+      }
+    )
+  }
+
+  const handleRestore = () => {
+    restoreUser(
+      { id },
+      {
+        onSuccess: () => {
+          toast.success('User restored successfully', { id: toastId })
+          refetch()
+          queryClient.invalidateQueries({ queryKey: ['all-users'] })
+        },
+        onError: () => {
+          toast.error('Failed to restore user', { id: toastId })
+        },
+      }
+    )
+  }
 
   return (
     <Dialog
@@ -110,13 +154,23 @@ const UserPopover = ({
             </div>
 
             <div className='flex justify-end gap-2 mt-6 items-center'>
-              <Button variant={'outline'}>Cancel</Button>
-              <Button variant={'default'}>
-                <Pencil /> Edit
-              </Button>
-              <Button variant={'destructive'}>
-                <Ban /> Suspend
-              </Button>
+              <DialogClose asChild>
+                <Button variant={'outline'}>Cancel</Button>
+              </DialogClose>
+              {user?.role === ROLE.ADMIN ? null : (
+                <Button variant={'default'}>
+                  <Pencil /> Edit
+                </Button>
+              )}
+              {user?.is_deleted ? (
+                <Button variant={'success'} onClick={handleRestore}>
+                  <RotateCcw /> Restore
+                </Button>
+              ) : user?.role === ROLE.ADMIN ? null : (
+                <Button variant={'destructive'} onClick={handleSuspend}>
+                  <Ban /> Suspend
+                </Button>
+              )}
             </div>
           </div>
         )}

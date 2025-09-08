@@ -7,6 +7,8 @@ import {
   getDonationHistory,
   getSingleUser,
   getTopDonorsAdmin,
+  restoreUser,
+  suspenseUser,
   toggleTwoFactorAuthentication,
   updatePrivacySettings,
   updateUser,
@@ -78,5 +80,17 @@ export const useGetAllUsers = (page: number, limit: number) => {
   return useQuery({
     queryKey: ['all-users'],
     queryFn: () => getAllUsers(page, limit),
+  })
+}
+
+export const useSuspendUser = () => {
+  return useMutation({
+    mutationFn: ({ id }: { id: number }) => suspenseUser({ id }),
+  })
+}
+
+export const useRestoreUser = () => {
+  return useMutation({
+    mutationFn: ({ id }: { id: number }) => restoreUser({ id }),
   })
 }

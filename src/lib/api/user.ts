@@ -226,3 +226,37 @@ export const getAllUsers = async (page: number, limit: number) => {
     throw error
   }
 }
+
+export const suspenseUser = async ({ id }: { id: number }) => {
+  try {
+    const res = await api.get(`${BackendBaseUrl}/api/auth/delete-temp/${id}`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to suspense user')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const restoreUser = async ({ id }: { id: number }) => {
+  try {
+    const res = await api.get(`${BackendBaseUrl}/api/auth/restore/${id}`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to restore user')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
