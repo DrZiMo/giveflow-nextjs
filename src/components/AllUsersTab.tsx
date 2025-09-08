@@ -9,7 +9,7 @@ import {
   TableRow,
 } from './ui/table'
 import Loading from '@/app/loading'
-import { Ban, Eye, Pencil, Trash, User } from 'lucide-react'
+import { Ban, Pencil, Trash, User } from 'lucide-react'
 import dayjs from 'dayjs'
 import { Badge } from './ui/badge'
 import {

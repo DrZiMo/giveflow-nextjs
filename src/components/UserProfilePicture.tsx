@@ -9,12 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import { UserProps } from '@/app/types/users.types'
+import { ROLE, UserProps } from '@/app/types/users.types'
 import {
   Bookmark,
+  ChartArea,
   Clock,
   LogOut,
   Newspaper,
+  Phone,
   Settings,
   User,
 } from 'lucide-react'
@@ -98,9 +100,20 @@ const UserProfilePicture = ({ user }: { user: UserProps }) => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href={'/contact'}>Contact Support</Link>
+          <Link href={'/contact'} className='w-full flex gap-2 items-center'>
+            <Phone /> Contact Support
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem disabled>Recurring</DropdownMenuItem>
+        {user.role === ROLE.ADMIN ? (
+          <DropdownMenuItem>
+            <Link
+              href={'/dashboard'}
+              className='w-full flex gap-2 items-center'
+            >
+              <ChartArea /> Dashboard
+            </Link>
+          </DropdownMenuItem>
+        ) : null}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut /> Log out
