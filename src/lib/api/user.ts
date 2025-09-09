@@ -48,6 +48,30 @@ export const updateUser = async (data: {
   }
 }
 
+export const updateUserAdmin = async (data: {
+  id: number
+  first_name: string
+  last_name: string
+}) => {
+  try {
+    const res = await api.put(
+      `${BackendBaseUrl}/api/auth//update-user-admin`,
+      data
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to update user')
+    }
+
+    return res.data as IUpdateUserRes
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
 export const changePassword = async (data: {
   currentPassword: string
   newPassword: string
@@ -96,12 +120,29 @@ export const updatePrivacySettings = async (data: {
   }
 }
 
-export const deleteUserTemp = async () => {
+export const deleteUser = async () => {
   try {
-    const res = await api.delete(`${BackendBaseUrl}/api/auth/delete-user-temp`)
+    const res = await api.delete(`${BackendBaseUrl}/api/auth/delete-current`)
 
     if (!res.data.ok) {
-      throw new Error(res.data.message || 'Failed to delete user temporarily')
+      throw new Error(res.data.message || 'Failed to delete user')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const deleteUserByAdmin = async (id: number) => {
+  try {
+    const res = await api.delete(`${BackendBaseUrl}/api/auth/delete/${id}`)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to delete user')
     }
 
     return res.data

@@ -9,7 +9,7 @@ import {
   TableRow,
 } from './ui/table'
 import Loading from '@/app/loading'
-import { Ban, Pencil, RotateCcw, Trash, User } from 'lucide-react'
+import { Ban, RotateCcw, Trash, User } from 'lucide-react'
 import dayjs from 'dayjs'
 import { Badge } from './ui/badge'
 import {
@@ -23,11 +23,27 @@ import {
 import relativeTime from 'dayjs/plugin/relativeTime'
 import UserPopover from './UserPopover'
 import Link from 'next/link'
-import { useRestoreUser, useSuspendUser } from '@/lib/hook/useUser'
+import {
+  useDeleteUserByAdmin,
+  useRestoreUser,
+  useSuspendUser,
+} from '@/lib/hook/useUser'
 import toast from 'react-hot-toast'
 import { useQueryClient } from '@tanstack/react-query'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { DashboardEditUser } from './Dashboard/DashboardEditUser'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from './ui/alert-dialog'
+import { Button } from './ui/button'
 
 dayjs.extend(relativeTime)
 
@@ -50,6 +66,20 @@ const AllUsersTab = ({
   const { mutate: suspendUser } = useSuspendUser()
   const { mutate: restoreUser } = useRestoreUser()
   const queryClient = useQueryClient()
+
+  const { mutate: deleteUser } = useDeleteUserByAdmin()
+
+  const handleDeleteAccount = (id: number) => {
+    deleteUser(id, {
+      onSuccess: () => {
+        toast.success('Account deleted successfully')
+        queryClient.invalidateQueries({ queryKey: ['all-users'] })
+      },
+      onError: () => {
+        toast.error('Error deleting account')
+      },
+    })
+  }
 
   const handleSuspend = (id: number) => {
     suspendUser(
@@ -169,10 +199,37 @@ const AllUsersTab = ({
                     />
                   )}
                   {user.role === ROLE.ADMIN ? null : (
-                    <Trash
-                      size={buttonSize}
-                      className='hover:text-red-700 transition cursor-pointer text-destructive'
-                    />
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Trash
+                          size={buttonSize}
+                          className='hover:text-red-700 transition cursor-pointer text-destructive'
+                        />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction asChild>
+                            <Button
+                              variant={'destructive'}
+                              onClick={() => handleDeleteAccount(user.id)}
+                            >
+                              Delete
+                            </Button>
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   )}
                 </TableCell>
               </TableRow>

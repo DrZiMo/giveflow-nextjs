@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useUpdateUser } from '@/lib/hook/useUser'
+import { useUpdateUserAdmin } from '@/lib/hook/useUser'
 import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 import FormError from '../FormError'
@@ -22,32 +22,32 @@ export function DashboardEditUser({
   isButton: boolean
   user: UserProps
 }) {
-  const [firstName, setFirstName] = useState<string | ''>()
-  const [lastName, setLastName] = useState<string | ''>()
-  const [error, setError] = useState<string | ''>()
-  const { mutate: updateUser } = useUpdateUser()
+  const [firstName, setFirstName] = useState<string | ''>(user.first_name || '')
+  const [lastName, setLastName] = useState<string | ''>(user.last_name || '')
+  const [error, setError] = useState<string | ''>('')
+  const { mutate: updateUser } = useUpdateUserAdmin()
   const queryClient = useQueryClient()
 
   const handleEdit = () => {
-    if (!firstName || !lastName) {
+    if (firstName?.trim() === '' || lastName?.trim() === '') {
       setError('Fill all the inputs')
       return
     }
 
     const data = {
-      id: user.id,
-      first_name: firstName,
-      last_name: lastName,
+      id: user.id!,
+      first_name: firstName!,
+      last_name: lastName!,
     }
 
     updateUser(data, {
       onSuccess: () => {
         toast.success('User updated successfully', { id: toastId })
-        queryClient.invalidateQueries({
-          queryKey: ['all-users', 'single-user'],
-        })
+        queryClient.invalidateQueries({ queryKey: ['all-users'] })
+        queryClient.invalidateQueries({ queryKey: ['single-user'] })
       },
     })
+    console.log(data)
   }
 
   return (

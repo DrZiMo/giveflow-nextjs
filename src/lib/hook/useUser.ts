@@ -2,7 +2,8 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   addPhoneNumber,
   changeProfilePic,
-  deleteUserTemp,
+  deleteUser,
+  deleteUserByAdmin,
   getAllUsers,
   getDonationHistory,
   getSingleUser,
@@ -12,6 +13,7 @@ import {
   toggleTwoFactorAuthentication,
   updatePrivacySettings,
   updateUser,
+  updateUserAdmin,
 } from '../api/user'
 
 export const useSingleUser = (userId: number) => {
@@ -28,6 +30,13 @@ export const useUpdateUser = () => {
   })
 }
 
+export const useUpdateUserAdmin = () => {
+  return useMutation({
+    mutationFn: (data: { id: number; first_name: string; last_name: string }) =>
+      updateUserAdmin(data),
+  })
+}
+
 export const useUpdatePrivacySettings = () => {
   return useMutation({
     mutationFn: (data: {
@@ -40,7 +49,13 @@ export const useUpdatePrivacySettings = () => {
 
 export const useDeleteUser = () => {
   return useMutation({
-    mutationFn: () => deleteUserTemp(),
+    mutationFn: () => deleteUser(),
+  })
+}
+
+export const useDeleteUserByAdmin = () => {
+  return useMutation({
+    mutationFn: (id: number) => deleteUserByAdmin(id),
   })
 }
 
