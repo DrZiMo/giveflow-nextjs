@@ -23,6 +23,7 @@ import { Button } from './ui/button'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useQueryClient } from '@tanstack/react-query'
+import { DashboardEditUser } from './Dashboard/DashboardEditUser'
 
 dayjs.extend(relativeTime)
 
@@ -158,9 +159,7 @@ const UserPopover = ({
                 <Button variant={'outline'}>Cancel</Button>
               </DialogClose>
               {user?.role === ROLE.ADMIN ? null : (
-                <Button variant={'default'}>
-                  <Pencil /> Edit
-                </Button>
+                <DashboardEditUser isButton={true} user={user!} />
               )}
               {user?.is_deleted ? (
                 <Button variant={'success'} onClick={handleRestore}>

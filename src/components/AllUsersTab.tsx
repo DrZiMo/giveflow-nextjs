@@ -27,6 +27,7 @@ import { useRestoreUser, useSuspendUser } from '@/lib/hook/useUser'
 import toast from 'react-hot-toast'
 import { useQueryClient } from '@tanstack/react-query'
 import { toastId } from '@/app/_constants/backendBaseUrl'
+import { DashboardEditUser } from './Dashboard/DashboardEditUser'
 
 dayjs.extend(relativeTime)
 
@@ -152,10 +153,7 @@ const AllUsersTab = ({
                 <TableCell className='flex gap-2 justify-end items-center'>
                   <UserPopover buttonSize={buttonSize} userId={user.id} />
                   {user.role === ROLE.ADMIN ? null : (
-                    <Pencil
-                      size={buttonSize}
-                      className='hover:text-primary transition cursor-pointer'
-                    />
+                    <DashboardEditUser isButton={false} user={user} />
                   )}
                   {user.is_deleted ? (
                     <RotateCcw
