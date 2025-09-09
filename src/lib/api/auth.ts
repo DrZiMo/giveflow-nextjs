@@ -85,7 +85,7 @@ export const singUpUser = async (data: ISignUpDataProp) => {
 
 export const sendCodeEmail = async () => {
   try {
-    const res = await axios.post(`${BackendBaseUrl}/api/auth/send-code-email`)
+    const res = await api.post(`${BackendBaseUrl}/api/auth/send-code-email`)
 
     if (!res.data.ok) {
       throw new Error(res.data.message || 'Sending code fieled')
