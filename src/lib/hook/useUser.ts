@@ -91,10 +91,14 @@ export const useGetTopDonorsAdmin = () => {
   })
 }
 
-export const useGetAllUsers = (page: number, limit: number) => {
+export const useGetAllUsers = (
+  page: number,
+  limit: number,
+  status: 'active' | 'suspend' | 'all' = 'all'
+) => {
   return useQuery({
-    queryKey: ['all-users'],
-    queryFn: () => getAllUsers(page, limit),
+    queryKey: ['all-users', page, limit, status],
+    queryFn: () => getAllUsers(page, limit, status),
   })
 }
 

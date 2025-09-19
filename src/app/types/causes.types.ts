@@ -20,8 +20,10 @@ export interface IGetFeaturedCausesRes {
 }
 
 export enum CausesStatus {
+  COMPLETED = 'COMPLETED',
   PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
   REJECTED = 'REJECTED',
 }
 
@@ -85,4 +87,14 @@ export interface IGetNumberOfDonorsRes {
 export interface ISupportedCause {
   cause: string
   amount: number
+}
+
+export interface ICreateCause {
+  name: string
+  short_description: string
+  long_description: string
+  amount_needed: string
+  category_id: string
+  urgency_level: string
+  expiration_date: string
 }

@@ -249,10 +249,14 @@ export const getTopDonorsAdmin = async () => {
   }
 }
 
-export const getAllUsers = async (page: number, limit: number) => {
+export const getAllUsers = async (
+  page: number,
+  limit: number,
+  status: 'active' | 'suspend' | 'all' = 'all'
+) => {
   try {
     const res = await api.get(`${BackendBaseUrl}/api/auth/all`, {
-      params: { page, limit },
+      params: { page, limit, status },
     })
 
     if (!res.data.ok) {

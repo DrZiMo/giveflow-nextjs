@@ -116,7 +116,9 @@ const AllUsersTab = ({
   const buttonSize = 15
   const { page, totalPages } = pagination
 
-  return (
+  return !users ? (
+    <p className='text-muted-forground'>No users found</p>
+  ) : (
     <Card>
       <CardContent>
         <Table className='rounded-md'>

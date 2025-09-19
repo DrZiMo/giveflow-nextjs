@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
+  createNewCause,
   getCauses,
   getFeaturedCauses,
   getNumberOfDonors,
@@ -44,5 +45,11 @@ export const useGetNumberOfDonors = (causeId: string) => {
 export const useToggleLikeCause = () => {
   return useMutation({
     mutationFn: (causeId: string) => toggleLikeCause(causeId),
+  })
+}
+
+export const useCreateCause = () => {
+  return useMutation({
+    mutationFn: (data: FormData) => createNewCause(data),
   })
 }

@@ -5,7 +5,7 @@ import Title from '@/components/Title'
 import CauseGroup from '@/components/CausesGroup'
 import Loading from '@/app/loading'
 import { useCauses } from '@/lib/hook/useCauses'
-import { ICause } from '@/app/types/causes.types'
+import { CausesStatus, ICause } from '@/app/types/causes.types'
 import { useState } from 'react'
 import {
   Select,
@@ -33,7 +33,8 @@ const CausePage = () => {
 
   const { data, isLoading } = useCauses(causeSearch, category, sort)
 
-  const causes = data?.causes || []
+  const causes =
+    data?.causes.filter((c: ICause) => c.status === CausesStatus.ACTIVE) || []
   const trendingCauses = causes.filter((c: ICause) => c.is_trending)
 
   return (

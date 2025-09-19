@@ -3,26 +3,17 @@
 import { DashboardUser } from '@/app/types/users.types'
 import AllUsersTab from '@/components/AllUsersTab'
 import ProfileTitle from '@/components/ProfileTitle'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Button } from '@/components/ui/button'
 import { useGetAllUsers } from '@/lib/hook/useUser'
 import { useState } from 'react'
 
 const UsersPage = () => {
   const [page, setPage] = useState(1)
   const limit = 10
+  const [status, setStatus] = useState<'all' | 'active' | 'suspend'>('all')
 
-  const { data: users, isLoading } = useGetAllUsers(page, limit)
+  const { data: users, isLoading } = useGetAllUsers(page, limit, status)
 
   const totalPages = users?.pagination.totalPages || 1
 
@@ -35,51 +26,50 @@ const UsersPage = () => {
       <Card className='my-8 py-0! px-0! bg-transparent border-0'>
         <CardContent className='px-0!'>
           <div className='flex w-full flex-col gap-6'>
-            <Tabs defaultValue='all'>
+            <Tabs
+              defaultValue='all'
+              onValueChange={(value) => {
+                setStatus(value as 'all' | 'active' | 'suspend')
+                setPage(1) // reset page when switching tab
+              }}
+            >
               <TabsList>
                 <TabsTrigger value='all'>
-                  All Users ({users?.number || '...'})
+                  All Users ({users?.number ?? '...'})
                 </TabsTrigger>
-                <TabsTrigger value='password'>Password</TabsTrigger>
+                <TabsTrigger value='active'>
+                  Active Users ({users?.activeCount ?? '...'})
+                </TabsTrigger>
+                <TabsTrigger value='suspend'>
+                  Suspended Users ({users?.suspendCount ?? '...'})
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value='all'>
                 <AllUsersTab
-                  pagination={{
-                    page,
-                    totalPages,
-                  }}
+                  pagination={{ page, totalPages }}
                   onPageChange={setPage}
                   users={users?.users as DashboardUser[]}
                   isLoading={isLoading}
                 />
               </TabsContent>
 
-              <TabsContent value='password'>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Password</CardTitle>
-                    <CardDescription>
-                      Change your password here. After saving, you&apos;ll be
-                      logged out.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className='grid gap-6'>
-                    <div className='grid gap-3'>
-                      <Label htmlFor='tabs-demo-current'>
-                        Current password
-                      </Label>
-                      <Input id='tabs-demo-current' type='password' />
-                    </div>
-                    <div className='grid gap-3'>
-                      <Label htmlFor='tabs-demo-new'>New password</Label>
-                      <Input id='tabs-demo-new' type='password' />
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button>Save password</Button>
-                  </CardFooter>
-                </Card>
+              <TabsContent value='active'>
+                <AllUsersTab
+                  pagination={{ page, totalPages }}
+                  onPageChange={setPage}
+                  users={users?.users as DashboardUser[]}
+                  isLoading={isLoading}
+                />
+              </TabsContent>
+
+              <TabsContent value='suspend'>
+                <AllUsersTab
+                  pagination={{ page, totalPages }}
+                  onPageChange={setPage}
+                  users={users?.users as DashboardUser[]}
+                  isLoading={isLoading}
+                />
               </TabsContent>
             </Tabs>
           </div>
