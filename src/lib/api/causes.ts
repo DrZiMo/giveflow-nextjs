@@ -89,3 +89,24 @@ export const createNewCause = async (data: FormData) => {
     throw error
   }
 }
+
+export const toggleActivity = async (id: string) => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/causes/toggle-active`, {
+      id,
+    })
+
+    if (!res.data.ok) {
+      throw new Error(
+        res.data.message || 'Failed to toggle activeness of the cause'
+      )
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}

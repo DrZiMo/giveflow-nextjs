@@ -7,6 +7,7 @@ import { Suspense } from 'react'
 import Loading from '@/app/loading'
 import Link from 'next/link'
 import { useCauses, useFeaturedCauses } from '@/lib/hook/useCauses'
+import { CausesStatus, ICause } from '@/app/types/causes.types'
 
 const FeaturedCauses = () => {
   const { data, isLoading } = useFeaturedCauses()
@@ -36,7 +37,9 @@ const FeaturedCauses = () => {
 
 const SimpleCauses = () => {
   const { data } = useCauses()
-  const causes = data?.causes
+  const causes = data?.causes.filter(
+    (c: ICause) => c.status === CausesStatus.ACTIVE
+  )
   return !causes ? (
     'Cause not found'
   ) : (

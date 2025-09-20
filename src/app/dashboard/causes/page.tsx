@@ -21,7 +21,7 @@ import {
   X,
 } from 'lucide-react'
 import Loading from '@/app/loading'
-import { useCauses } from '@/lib/hook/useCauses'
+import { useCauses, useToggleActive } from '@/lib/hook/useCauses'
 import { CausesStatus, ICause } from '@/app/types/causes.types'
 import { useState, useMemo } from 'react'
 import {
@@ -38,6 +38,9 @@ import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
+import toast from 'react-hot-toast'
+import { toastId } from '@/app/_constants/backendBaseUrl'
+import { useQueryClient } from '@tanstack/react-query'
 
 // helper function
 const shortenText = (text: string, maxLength = 80) => {
@@ -60,7 +63,22 @@ const CausePage = () => {
   const [category, setCategory] = useState('All')
   const [sort, setSort] = useState('Newest Causes')
 
+  const queryClient = useQueryClient()
+
   const { data, isLoading } = useCauses(causeSearch, category, sort)
+  const toggleActive = useToggleActive()
+
+  const handleActivity = (id: string) => {
+    toggleActive.mutate(id, {
+      onSuccess: (res) => {
+        toast.success(res.message, { id: toastId })
+        queryClient.invalidateQueries({ queryKey: ['causes'] })
+      },
+      onError: () => {
+        toast.error('Failed to toggle activeness', { id: toastId })
+      },
+    })
+  }
 
   const categoryIcon: Record<string, React.ElementType> = {
     Environment: Leaf,
@@ -226,11 +244,17 @@ const CausePage = () => {
                         </Button>
                       )}
                       {s.status !== CausesStatus.ACTIVE ? (
-                        <Button variant={'success'}>
+                        <Button
+                          variant={'success'}
+                          onClick={() => handleActivity(s.id)}
+                        >
                           <Check />
                         </Button>
                       ) : (
-                        <Button variant={'destructive'}>
+                        <Button
+                          variant={'destructive'}
+                          onClick={() => handleActivity(s.id)}
+                        >
                           <X />
                         </Button>
                       )}

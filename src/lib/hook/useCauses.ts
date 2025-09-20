@@ -7,6 +7,7 @@ import {
   getFeaturedCauses,
   getNumberOfDonors,
   getSingleCause,
+  toggleActivity,
   toggleLikeCause,
 } from '../api/causes'
 
@@ -51,5 +52,11 @@ export const useToggleLikeCause = () => {
 export const useCreateCause = () => {
   return useMutation({
     mutationFn: (data: FormData) => createNewCause(data),
+  })
+}
+
+export const useToggleActive = () => {
+  return useMutation({
+    mutationFn: (id: string) => toggleActivity(id),
   })
 }
