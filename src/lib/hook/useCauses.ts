@@ -3,13 +3,17 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   createNewCause,
+  deleteCause,
   getCauses,
   getFeaturedCauses,
   getNumberOfDonors,
   getSingleCause,
   toggleActivity,
+  toggleFeatured,
   toggleLikeCause,
+  updateCause,
 } from '../api/causes'
+import { IUpdateCaue } from '@/app/types/causes.types'
 
 export const useCauses = (
   cause_search?: string,
@@ -58,5 +62,23 @@ export const useCreateCause = () => {
 export const useToggleActive = () => {
   return useMutation({
     mutationFn: (id: string) => toggleActivity(id),
+  })
+}
+
+export const useDeleteCause = () => {
+  return useMutation({
+    mutationFn: (id: string) => deleteCause(id),
+  })
+}
+
+export const useToggleFeatured = () => {
+  return useMutation({
+    mutationFn: (id: string) => toggleFeatured(id),
+  })
+}
+
+export const useUpdateCause = () => {
+  return useMutation({
+    mutationFn: (data: IUpdateCaue) => updateCause(data),
   })
 }

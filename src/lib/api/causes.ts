@@ -4,6 +4,7 @@ import {
   IGetFeaturedCausesRes,
   IGetNumberOfDonorsRes,
   IGetSingleCauseRes,
+  IUpdateCaue,
 } from '@/app/types/causes.types'
 import axios from 'axios'
 import api from './axios'
@@ -100,6 +101,61 @@ export const toggleActivity = async (id: string) => {
       throw new Error(
         res.data.message || 'Failed to toggle activeness of the cause'
       )
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const deleteCause = async (id: string) => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/causes/delete-perm`, {
+      id,
+    })
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to delete cause')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const toggleFeatured = async (id: string) => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/causes/toggle-featured`, {
+      cause_id: id,
+    })
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to toggle featured cause')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const updateCause = async (data: IUpdateCaue) => {
+  try {
+    const res = await api.put(`${BackendBaseUrl}/api/causes/update`, data)
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to update cause')
     }
 
     return res.data

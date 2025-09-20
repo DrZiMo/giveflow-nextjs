@@ -9,6 +9,8 @@ import { Suspense, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { useGetUserSaves } from '@/lib/hook/useSaves'
+import { CausesStatus } from '@/app/types/causes.types'
+import { ISavedCause } from '@/app/types/saves'
 
 const SavedCauses = () => {
   const router = useRouter()
@@ -34,7 +36,9 @@ const SavedCauses = () => {
 
   if (isLoading) return <Loading />
 
-  const causeSaved = savedCauses?.savedCauses
+  const causeSaved = savedCauses?.savedCauses.filter(
+    (c: ISavedCause) => c.cause.status === CausesStatus.ACTIVE
+  )
 
   return (
     <div>

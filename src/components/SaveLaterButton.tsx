@@ -42,6 +42,7 @@ const SaveLaterButton = ({ size = 20, causeId }: SaveLaterButtonProps) => {
     toggleSave(causeId, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['whoami'] })
+        queryClient.invalidateQueries({ queryKey: ['user-saves'] })
         dispatch(setUser(user))
         toast.success(`Cause ${action} successfully`, { id: toastId })
       },

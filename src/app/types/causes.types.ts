@@ -98,3 +98,14 @@ export interface ICreateCause {
   urgency_level: string
   expiration_date: string
 }
+
+export interface IUpdateCaue {
+  id: string
+  name?: string
+  short_description?: string
+  long_description?: string
+  amount_needed?: number
+  category_id?: string
+  expiration_date?: string
+  urgency_level?: string
+}

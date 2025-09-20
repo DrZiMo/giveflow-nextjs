@@ -17,10 +17,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useQueryClient } from '@tanstack/react-query'
-import { useCreateCause } from '@/lib/hook/useCauses'
 import { useRouter } from 'next/navigation'
+import { ICause } from '@/app/types/causes.types'
+import { useUpdateCause } from '@/lib/hook/useCauses'
 
 interface FormData {
+  id: string
   name: string
   short_description: string
   long_description: string
@@ -30,24 +32,24 @@ interface FormData {
 }
 
 interface Props {
-  causePic: File | null
+  cause: ICause
 }
 
-const NewCauseForm: React.FC<Props> = ({ causePic }) => {
+const EditCauseForm: React.FC<Props> = ({ cause }) => {
   const [newCategory, setNewCategory] = useState<string | ''>()
   const [formData, setFormData] = useState({
-    name: '',
-    short_description: '',
-    long_description: '',
-    amount_needed: '',
-    category_id: '',
-    urgency_level: '',
+    name: cause.name || '',
+    short_description: cause.short_description || '',
+    long_description: cause.long_description || '',
+    amount_needed: cause.amount_needed || 0,
+    category_id: cause.category_id || '',
+    urgency_level: cause.urgency_level || '',
   })
   const queryClient = useQueryClient()
 
   const { data, isLoading } = useGetAllCategory()
   const addNewCategory = useAddNewCategory()
-  const addNewCause = useCreateCause()
+  const updateCause = useUpdateCause()
   const router = useRouter()
 
   const handleChange = <K extends keyof FormData>(
@@ -59,25 +61,28 @@ const NewCauseForm: React.FC<Props> = ({ causePic }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const fd = new FormData()
-    if (causePic) fd.append('causePic', causePic)
-    fd.append('name', formData.name)
-    fd.append('short_description', formData.short_description)
-    fd.append('long_description', formData.long_description)
-    fd.append('amount_needed', formData.amount_needed.toString())
-    fd.append('category_id', formData.category_id)
-    fd.append('urgency_level', formData.urgency_level)
-    console.log('Submitting cause:', fd)
 
-    addNewCause.mutate(fd, {
-      onSuccess: () => {
-        toast.success('Create cause successfully', { id: toastId })
-        router.push('/dashboard/causes')
+    updateCause.mutate(
+      {
+        id: cause.id,
+        name: formData.name,
+        short_description: formData.short_description,
+        long_description: formData.long_description,
+        amount_needed: Number(formData.amount_needed),
+        category_id: formData.category_id,
+        urgency_level: formData.urgency_level,
       },
-      onError: (err: Error) => {
-        toast.error(err.message, { id: toastId })
-      },
-    })
+      {
+        onSuccess: () => {
+          toast.success('Create cause successfully', { id: toastId })
+          queryClient.invalidateQueries({ queryKey: ['causes'] })
+          router.push('/dashboard/causes')
+        },
+        onError: (err: Error) => {
+          toast.error(err.message, { id: toastId })
+        },
+      }
+    )
   }
 
   const handleNewCategory = (newCategory: string) => {
@@ -97,7 +102,7 @@ const NewCauseForm: React.FC<Props> = ({ causePic }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-6 p-4 max-w-2xl mx-auto'>
+    <form onSubmit={handleSubmit} className='space-y-6 mt-10 mx-auto'>
       {/* Cause Name */}
       <div className='space-y-3'>
         <Label htmlFor='name'>Cause Name</Label>
@@ -260,11 +265,11 @@ const NewCauseForm: React.FC<Props> = ({ causePic }) => {
         </Select>
       </div>
 
-      <Button type='submit' className='w-full' disabled={addNewCause.isPending}>
-        Create Cause
+      <Button type='submit' className='w-full' disabled={updateCause.isPending}>
+        Update Cause
       </Button>
     </form>
   )
 }
 
-export default NewCauseForm
+export default EditCauseForm

@@ -21,7 +21,12 @@ import {
   X,
 } from 'lucide-react'
 import Loading from '@/app/loading'
-import { useCauses, useToggleActive } from '@/lib/hook/useCauses'
+import {
+  useCauses,
+  useDeleteCause,
+  useToggleActive,
+  useToggleFeatured,
+} from '@/lib/hook/useCauses'
 import { CausesStatus, ICause } from '@/app/types/causes.types'
 import { useState, useMemo } from 'react'
 import {
@@ -41,6 +46,17 @@ import { Badge } from '@/components/ui/badge'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useQueryClient } from '@tanstack/react-query'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
 // helper function
 const shortenText = (text: string, maxLength = 80) => {
@@ -67,6 +83,8 @@ const CausePage = () => {
 
   const { data, isLoading } = useCauses(causeSearch, category, sort)
   const toggleActive = useToggleActive()
+  const deleteCause = useDeleteCause()
+  const toggleFeatured = useToggleFeatured()
 
   const handleActivity = (id: string) => {
     toggleActive.mutate(id, {
@@ -76,6 +94,30 @@ const CausePage = () => {
       },
       onError: () => {
         toast.error('Failed to toggle activeness', { id: toastId })
+      },
+    })
+  }
+
+  const handleDelete = (id: string) => {
+    deleteCause.mutate(id, {
+      onSuccess: (res) => {
+        toast.success(res.message, { id: toastId })
+        queryClient.invalidateQueries({ queryKey: ['causes'] })
+      },
+      onError: () => {
+        toast.error('Failed to delete cause', { id: toastId })
+      },
+    })
+  }
+
+  const handleFeatured = (id: string) => {
+    toggleFeatured.mutate(id, {
+      onSuccess: (res) => {
+        toast.success(res.message, { id: toastId })
+        queryClient.invalidateQueries({ queryKey: ['causes'] })
+      },
+      onError: () => {
+        toast.error('Failed to toggle featured cause', { id: toastId })
       },
     })
   }
@@ -231,15 +273,17 @@ const CausePage = () => {
                     </div>
 
                     <div className='flex items-center gap-2 mt-4'>
-                      <Button>
-                        <Pencil />
-                      </Button>
-                      {s.is_featured ? (
+                      <Link href={`/dashboard/causes/update/${s.id}`}>
                         <Button>
+                          <Pencil />
+                        </Button>
+                      </Link>
+                      {s.is_featured ? (
+                        <Button onClick={() => handleFeatured(s.id)}>
                           <StarOff />
                         </Button>
                       ) : (
-                        <Button>
+                        <Button onClick={() => handleFeatured(s.id)}>
                           <Star />
                         </Button>
                       )}
@@ -258,9 +302,36 @@ const CausePage = () => {
                           <X />
                         </Button>
                       )}
-                      <Button variant={'destructive'}>
-                        <Trash />
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant={'destructive'}>
+                            <Trash />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete this cause and remove the data
+                              from our servers.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction asChild>
+                              <Button
+                                variant={'destructive'}
+                                onClick={() => handleDelete(s.id)}
+                              >
+                                Delete
+                              </Button>
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </div>
                 </Card>

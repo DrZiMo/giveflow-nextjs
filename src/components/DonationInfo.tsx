@@ -50,7 +50,7 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
     (selectedCause.current_amount / selectedCause.amount_needed) * 100
 
   const onSubmit = (data: DonationFormValues) => {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       router.push('/auth/login')
       return
     }
