@@ -7,7 +7,7 @@ import { ICause } from '@/app/types/causes.types'
 const CauseInfo = ({ selectedCause }: { selectedCause: ICause }) => {
   return (
     <div>
-      <BackButton />
+      <BackButton link={'/causes'} />
       <div className='mt-8 space-y-4'>
         <BadgeCustome>
           <HeartHandshake size={20} /> Make Donation

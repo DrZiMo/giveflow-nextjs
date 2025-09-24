@@ -55,7 +55,7 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
       return
     }
     createDonation(
-      { cause_id: data.cause_id, amount: data.amount },
+      { cause_id: selectedCause.id, amount: data.amount },
       {
         onSuccess: (res) => {
           if (res?.sessionUrl) {
@@ -83,6 +83,7 @@ const DonationInfo = ({ selectedCause }: { selectedCause: ICause }) => {
                 causeId={selectedCause.id}
                 likes={selectedCause._count.like}
                 buttonSize={buttonSize}
+                cause={selectedCause}
               />
             </div>
           </CardHeader>

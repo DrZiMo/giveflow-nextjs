@@ -1,3 +1,4 @@
+import { ICause } from '@/app/types/causes.types'
 import { useToggleLikeCause } from '@/lib/hook/useCauses'
 import { AppDispatch, RootState } from '@/store'
 import { setLikedCauses } from '@/store/likeSlice'
@@ -10,9 +11,15 @@ interface ILikeButtonProps {
   likes: number
   buttonSize: number
   causeId: string
+  cause: ICause
 }
 
-const LikeButton = ({ likes, buttonSize, causeId }: ILikeButtonProps) => {
+const LikeButton = ({
+  likes,
+  buttonSize,
+  causeId,
+  cause,
+}: ILikeButtonProps) => {
   const likedCauses = useSelector(
     (state: RootState) => state.likedCauses.causes
   )
@@ -38,7 +45,13 @@ const LikeButton = ({ likes, buttonSize, causeId }: ILikeButtonProps) => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['user-like'] })
         queryClient.invalidateQueries({ queryKey: ['whoami'] })
-        dispatch(setLikedCauses(likedCauses))
+        if (optimisticLike) {
+          dispatch(
+            setLikedCauses(likedCauses.filter((c) => c.cause.id !== causeId))
+          )
+        } else {
+          dispatch(setLikedCauses([...likedCauses, { cause }]))
+        }
       },
       onError: () => {
         startTransition(() => {
