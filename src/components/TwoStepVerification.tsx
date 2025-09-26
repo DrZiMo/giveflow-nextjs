@@ -1,5 +1,5 @@
 import { Smartphone } from 'lucide-react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { useToggleTwoFactorAuthentication } from '@/lib/hook/useUser'
@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useQueryClient } from '@tanstack/react-query'
+import { useAppDispatch } from '@/store/redux/hooks'
+import { logout } from '@/store/authSlice'
 
 const TwoStepVerification = () => {
   const twoFAEnabled = useSelector(
@@ -15,6 +17,7 @@ const TwoStepVerification = () => {
   )
   const { mutate: toggle2FA, isPending } = useToggleTwoFactorAuthentication()
   const [isEnabled, setIsEnabled] = useState<boolean>(twoFAEnabled)
+  const dispatch = useAppDispatch()
   const queryClient = useQueryClient()
 
   const handleToggle = () => {
@@ -28,6 +31,7 @@ const TwoStepVerification = () => {
         const whoami = queryClient.getQueryData(['whoami'])
         if (whoami) {
           await queryClient.refetchQueries({ queryKey: ['whoami'] })
+          dispatch(logout())
         }
       },
       onError: () => {

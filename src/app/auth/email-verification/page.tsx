@@ -25,6 +25,9 @@ import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useRouter, useSearchParams } from 'next/navigation'
 import FormError from '@/components/FormError'
+import { useAppDispatch } from '@/store/redux/hooks'
+import { loginSuccess } from '@/store/authSlice'
+import { UserProps } from '@/app/types/users.types'
 
 const EmailVerification = () => {
   const searchParams = useSearchParams()
@@ -39,6 +42,7 @@ const EmailVerification = () => {
 
   const didSendCode = useRef(false)
   const router = useRouter()
+  const dispatch = useAppDispatch()
 
   // Countdown timer
   useEffect(() => {
@@ -67,8 +71,9 @@ const EmailVerification = () => {
     verifyEmail.mutate(
       { code: otp },
       {
-        onSuccess: () => {
+        onSuccess: (res) => {
           toast.success('Email verified successfully', { id: toastId })
+          dispatch(loginSuccess(res.user as UserProps))
           router.replace('/causes')
         },
         onError: () => toast.error('Email verification failed'),

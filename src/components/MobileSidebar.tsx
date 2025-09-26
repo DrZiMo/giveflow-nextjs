@@ -5,9 +5,12 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
 
 export function MobileSidebar() {
   const pathname = usePathname()
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const tabs = [
     { name: 'Home', href: '/' },
@@ -51,14 +54,16 @@ export function MobileSidebar() {
               })}
             </div>
           </div>
-          <div className='buttons flex gap-3 mt-10'>
-            <Link href={'/auth/login'}>
-              <Button variant={'outline'}>Login</Button>
-            </Link>
-            <Link href={'/auth/signup'}>
-              <Button>Signup</Button>
-            </Link>
-          </div>
+          {isLoggedIn ? (
+            <div className='buttons flex gap-3 mt-10'>
+              <Link href={'/auth/login'}>
+                <Button variant={'outline'}>Login</Button>
+              </Link>
+              <Link href={'/auth/signup'}>
+                <Button>Signup</Button>
+              </Link>
+            </div>
+          ) : null}
         </div>
       </SheetContent>
     </Sheet>
