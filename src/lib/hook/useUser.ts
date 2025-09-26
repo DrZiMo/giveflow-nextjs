@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   addPhoneNumber,
   changeProfilePic,
+  changeUserRole,
   deleteUser,
   deleteUserByAdmin,
   getAllUsers,
@@ -9,12 +10,14 @@ import {
   getSingleUser,
   getTopDonorsAdmin,
   restoreUser,
+  sendMessageEmail,
   suspenseUser,
   toggleTwoFactorAuthentication,
   updatePrivacySettings,
   updateUser,
   updateUserAdmin,
 } from '../api/user'
+import { ISendMessageEmail, ROLE } from '@/app/types/users.types'
 
 export const useSingleUser = (userId: number) => {
   return useQuery({
@@ -94,11 +97,12 @@ export const useGetTopDonorsAdmin = () => {
 export const useGetAllUsers = (
   page: number,
   limit: number,
-  status: 'active' | 'suspend' | 'all' = 'all'
+  status: 'active' | 'suspend' | 'all' = 'all',
+  role: ROLE | 'all' = ROLE.ADMIN
 ) => {
   return useQuery({
-    queryKey: ['all-users', page, limit, status],
-    queryFn: () => getAllUsers(page, limit, status),
+    queryKey: ['all-users', page, limit, status, role],
+    queryFn: () => getAllUsers(page, limit, status, role),
   })
 }
 
@@ -111,5 +115,18 @@ export const useSuspendUser = () => {
 export const useRestoreUser = () => {
   return useMutation({
     mutationFn: ({ id }: { id: number }) => restoreUser({ id }),
+  })
+}
+
+export const useChangeRole = () => {
+  return useMutation({
+    mutationFn: ({ id, role }: { id: number; role: ROLE }) =>
+      changeUserRole(id, role),
+  })
+}
+
+export const useSendMessageEmail = () => {
+  return useMutation({
+    mutationFn: (data: ISendMessageEmail) => sendMessageEmail(data),
   })
 }

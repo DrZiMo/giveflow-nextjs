@@ -13,7 +13,7 @@ const UsersPage = () => {
   const limit = 10
   const [status, setStatus] = useState<'all' | 'active' | 'suspend'>('all')
 
-  const { data: users, isLoading } = useGetAllUsers(page, limit, status)
+  const { data: users, isLoading } = useGetAllUsers(page, limit, status, 'all')
 
   const totalPages = users?.pagination.totalPages || 1
 
@@ -23,6 +23,7 @@ const UsersPage = () => {
         title='User Management'
         subtitle='Manage donors, recipients, and user approvals'
       />
+
       <Card className='my-8 py-0! px-0! bg-transparent border-0'>
         <CardContent className='px-0!'>
           <div className='flex w-full flex-col gap-6'>

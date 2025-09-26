@@ -49,11 +49,19 @@ export interface IUpdateUserRes {
 export enum ROLE {
   USER = 'USER',
   ADMIN = 'ADMIN',
+  MODERATOR = 'MODERATOR',
 }
 
 export interface IDonationHistoryRes {
   ok: boolean
   history: IDonationCause[]
+}
+
+export interface ISendMessageEmail {
+  full_name: string
+  email: string
+  subject: string
+  message: string
 }
 
 export interface ISignUpDataProp {

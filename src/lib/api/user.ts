@@ -5,6 +5,8 @@ import {
   IDonationHistoryRes,
   IGetTopDonorsAdminRes,
   IGetAllUsersRes,
+  ROLE,
+  ISendMessageEmail,
 } from '@/app/types/users.types'
 import api from './axios'
 import axios from 'axios'
@@ -252,11 +254,12 @@ export const getTopDonorsAdmin = async () => {
 export const getAllUsers = async (
   page: number,
   limit: number,
-  status: 'active' | 'suspend' | 'all' = 'all'
+  status: 'active' | 'suspend' | 'all' = 'all',
+  role: ROLE | 'all' = ROLE.ADMIN
 ) => {
   try {
     const res = await api.get(`${BackendBaseUrl}/api/auth/all`, {
-      params: { page, limit, status },
+      params: { page, limit, status, role },
     })
 
     if (!res.data.ok) {
@@ -295,6 +298,46 @@ export const restoreUser = async ({ id }: { id: number }) => {
 
     if (!res.data.ok) {
       throw new Error(res.data.message || 'Failed to restore user')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const changeUserRole = async (id: number, role: ROLE) => {
+  try {
+    const res = await api.post(`${BackendBaseUrl}/api/auth/change-role`, {
+      id,
+      role,
+    })
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to change user role')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
+export const sendMessageEmail = async (data: ISendMessageEmail) => {
+  try {
+    const res = await api.post(
+      `${BackendBaseUrl}/api/auth/send-message-email`,
+      data
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Failed to send email')
     }
 
     return res.data

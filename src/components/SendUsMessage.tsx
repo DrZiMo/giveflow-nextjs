@@ -1,8 +1,9 @@
+'use client'
+
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from './ui/card'
@@ -11,8 +12,44 @@ import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Textarea } from './ui/textarea'
 import { Send } from 'lucide-react'
+import { useSendMessageEmail } from '@/lib/hook/useUser'
+import React from 'react'
+import { ISendMessageEmail } from '@/app/types/users.types'
+import toast from 'react-hot-toast'
+import { toastId } from '@/app/_constants/backendBaseUrl'
 
 const SendUsMessage = () => {
+  const { mutate: sendMessageEmail, isPending } = useSendMessageEmail()
+
+  const handleSendMessageEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.currentTarget)
+
+    const full_name = formData.get('full_name') as string
+    const email = formData.get('email') as string
+    const subject = formData.get('subject') as string
+    const message = formData.get('message') as string
+
+    if (!full_name || !email || !subject || !message) return
+
+    const data: ISendMessageEmail = {
+      full_name,
+      email,
+      subject,
+      message,
+    }
+
+    sendMessageEmail(data, {
+      onSuccess: (res) => {
+        toast.success(res.message, { id: toastId })
+      },
+      onError: () => {
+        toast.error('Failed to send message', { id: toastId })
+      },
+    })
+  }
+
   return (
     <Card className='w-full'>
       <CardHeader>
@@ -23,13 +60,14 @@ const SendUsMessage = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form onSubmit={handleSendMessageEmail}>
           <div className='flex flex-col gap-6'>
             <div className='flex flex-col md:flex-row justify-between gap-5'>
               <div className='grid gap-2 w-full'>
                 <Label htmlFor='fullname'>Full Name *</Label>
                 <Input
                   id='fullname'
+                  name='full_name'
                   type='text'
                   placeholder='Enter your full name'
                   required
@@ -39,6 +77,7 @@ const SendUsMessage = () => {
                 <Label htmlFor='email'>Email Address *</Label>
                 <Input
                   id='email'
+                  name='email'
                   type='email'
                   placeholder='Enter your email address'
                   required
@@ -49,6 +88,7 @@ const SendUsMessage = () => {
               <Label htmlFor='subject'>Subject *</Label>
               <Input
                 id='subject'
+                name='subject'
                 type='text'
                 placeholder='What is this about?'
                 required
@@ -58,6 +98,7 @@ const SendUsMessage = () => {
               <Label htmlFor='message'>Message *</Label>
               <Textarea
                 id='message'
+                name='message'
                 placeholder='Tell us more about your inquiry ...'
                 className='h-auto min-h-[150px] resize-none'
                 rows={6}
@@ -65,13 +106,11 @@ const SendUsMessage = () => {
               />
             </div>
           </div>
+          <Button type='submit' className='w-full mt-6' disabled={isPending}>
+            <Send /> Send Message
+          </Button>
         </form>
       </CardContent>
-      <CardFooter>
-        <Button type='submit' className='w-full'>
-          <Send /> Send Message
-        </Button>
-      </CardFooter>
     </Card>
   )
 }

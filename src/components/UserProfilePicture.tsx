@@ -104,7 +104,7 @@ const UserProfilePicture = ({ user }: { user: UserProps }) => {
             <Phone /> Contact Support
           </Link>
         </DropdownMenuItem>
-        {user.role === ROLE.ADMIN ? (
+        {user.role !== ROLE.USER ? (
           <DropdownMenuItem>
             <Link
               href={'/dashboard'}
