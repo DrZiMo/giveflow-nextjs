@@ -54,7 +54,7 @@ export function MobileSidebar() {
               })}
             </div>
           </div>
-          {isLoggedIn ? (
+          {!isLoggedIn ? (
             <div className='buttons flex gap-3 mt-10'>
               <Link href={'/auth/login'}>
                 <Button variant={'outline'}>Login</Button>

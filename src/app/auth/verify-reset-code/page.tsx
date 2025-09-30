@@ -16,7 +16,10 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp'
-import { useSendCodeEmail, useVerifyResetCode } from '@/lib/hook/useAuth'
+import {
+  useSendForgetPasswordCodeEmail,
+  useVerifyResetCode,
+} from '@/lib/hook/useAuth'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -34,7 +37,7 @@ const EmailVerification = () => {
 
   const didSendCode = useRef(false)
 
-  const { mutate: sendCode } = useSendCodeEmail()
+  const { mutate: sendCode } = useSendForgetPasswordCodeEmail()
   const { mutate: verifyReset, isPending, error } = useVerifyResetCode()
 
   // Countdown timer
@@ -49,13 +52,13 @@ const EmailVerification = () => {
 
   useEffect(() => {
     if (!didSendCode.current) {
-      sendCode()
+      sendCode(email!)
       didSendCode.current = true
     }
-  }, [sendCode])
+  }, [sendCode, email])
 
   const resendCode = () => {
-    sendCode()
+    sendCode(email!)
     setTimer(40)
     setCanResend(false)
   }

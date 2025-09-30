@@ -85,8 +85,9 @@ const EmailVerification = () => {
     verify2FA.mutate(
       { code: otp },
       {
-        onSuccess: () => {
+        onSuccess: (res) => {
           toast.success('Verified successfully', { id: toastId })
+          dispatch(loginSuccess(res.user as UserProps))
           router.replace('/causes')
         },
         onError: () => toast.error('Verification failed'),

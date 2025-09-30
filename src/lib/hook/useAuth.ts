@@ -6,6 +6,7 @@ import {
   logoutUser,
   resetPassword,
   sendCodeEmail,
+  sendForgetPasswordCodeEmail,
   singUpUser,
   verifyCode,
   verifyResetCode,
@@ -56,6 +57,12 @@ export const useChangePassword = () => {
 export const useSendCodeEmail = () => {
   return useMutation({
     mutationFn: sendCodeEmail,
+  })
+}
+
+export const useSendForgetPasswordCodeEmail = () => {
+  return useMutation({
+    mutationFn: (email: string) => sendForgetPasswordCodeEmail(email),
   })
 }
 

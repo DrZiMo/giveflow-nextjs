@@ -100,6 +100,26 @@ export const sendCodeEmail = async () => {
   }
 }
 
+export const sendForgetPasswordCodeEmail = async (email: string) => {
+  try {
+    const res = await api.post(
+      `${BackendBaseUrl}/api/auth/send-forget-password-code-email`,
+      { email }
+    )
+
+    if (!res.data.ok) {
+      throw new Error(res.data.message || 'Sending code failed')
+    }
+
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data?.message || 'Unknown Error')
+    }
+    throw error
+  }
+}
+
 export const verifyCode = async (code: { code: string }) => {
   try {
     const res = await api.post(`${BackendBaseUrl}/api/auth/verify-email`, code)
