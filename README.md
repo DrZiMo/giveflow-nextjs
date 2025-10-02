@@ -3,7 +3,20 @@
 GiveFlow is a modern donation platform that empowers individuals and organizations to raise funds while enabling donors to contribute with transparency and ease.  
 This repository contains the **frontend application** built with **Next.js, TypeScript, and Tailwind CSS**.
 
-![GiveFlow Banner](https://via.placeholder.com/1200x300?text=GiveFlow+Frontend)  
+<!-- Main banner image -->
+<p align="center">
+  <img src="./public/banner.png" alt="GiveFlow Banner" width="100%" />
+</p>
+
+---
+
+## 🖼️ Preview
+
+<p align="center">
+  <img src="./public/preview1.png" alt="Home Page" width="30%" />
+  <img src="./public/preview2.png" alt="Cause Page" width="30%" />
+  <img src="./public/preview3.png" alt="Donation Flow" width="30%" />
+</p>
 
 ---
 
