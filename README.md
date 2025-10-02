@@ -41,5 +41,3 @@ This repository contains the **frontend application** built with **Next.js, Type
 - 🔒 **JWT Authentication**
 
 ---
-
-## 📂 Project Structure
