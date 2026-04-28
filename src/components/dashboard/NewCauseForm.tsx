@@ -52,7 +52,7 @@ const NewCauseForm: React.FC<Props> = ({ causePic }) => {
 
   const handleChange = <K extends keyof FormData>(
     field: K,
-    value: FormData[K]
+    value: FormData[K],
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
@@ -92,7 +92,7 @@ const NewCauseForm: React.FC<Props> = ({ causePic }) => {
         onError: (err) => {
           toast.error(err.message, { id: toastId })
         },
-      }
+      },
     )
   }
 
@@ -125,7 +125,6 @@ const NewCauseForm: React.FC<Props> = ({ causePic }) => {
       <div className='space-y-3'>
         <Label>Long Description</Label>
         <Editor
-          apiKey='13dohz58dvcfp7iubzyr1s4fj3wsrrkf56v9zl6c9bgfxx2b'
           value={formData.long_description}
           onEditorChange={(content) =>
             handleChange('long_description', content)
