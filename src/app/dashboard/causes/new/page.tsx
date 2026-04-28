@@ -1,7 +1,7 @@
 'use client'
 
-import ImageUploaderCause from '@/components/Dashboard/ImageUploaderCause'
-import NewCauseForm from '@/components/Dashboard/NewCauseForm'
+import ImageUploaderCause from '@/components/dashboard/ImageUploaderCause'
+import NewCauseForm from '@/components/dashboard/NewCauseForm'
 import ProfileTitle from '@/components/ProfileTitle'
 import React, { useState } from 'react'
 

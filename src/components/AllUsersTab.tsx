@@ -31,7 +31,7 @@ import {
 import toast from 'react-hot-toast'
 import { useQueryClient } from '@tanstack/react-query'
 import { toastId } from '@/app/_constants/backendBaseUrl'
-import { DashboardEditUser } from './Dashboard/DashboardEditUser'
+import { DashboardEditUser } from './dashboard/DashboardEditUser'
 import {
   AlertDialog,
   AlertDialogAction,

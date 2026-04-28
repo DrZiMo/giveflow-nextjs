@@ -1,7 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import React from 'react'
-import DashboardHeader from '@/components/Dashboard/DashboardHeader'
-import { DashboardSidebar } from '@/components/Dashboard/DashoardSidebar'
+import DashboardHeader from '@/components/dashboard/DashboardHeader'
+import { DashboardSidebar } from '@/components/dashboard/DashoardSidebar'
 import DashboardProvider from './dashboardProvider'
 
 export default function ProfileLayout({

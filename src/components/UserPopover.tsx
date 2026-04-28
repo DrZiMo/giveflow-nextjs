@@ -23,7 +23,7 @@ import { Button } from './ui/button'
 import toast from 'react-hot-toast'
 import { toastId } from '@/app/_constants/backendBaseUrl'
 import { useQueryClient } from '@tanstack/react-query'
-import { DashboardEditUser } from './Dashboard/DashboardEditUser'
+import { DashboardEditUser } from './dashboard/DashboardEditUser'
 
 dayjs.extend(relativeTime)
 

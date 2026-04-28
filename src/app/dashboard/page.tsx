@@ -1,8 +1,8 @@
-import MonthlyDonationDashboard from '@/components/Dashboard/MonthlyDonationDashboard'
-import RecentActivitiesDashboard from '@/components/Dashboard/RecentActivitiesDashboard'
-import TopDonorsDashboard from '@/components/Dashboard/TopDonorsDashboard'
-import TopSummaryDashboard from '@/components/Dashboard/TopSummaryDashboard'
-import TopSupportedCausesDashboard from '@/components/Dashboard/TopSupportedCausesDashboard'
+import MonthlyDonationDashboard from '@/components/dashboard/MonthlyDonationDashboard'
+import RecentActivitiesDashboard from '@/components/dashboard/RecentActivitiesDashboard'
+import TopDonorsDashboard from '@/components/dashboard/TopDonorsDashboard'
+import TopSummaryDashboard from '@/components/dashboard/TopSummaryDashboard'
+import TopSupportedCausesDashboard from '@/components/dashboard/TopSupportedCausesDashboard'
 import ProfileTitle from '@/components/ProfileTitle'
 import React from 'react'
 

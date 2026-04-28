@@ -1,4 +1,4 @@
-import AnnouncementsPage from '@/components/Dashboard/AnnouncementsPage'
+import AnnouncementsPage from '@/components/dashboard/AnnouncementsPage'
 import ProfileTitle from '@/components/ProfileTitle'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'

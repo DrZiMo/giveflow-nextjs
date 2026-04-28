@@ -1,12 +1,10 @@
 'use client'
 
 import Loading from '@/app/loading'
-import ImageUploaderCause from '@/components/Dashboard/ImageUploaderCause'
-import EditCauseForm from '@/components/Dashboard/EditCauseForm'
+import EditCauseForm from '@/components/dashboard/EditCauseForm'
 import ProfileTitle from '@/components/ProfileTitle'
 import { useSingleCause } from '@/lib/hook/useCauses'
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
 
 const EditCausePage = () => {
   const { cause_id } = useParams()

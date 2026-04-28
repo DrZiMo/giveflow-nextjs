@@ -1,7 +1,7 @@
 'use client'
 
 import { DashboardUser, ROLE } from '@/app/types/users.types'
-import RoleUsers from '@/components/Dashboard/RoleUsers'
+import RoleUsers from '@/components/dashboard/RoleUsers'
 import ProfileTitle from '@/components/ProfileTitle'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
